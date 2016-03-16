@@ -1,0 +1,38 @@
+
+
+
+Units:
+
+ * Finance DSL (Bedrag, Per, etc)
+ * Engine
+   * Allows full programmatic usage
+   * Includes Condition (DslCondtion's bare parts)
+   * Includes operations with mathematical symbols
+ * Derivation DSL
+   * Core (actually included in Engine project, i.e. the Bare Items)
+   * Language packs extend core domain objects an provide operations using natural language
+     * NL
+     * EN
+     * ...
+
+
+* NumberLike comes into our project (maybe duplicate in Finance)
+* Split into three projects
+* Push to GitHub
+*
+* Finance DSL Translate to English
+* Decouple Finance DSL from Engine (add Bridge package)
+
+
+org.scalarules.finance.core
+org.scalarules.finance.nl
+org.scalarules.finance.en
+
+org.scalarules.engine.FactEngine
+org.scalarules.engine.domain
+org.scalarules.engine.types
+org.scalarules.engine.operators
+
+org.scalarules.dsl.core
+org.scalarules.dsl.nl
+org.scalarules.dsl.en
