@@ -1,0 +1,223 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>org.scala-rules</groupId>
+    <artifactId>scala-rules</artifactId>
+    <version>0.5-SNAPSHOT</version>
+    <packaging>pom</packaging>
+
+    <name>Scala Rules</name>
+
+    <properties>
+        <scala.version>2.11.8</scala.version>
+        <scala.compat.version>2.11</scala.compat.version>
+        <scala-maven-plugin.version>3.2.2</scala-maven-plugin.version>
+        <maven-source-plugin.version>2.1.2</maven-source-plugin.version>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
+        <encoding>UTF-8</encoding>
+    </properties>
+
+    <modules>
+        <module>engine-core</module>
+        <module>engine</module>
+        <module>engine-test-utils</module>
+    </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-library</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang</groupId>
+                <artifactId>scala-reflect</artifactId>
+                <version>${scala.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.scala-lang.modules</groupId>
+                <artifactId>scala-parser-combinators_${scala.compat.version}</artifactId>
+                <version>1.0.4</version>
+            </dependency>
+
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>7.0</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.module</groupId>
+                <artifactId>jackson-module-scala_${scala.compat.version}</artifactId>
+                <version>2.7.2</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.fasterxml.jackson.jaxrs</groupId>
+                <artifactId>jackson-jaxrs-json-provider</artifactId>
+                <version>2.7.3</version>
+            </dependency>
+
+            <!-- Test Dependencies -->
+            <dependency>
+                <groupId>org.scalatest</groupId>
+                <artifactId>scalatest_${scala.compat.version}</artifactId>
+                <version>2.2.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.scalacheck</groupId>
+                <artifactId>scalacheck_${scala.compat.version}</artifactId>
+                <version>1.12.5</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <version>4.12</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.storm-enroute</groupId>
+                <artifactId>scalameter_${scala.compat.version}</artifactId>
+                <version>0.7</version>
+                <scope>test</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>net.alchim31.maven</groupId>
+                    <artifactId>scala-maven-plugin</artifactId>
+                    <version>${scala-maven-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>scala-compile-first</id>
+                            <phase>process-resources</phase>
+                            <goals>
+                                <goal>add-source</goal>
+                                <goal>compile</goal>
+                            </goals>
+                        </execution>
+                        <execution>
+                            <id>scala-test-compile</id>
+                            <phase>process-test-resources</phase>
+                            <goals>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                    <configuration>
+                        <args>
+                            <arg>-deprecation</arg>
+                            <arg>-unchecked</arg>
+                            <arg>-feature</arg>
+                            <arg>-Xlint</arg>
+                            <arg>-Xfatal-warnings</arg>
+                        </args>
+                    </configuration>
+                </plugin>
+
+                <!-- Enable ScalaTest -->
+                <plugin>
+                    <groupId>org.scalatest</groupId>
+                    <artifactId>scalatest-maven-plugin</artifactId>
+                    <version>1.0</version>
+                    <configuration>
+                        <reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>
+                        <junitxml>.</junitxml>
+                        <filereports>WDF TestSuite.txt</filereports>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <id>test</id>
+                            <goals>
+                                <goal>test</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.scalastyle</groupId>
+                    <artifactId>scalastyle-maven-plugin</artifactId>
+                    <version>0.7.0</version>
+                    <configuration>
+                        <verbose>false</verbose>
+                        <failOnViolation>true</failOnViolation>
+                        <includeTestSourceDirectory>true</includeTestSourceDirectory>
+                        <failOnWarning>false</failOnWarning>
+                        <sourceDirectory>${basedir}/src/main/scala</sourceDirectory>
+                        <testSourceDirectory>${basedir}/src/test/scala</testSourceDirectory>
+                        <configLocation>scalastyle-config.xml</configLocation>
+                        <configLocation>scalastyle-test-config.xml</configLocation>
+                        <outputFile>${project.build.directory}/scalastyle-output.xml</outputFile>
+                        <outputEncoding>UTF-8</outputEncoding>
+                    </configuration>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>check</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+
+                <plugin>
+                    <groupId>org.scoverage</groupId>
+                    <artifactId>scoverage-maven-plugin</artifactId>
+                    <version>1.1.1</version>
+                    <configuration>
+                        <scalacPluginVersion>1.1.1</scalacPluginVersion>
+                        <highlighting>true</highlighting>
+                    </configuration>
+                </plugin>
+
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <!-- blanket solution for releasing all artifacts using this parent POM -->
+            <plugin>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.4.2</version>
+                <configuration>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <!-- Use a better name for the tag -->
+                    <tagNameFormat>${project.artifactId}-v@{project.version}</tagNameFormat>
+                    <!-- excluded 'deploy-site' to prevent site generation -->
+                    <goals>deploy</goals>
+                    <arguments>-Dmaven.javadoc.skip=true -Dmaven.site.skip=true</arguments>
+                </configuration>
+                <!--<dependencies>-->
+                    <!--<dependency>-->
+                        <!--<groupId>org.apache.maven.scm</groupId>-->
+                        <!--<artifactId>maven-scm-provider-gitexe</artifactId>-->
+                        <!--<version>1.9</version>-->
+                    <!--</dependency>-->
+                <!--</dependencies>-->
+            </plugin>
+
+        </plugins>
+    </build>
+    
+    <scm>
+        <url>https://git.rabobank.nl/projects/MOA/repos/calculations-scala</url>
+        <connection>scm:git:ssh://git@git.rabobank.nl:7999/moa/calculations-scala.git</connection>
+        <developerConnection>scm:git:ssh://git@git.rabobank.nl:7999/moa/calculations-scala.git</developerConnection>
+        <tag>HEAD</tag>
+    </scm>
+
+	<distributionManagement>
+		<repository>
+			<id>releases</id>
+			<name>FPX Releases</name>
+			<url>http://maven.rabobank.nl/nexus/content/repositories/private-financing-release/</url>
+		</repository>
+	</distributionManagement>
+</project>
+
