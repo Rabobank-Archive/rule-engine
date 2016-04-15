@@ -4,7 +4,7 @@
     <parent>
         <groupId>org.scala-rules</groupId>
 		<artifactId>scala-rules</artifactId>
-		<version>0.5-SNAPSHOT</version>
+		<version>0.5</version>
     </parent>
 
     <artifactId>rule-engine</artifactId>

@@ -2,10 +2,34 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.scala-rules</groupId>
     <artifactId>scala-rules</artifactId>
-    <version>0.5-SNAPSHOT</version>
+    <version>0.5</version>
     <packaging>pom</packaging>
 
-    <name>Scala Rules</name>
+    <name>Scala Rule Engine</name>
+	<description>Rule Engine in the Scala language. Contains an easy to use DSL in Scala for usage</description>
+	<url>https://github.com/scala-rules/scala-rules</url>
+
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Vincent Zorge</name>
+			<email>scala-rules@linuse.nl</email>
+			<organization>Linuse</organization>
+			<organizationUrl>https://github.com/vzorge</organizationUrl>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:git@github.com:scala-rules/scala-rules.git</connection>
+		<developerConnection>scm:git:git@github.com:scala-rules/scala-rules.git</developerConnection>
+		<url>git@github.com:scala-rules/scala-rules.git</url>
+	</scm>
 
     <properties>
         <scala.version>2.11.8</scala.version>
@@ -22,6 +46,17 @@
         <module>engine</module>
         <module>engine-test-utils</module>
     </modules>
+
+	<distributionManagement>
+		<snapshotRepository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots</url>
+		</snapshotRepository>
+		<repository>
+			<id>ossrh</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+		</repository>
+	</distributionManagement>
 
     <dependencyManagement>
         <dependencies>
@@ -201,23 +236,58 @@
                     <!--</dependency>-->
                 <!--</dependencies>-->
             </plugin>
-
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-source-plugin</artifactId>
+				<version>2.4</version>
+				<executions>
+					<execution>
+						<id>attach-sources</id>
+						<goals>
+							<goal>jar-no-fork</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>2.9.1</version>
+				<executions>
+					<execution>
+						<id>attach-javadocs</id>
+						<goals>
+							<goal>jar</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-gpg-plugin</artifactId>
+				<version>1.5</version>
+				<executions>
+					<execution>
+						<id>sign-artifacts</id>
+						<phase>verify</phase>
+						<goals>
+							<goal>sign</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>org.sonatype.plugins</groupId>
+				<artifactId>nexus-staging-maven-plugin</artifactId>
+				<version>1.6.6</version>
+				<extensions>true</extensions>
+				<configuration>
+					<serverId>ossrh</serverId>
+					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
+					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+				</configuration>
+			</plugin>
         </plugins>
     </build>
-    
-    <scm>
-        <url>https://git.rabobank.nl/projects/MOA/repos/calculations-scala</url>
-        <connection>scm:git:ssh://git@git.rabobank.nl:7999/moa/calculations-scala.git</connection>
-        <developerConnection>scm:git:ssh://git@git.rabobank.nl:7999/moa/calculations-scala.git</developerConnection>
-        <tag>HEAD</tag>
-    </scm>
-
-	<distributionManagement>
-		<repository>
-			<id>releases</id>
-			<name>FPX Releases</name>
-			<url>http://maven.rabobank.nl/nexus/content/repositories/private-financing-release/</url>
-		</repository>
-	</distributionManagement>
 </project>
 
