@@ -2,7 +2,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>org.scala-rules</groupId>
     <artifactId>scala-rules</artifactId>
-    <version>0.5</version>
+    <version>0.1</version>
     <packaging>pom</packaging>
 
     <name>Scala Rule Engine</name>
@@ -146,6 +146,12 @@
                                 <goal>testCompile</goal>
                             </goals>
                         </execution>
+						<execution>
+							<id>attach-scaladoc</id>
+							<goals>
+								<goal>doc-jar</goal>
+							</goals>
+						</execution>
                     </executions>
                     <configuration>
                         <args>
@@ -200,7 +206,7 @@
                                 <goal>check</goal>
                             </goals>
                         </execution>
-                    </executions>
+					</executions>
                 </plugin>
 
                 <plugin>
@@ -249,19 +255,19 @@
 					</execution>
 				</executions>
 			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-javadoc-plugin</artifactId>
-				<version>2.9.1</version>
-				<executions>
-					<execution>
-						<id>attach-javadocs</id>
-						<goals>
-							<goal>jar</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-javadoc-plugin</artifactId>-->
+				<!--<version>2.9.1</version>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<id>attach-javadocs</id>-->
+						<!--<goals>-->
+							<!--<goal>jar</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-gpg-plugin</artifactId>
@@ -284,7 +290,7 @@
 				<configuration>
 					<serverId>ossrh</serverId>
 					<nexusUrl>https://oss.sonatype.org/</nexusUrl>
-					<autoReleaseAfterClose>true</autoReleaseAfterClose>
+					<autoReleaseAfterClose>false</autoReleaseAfterClose>
 				</configuration>
 			</plugin>
         </plugins>
