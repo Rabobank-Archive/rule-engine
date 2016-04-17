@@ -1,3 +1,6 @@
+
+// *** Settings ***
+
 lazy val commonSettings = Seq(
   organization := "org.scala-rules",
   organizationHomepage := Some(url("https://github.com/scala-rules/scala-rules")),
@@ -5,10 +8,14 @@ lazy val commonSettings = Seq(
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings"),
   pomExtra := pom
-)
+) ++ staticAnalysisSettings
+
+
+
+// *** Projects ***
 
 lazy val root = (project in file("."))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "scala-rules",
     description := "Scala Rules"
@@ -16,7 +23,7 @@ lazy val root = (project in file("."))
   .aggregate(engineCore, engine, engineTestUtils)
 
 lazy val engineCore = (project in file("engine-core"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "rule-engine-core",
     description := "Rule Engine Core",
@@ -24,7 +31,7 @@ lazy val engineCore = (project in file("engine-core"))
   )
 
 lazy val engine = (project in file("engine"))
-  .settings(commonSettings: _*)
+  .settings(commonSettings)
   .settings(
     name := "rule-engine",
     description := "Rule Engine",
@@ -41,6 +48,9 @@ lazy val engineTestUtils = (project in file("engine-test-utils"))
   )
   .dependsOn(engine)
 
+
+
+// *** Dependencies ***
 
 lazy val scalaTestVersion = "2.2.5"
 
@@ -61,6 +71,29 @@ lazy val engineDependencies = commonDependencies
 lazy val testUtilDependencies = Seq(
   "org.scalatest" %% "scalatest" % scalaTestVersion
 ) ++ commonDependencies
+
+
+
+// *** Static analysis ***
+
+lazy val staticAnalysisSettings = {
+  lazy val compileScalastyle = taskKey[Unit]("Runs Scalastyle on production code")
+  lazy val testScalastyle = taskKey[Unit]("Runs Scalastyle on test code")
+
+  Seq(
+    scalastyleConfig in Compile := (baseDirectory in ThisBuild).value / "project" / "scalastyle-config.xml",
+    scalastyleConfig in Test := (baseDirectory in ThisBuild).value / "project" / "scalastyle-test-config.xml",
+
+    compileScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Compile).toTask("").value,
+    testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Test).toTask("").value
+  )
+}
+
+addCommandAlias("verify", ";compileScalastyle;coverage;test;coverageReport;coverageAggregate")
+
+
+
+// *** Publishing ***
 
 publishTo := {
   val nexus = "https://oss.sonatype.org/"
