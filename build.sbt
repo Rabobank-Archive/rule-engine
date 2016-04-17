@@ -1,3 +1,4 @@
+// scalastyle:off multiple.string.literals
 
 // *** Settings ***
 
