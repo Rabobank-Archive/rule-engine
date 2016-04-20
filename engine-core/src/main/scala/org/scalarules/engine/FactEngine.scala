@@ -136,7 +136,7 @@ object FactEngine {
     }
 
     def runSubCalculations[B](c: Context, subRunData: SubRunData[Any, B]): Seq[Option[Any]] = {
-      subRunData.inputList.toFunc(c).get.map(input => subRunData.yieldValue(runDerivations(c ++ subRunData.contextAdditions(input), subRunData.derivations, evaluator)))
+      subRunData.inputList.toEval(c).get.map(input => subRunData.yieldValue(runDerivations(c ++ subRunData.contextAdditions(input), subRunData.derivations, evaluator)))
     }
 
     runDerivations(c, derivations, evaluatorExceptionWrapper(evaluator))
@@ -169,7 +169,7 @@ object FactEngine {
     }
 
     def runSubCalculations[B](c: Context, subRunData: SubRunData[Any, B], d: Derivation): List[(Context, List[Step])] = {
-      subRunData.inputList.toFunc(c).get.map(input => {
+      subRunData.inputList.toEval(c).get.map(input => {
         val newContext: Context = c ++ subRunData.contextAdditions(input)
         runDerivations((newContext, List(Step(c, d, "SubCalculation with new value", newContext))), subRunData.derivations, evaluator)
       })

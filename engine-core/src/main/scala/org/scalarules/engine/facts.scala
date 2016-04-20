@@ -9,12 +9,12 @@ trait Fact[+A] {
   def isResult: Boolean
   def description: String
 
-  def toFunc: Evaluation[A]
+  def toEval: Evaluation[A]
   def valueClass: Class[_]
 }
 
 case class SingularFact[+A : TypeTag](name: String, isResult: Boolean = true, description: String = "") extends Fact[A] {
-  def toFunc: Evaluation[A] = new SingularFactEvaluation(this)
+  def toEval: Evaluation[A] = new SingularFactEvaluation(this)
 
   override def toString: String = name
 
@@ -26,7 +26,7 @@ case class SingularFact[+A : TypeTag](name: String, isResult: Boolean = true, de
 }
 
 case class ListFact[+A : TypeTag](name: String, isResult: Boolean = true, description: String = "") extends Fact[List[A]] {
-  def toFunc: Evaluation[List[A]] = new ListFactEvaluation[A](this)
+  def toEval: Evaluation[List[A]] = new ListFactEvaluation[A](this)
 
   override def toString: String = name
 

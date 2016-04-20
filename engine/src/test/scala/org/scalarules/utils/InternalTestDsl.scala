@@ -28,7 +28,7 @@ class InternalBerekeningenTester(verplichteBerekening: Berekening, optioneleBere
   }
 
   protected def assert[A](result: Context, fact: Fact[A], value: A) = {
-    fact.toFunc(result) match {
+    fact.toEval(result) match {
       case Some(x) if value == Nil => fail(s"Feit ${fact.name} wordt verwacht niet aanwezig te zijn, maar heeft waarde $x")
       case Some(x) => assertValue(x, value)
       case None if value == Nil => // What to do?? --> Nothing.. You interpret Nil as 'expected not to be present', which is exactly what the None result means

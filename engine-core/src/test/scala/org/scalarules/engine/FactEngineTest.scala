@@ -78,7 +78,7 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
 
 class FactEngineTestRunDefaultDerivations extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
 
-  def resolve[A](f: Fact[A], c: Context): A = f.toFunc(c).get
+  def resolve[A](f: Fact[A], c: Context): A = f.toEval(c).get
 
   val contextGenerator: Gen[Context] = for {
     purchaseAmount <- Gen.posNum[Long]
@@ -103,7 +103,7 @@ class FactEngineTestRunDefaultDerivations extends FlatSpec with Matchers with Ge
 
 class FactEngineTestRunSubRunDefaultDerivations extends FlatSpec with Matchers with GeneratorDrivenPropertyChecks {
 
-  def resolve[A](f: Fact[A], c: Context): A = f.toFunc(c).get
+  def resolve[A](f: Fact[A], c: Context): A = f.toEval(c).get
 
   private val inputs: List[BigDecimal] = (for (input <- 1 to 5) yield BigDecimal(input)).toList
   private val context: Context = Map(SubRunInput -> inputs)
@@ -149,21 +149,21 @@ object FactEngineTestValues {
     output = BuildingValue,
     condition = Conditions.trueCondition,
     operation = new Evaluation[BigDecimal]{
-      override def apply(c: Context): Option[BigDecimal] = Some(PurchaseAmount.toFunc(c).get + TaxationValue.toFunc(c).get)
+      override def apply(c: Context): Option[BigDecimal] = Some(PurchaseAmount.toEval(c).get + TaxationValue.toEval(c).get)
     })
 
   val derivationTwo = DefaultDerivation(input = List(PurchaseAmount, Costs),
     output = ConstructionValue,
     condition = Conditions.trueCondition,
     operation = new Evaluation[BigDecimal]{
-      override def apply(c: Context): Option[BigDecimal] = Some(PurchaseAmount.toFunc(c).get - TaxationValue.toFunc(c).get)
+      override def apply(c: Context): Option[BigDecimal] = Some(PurchaseAmount.toEval(c).get - TaxationValue.toEval(c).get)
     })
 
   val derivationThree = DefaultDerivation(input = List(ConstructionValue, BuildingValue),
     output = MarketValue,
     condition = Conditions.trueCondition,
     operation = new Evaluation[BigDecimal]{
-      override def apply(c: Context): Option[BigDecimal] = Some(ConstructionValue.toFunc(c).get.min(BuildingValue.toFunc(c).get))
+      override def apply(c: Context): Option[BigDecimal] = Some(ConstructionValue.toEval(c).get.min(BuildingValue.toEval(c).get))
     })
 
   val nodeThree = Node(derivationThree, List())
@@ -229,7 +229,7 @@ object FactEngineTestValues {
           output = SubRunIntermediateResult,
           condition = Conditions.trueCondition,
           operation = new Evaluation[BigDecimal]{
-            override def apply(c: Context): Option[BigDecimal] = SubRunIntermediateInput.toFunc(c).map(_ + 10)
+            override def apply(c: Context): Option[BigDecimal] = SubRunIntermediateInput.toEval(c).map(_ + 10)
           })
         )
     ))

@@ -22,7 +22,7 @@ object DslCondition {
 
   val emptyTrueCondition: DslCondition = DslCondition(Set(), _ => true)
   def factFilledCondition[A](fact: Fact[A]): DslCondition = DslCondition(Set(fact), isAanwezig(fact))
-  def isAanwezig[A](fact: Fact[A]): Condition = c => fact.toFunc(c).isDefined
+  def isAanwezig[A](fact: Fact[A]): Condition = c => fact.toEval(c).isDefined
 
   def andCombineConditions(initialDslCondition: DslCondition, dslConditions: DslCondition*): DslCondition = dslConditions.foldLeft(initialDslCondition)(_ en _)
   def orCombineConditions(initialDslCondition: DslCondition, dslConditions: DslCondition*): DslCondition = dslConditions.foldLeft(initialDslCondition)(_ of _)

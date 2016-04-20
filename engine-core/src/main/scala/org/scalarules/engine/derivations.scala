@@ -58,7 +58,7 @@ case class SubRunDerivation(inputs: Input, output: Output, condition: Condition,
   * @tparam B element type of the input `Fact`.
   */
 case class SubRunData[+A, B](derivations: List[Derivation], contextAdditions: B => Context, inputList: Fact[List[B]], yieldFact: Fact[A]) {
-  def yieldValue: Context => Option[A] = c => yieldFact.toFunc(c)
+  def yieldValue: Context => Option[A] = c => yieldFact.toEval(c)
 }
 
 /**

@@ -42,8 +42,8 @@ class DslTableOperationForLists[A, X, Y](tableFact: Fact[Table[A, X, Y]], condit
 }
 
 class TableEvaluation[A, X, Y](val xFact: Fact[X], val yFact: Fact[Y], val tableFact: Fact[Table[A, X, Y]]) extends Evaluation[A] {
-  def apply(c: Context): Option[A] = tableFact.toFunc(c) match {
-    case Some(res) => Some(res.get(xFact.toFunc(c).get, yFact.toFunc(c).get))
+  def apply(c: Context): Option[A] = tableFact.toEval(c) match {
+    case Some(res) => Some(res.get(xFact.toEval(c).get, yFact.toEval(c).get))
     case _ => None
   }
 
@@ -52,10 +52,10 @@ class TableEvaluation[A, X, Y](val xFact: Fact[X], val yFact: Fact[Y], val table
 
 class RepeatedTableEvaluation[A, X, Y](val xFact: Fact[List[X]], val yFact: Fact[Y], val tableFact: Fact[Table[A, X, Y]]) extends Evaluation[List[A]] {
   def apply(c: Context): Option[List[A]] = {
-    val xValues = xFact.toFunc(c).getOrElse(List())
-    val yCoordinate: Y = yFact.toFunc(c).get
+    val xValues = xFact.toEval(c).getOrElse(List())
+    val yCoordinate: Y = yFact.toEval(c).get
 
-    tableFact.toFunc(c) match {
+    tableFact.toEval(c) match {
       case Some(res) => Some(xValues.map( res.get(_, yCoordinate) ))
       case _ => None
     }

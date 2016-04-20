@@ -17,19 +17,19 @@ object TestUtils {
 
 
   def runAndExtractFact[A](initial: Context, derivations: List[Derivation], extract: Fact[A]): Option[A] = {
-    extract.toFunc( run(initial, derivations) )
+    extract.toEval( run(initial, derivations) )
   }
 
   def debugAndExtractFact[A](initial: Context, derivations: List[Derivation], extract: Fact[A]): Option[A] = {
-    extract.toFunc( debug(initial, derivations) )
+    extract.toEval( debug(initial, derivations) )
   }
 
   def runAndExtractFact[A](initial: Context, derivations: List[Derivation], heuristicService: HeuristicService, extract: Fact[A]): Option[A] = {
-    extract.toFunc( run(initial, derivations, heuristicService).get.result )
+    extract.toEval( run(initial, derivations, heuristicService).get.result )
   }
 
   def debugAndExtractFact[A](initial: Context, derivations: List[Derivation], heuristicService: HeuristicService, extract: Fact[A]): Option[A] = {
-    extract.toFunc( debug(initial, derivations, heuristicService).get.result )
+    extract.toEval( debug(initial, derivations, heuristicService).get.result )
   }
 
 }

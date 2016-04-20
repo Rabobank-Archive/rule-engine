@@ -62,7 +62,7 @@ object gecombineerdMaximum {
     val condition = facts.map(f => factFilledCondition(f)).reduceLeft((b, a) => andCombineConditions(b, a))
 
     DslEvaluation(condition, new Evaluation[List[A]] {
-      override def apply(c: Context): Option[List[A]] = Some(facts.map( _.toFunc(c).get ).transpose.map( _.max ).toList)
+      override def apply(c: Context): Option[List[A]] = Some(facts.map( _.toEval(c).get ).transpose.map( _.max ).toList)
     })
   }
 }
@@ -72,7 +72,7 @@ object gecombineerdMinimum {
     val condition = facts.map(f => factFilledCondition(f)).reduceLeft((b, a) => andCombineConditions(b, a))
 
     DslEvaluation(condition, new Evaluation[List[A]] {
-      override def apply(c: Context): Option[List[A]] = Some(facts.map( _.toFunc(c).get ).transpose.map( _.min ).toList)
+      override def apply(c: Context): Option[List[A]] = Some(facts.map( _.toEval(c).get ).transpose.map( _.min ).toList)
     })
   }
 }

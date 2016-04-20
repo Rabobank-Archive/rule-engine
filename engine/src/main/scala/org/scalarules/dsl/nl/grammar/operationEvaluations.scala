@@ -14,8 +14,8 @@ import org.scalarules.engine._
   * @tparam A the type returned by this Evaluation. It is inferred from the type of Facts in the input Sequence.
   */
 class EersteEvaluation[A](facts: Seq[Fact[A]]) extends Evaluation[A] {
-  def apply(c: Context): Option[A] = facts.find(f => f.toFunc(c).isDefined) match {
-    case Some(x) => x.toFunc(c)
+  def apply(c: Context): Option[A] = facts.find(f => f.toEval(c).isDefined) match {
+    case Some(x) => x.toEval(c)
     case _ => None
   }
 
@@ -23,7 +23,7 @@ class EersteEvaluation[A](facts: Seq[Fact[A]]) extends Evaluation[A] {
 }
 
 class EersteElementEvaluation[A](fact: Fact[List[A]]) extends Evaluation[A] {
-  def apply(c: Context): Option[A] = fact.toFunc(c) match {
+  def apply(c: Context): Option[A] = fact.toEval(c) match {
     case Some(x :: xs) => Some(x)
     case _ => None
   }
@@ -43,7 +43,7 @@ class EersteElementEvaluation[A](fact: Fact[List[A]]) extends Evaluation[A] {
   * @tparam B type of the result of the reducing operation. Must be a supertype of type A to fit into the reduceLeft operation.
   */
 class ReducableEvaluation[A, B >: A](val operationName: String, val operation: (B, A) => B, val facts: Seq[Fact[A]]) extends Evaluation[B] {
-  override def apply(c: Context): Option[B] = facts.flatMap(f => f.toFunc(c)).toList match {
+  override def apply(c: Context): Option[B] = facts.flatMap(f => f.toEval(c)).toList match {
     case Nil => None
     case list@(x :: xs) => Some(list.reduceLeft((l: B, r: A) => operation(l, r)))
   }
