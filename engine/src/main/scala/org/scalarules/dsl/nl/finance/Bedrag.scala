@@ -52,10 +52,10 @@ object Bedrag {
 
 trait BedragImplicits {
   abstract class ToBedrag(value: BigDecimal) {
-    /** Maakt een [[Bedrag]]. */
+    /** Maakt een Bedrag. */
     def euro: Bedrag = Bedrag(value)
 
-    /** Returnt het product van deze [[BigDecimal]] en [[Bedrag]] b. */
+    /** Returnt het product van deze BigDecimal en Bedrag b. */
     def *(b: Bedrag): Bedrag = b * value
   }
   implicit class BigDecimalToBedrag(value: BigDecimal) extends ToBedrag(value)
@@ -64,12 +64,12 @@ trait BedragImplicits {
   /** Het is niet mogelijk om een String te vermenigvuldigen met een Bedrag
     * Dit conflicteert met String's eigen * functie en is dus niet geimplementeerd*/
   implicit class StringToBedrag(value: String){
-    /** Maakt een [[Bedrag]]. */
+    /** Maakt een Bedrag. */
     def euro: Bedrag = Bedrag(BigDecimal(value))
   }
 
 
-  /** Zorgt ervoor dat zaken als "sum" gemakkelijk kunnen worden berekend op verzamelingen van [[Bedrag]]. */
+  /** Zorgt ervoor dat zaken als "sum" gemakkelijk kunnen worden berekend op verzamelingen van Bedrag. */
   implicit object NumericBedrag extends Numeric[Bedrag] {
     override def plus(x: Bedrag, y: Bedrag): Bedrag = x + y
     override def minus(x: Bedrag, y: Bedrag): Bedrag = x - y

@@ -5,8 +5,8 @@ import org.scalarules.dsl.nl.finance._
 import scala.annotation.implicitNotFound
 
 /**
- * Type class die ervoor zorgt dat er gerekend kan worden met instanties van [[Per]],
- * als de type class ook gedefinieerd is voor het 'waarde' gedeelte van de [[Per]] instantie.
+ * Type class die ervoor zorgt dat er gerekend kan worden met instanties van Per,
+ * als de type class ook gedefinieerd is voor het 'waarde' gedeelte van de Per instantie.
  */
 @implicitNotFound("No member of type class NumberLike available in scope for type ${T}")
 trait NumberLike[T] {

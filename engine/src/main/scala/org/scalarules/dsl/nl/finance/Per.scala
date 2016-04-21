@@ -5,19 +5,19 @@ import org.scalarules.dsl.core.types.NumberLike
 // scalastyle:off method.name
 
 /**
- * Geeft aan dat een bepaalde [[waarde]] van type [[W]] voorkomt voor elke [[termijn]] van type [[T]].
+ * Geeft aan dat een bepaalde waarde van type W voorkomt voor elke termijn van type T.
  */
 case class Per[W, T <: Termijn](waarde: W, termijn: T) {
-  /** Returnt de som van deze [[W]] en n; per [[T]]. */
+  /** Returnt de som van deze W en n; per T. */
   def + (n: W Per T)(implicit ev: NumberLike[W]): W Per T = applySafely(ev.plus, this, n)
 
-  /** Returnt het verschil tussen deze [[W]] en n; per [[T]]. */
+  /** Returnt het verschil tussen deze W en n; per T. */
   def - (n: W Per T)(implicit ev: NumberLike[W]): W Per T = applySafely(ev.minus, this, n)
 
-  /** Returnt het product van deze [[W]] en n; per [[T]]. */
+  /** Returnt het product van deze W en n; per T. */
   def * (n: BigDecimal)(implicit ev: NumberLike[W]): W Per T = Per(ev.multiply(waarde, n), termijn)
 
-  /** Returnt het quotiënt van deze [[W]] en n; per [[T]]. */
+  /** Returnt het quotiënt van deze W en n; per T. */
   def / (n: BigDecimal)(implicit ev: NumberLike[W]): W Per T = Per(ev.divide(waarde, n), termijn)
 
   /** Converteert dit naar de equivalente waarde per maand. */
@@ -26,7 +26,7 @@ case class Per[W, T <: Termijn](waarde: W, termijn: T) {
   /** Converteert dit naar de equivalente waarde per jaar. */
   def jaarlijks(implicit ev: NumberLike[W]): W Per Jaar = Per(ev.multiply(waarde, termijn.frequentiePerJaar), Jaar)
 
-  /** Past f toe op waarde en returnt het resultaat, per [[termijn]]. */
+  /** Past f toe op waarde en returnt het resultaat, per termijn. */
   def map[V](f: W => V): V Per T = Per(f(waarde), termijn)
 
   /** Past f toe op waarde en returnt het resultaat. */
@@ -42,7 +42,7 @@ case class Per[W, T <: Termijn](waarde: W, termijn: T) {
 
 trait PerImplicits {
   sealed abstract class PerTermijn[W](waarde: W) {
-    /** Verandert [[waarde]] in een waarde die voorkomt voor elke gegeven termijn. */
+    /** Verandert waarde in een waarde die voorkomt voor elke gegeven termijn. */
     def per[T <: Termijn](termijn: T): W Per T = Per(waarde, termijn)
   }
   implicit class BedragPerTermijn(waarde: Bedrag) extends PerTermijn[Bedrag](waarde)
@@ -53,8 +53,8 @@ trait PerImplicits {
 
 
   /**
-   * Zorgt ervoor dat [[Numeric]] en [[Ordering]] operaties toegepast kunnen worden op [[Per]]
-   * voor types [[W]] waarvoor [[Numeric]] gedefinieerd is.
+   * Zorgt ervoor dat Numeric en Ordering operaties toegepast kunnen worden op Per
+   * voor types W waarvoor Numeric gedefinieerd is.
    */
   private def numericPerPeriode[W : Numeric, T <: Termijn](termijn: T) = new Numeric[W Per T] {
     val ev = implicitly[Numeric[W]]
@@ -76,8 +76,8 @@ trait PerImplicits {
   implicit def numericPerJaar[W : Numeric]: Numeric[W Per Jaar] = numericPerPeriode(Jaar)
 
   /**
-   * Zorgt ervoor dat [[Numeric]] en [[Ordering]] operaties toegepast kunnen worden op [[Per]]
-   * voor types [[W]] waarvoor [[Numeric]] gedefinieerd is, en waarvoor de [[Termijn]] ongespecificeerd is.
+   * Zorgt ervoor dat Numeric en Ordering operaties toegepast kunnen worden op Per
+   * voor types W waarvoor Numeric gedefinieerd is, en waarvoor de Termijn ongespecificeerd is.
    */
   implicit def numericPerTermijn[W : NumberLike : Numeric]: Numeric[W Per Termijn] = new Numeric[W Per Termijn] {
     val ev = implicitly[Numeric[W]]
