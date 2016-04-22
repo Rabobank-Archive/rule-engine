@@ -121,6 +121,16 @@ lazy val pom =
       <organization>Linuse</organization>
       <organizationUrl>https://github.com/vzorge</organizationUrl>
     </developer>
+    <developer>
+      <name>Jan-Hendrik Kuperus</name>
+      <email>jan-hendrik@scala-rules.org</email>
+      <organization>Yoink Development</organization>
+      <organizationUrl>http://www.yoink.nl</organizationUrl>
+    </developer>
+    <developer>
+      <name>Nathan Perdijk</name>
+      <email>nathan@scala-rules.org</email>
+    </developer>
   </developers>
   <scm>
     <connection>scm:git:git@github.com:scala-rules/scala-rules.git</connection>
