@@ -17,7 +17,7 @@ case class Periode private[finance](inMaanden: Int) {
   /** Returnt hoe vaak deze periode in een jaar past. */
   def frequentiePerJaar: Int = 12 / inMaanden
 
-  /** Returnt deze periode als een [[Int]], afgekapt op hele jaren. */
+  /** Returnt deze periode als een Int, afgekapt op hele jaren. */
   def inAfgekapteJaren: Int = inMaanden / 12
 
   /** Kapt deze periode af (naar beneden) op hele jaren. */

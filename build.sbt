@@ -1,22 +1,23 @@
-// scalastyle:off multiple.string.literals
+import sbt.Keys._
+
+// scalastyle:off
 
 // *** Settings ***
 
 lazy val commonSettings = Seq(
   organization := "org.scala-rules",
   organizationHomepage := Some(url("https://github.com/scala-rules/scala-rules")),
+  homepage := Some(url("https://github.com/scala-rules/scala-rules")),
   version := "0.2-SNAPSHOT",
   scalaVersion := "2.11.8",
-  scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings"),
-  pomExtra := pom
-) ++ staticAnalysisSettings
-
+  scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings")
+) ++ staticAnalysisSettings ++ publishSettings
 
 
 // *** Projects ***
 
 lazy val root = (project in file("."))
-  .settings(commonSettings)
+  .settings(commonSettings: _*)
   .settings(
     name := "scala-rules",
     description := "Scala Rules"
@@ -24,7 +25,7 @@ lazy val root = (project in file("."))
   .aggregate(engineCore, engine, engineTestUtils)
 
 lazy val engineCore = (project in file("engine-core"))
-  .settings(commonSettings)
+  .settings(commonSettings: _*)
   .settings(
     name := "rule-engine-core",
     description := "Rule Engine Core",
@@ -32,7 +33,7 @@ lazy val engineCore = (project in file("engine-core"))
   )
 
 lazy val engine = (project in file("engine"))
-  .settings(commonSettings)
+  .settings(commonSettings: _*)
   .settings(
     name := "rule-engine",
     description := "Rule Engine",
@@ -99,21 +100,22 @@ addCommandAlias("verify", ";compileScalastyle;testScalastyle;coverage;test;cover
 
 // *** Publishing ***
 
-publishTo := {
-  val nexus = "https://oss.sonatype.org/"
-  if (isSnapshot.value)
-    Some("snapshots" at nexus + "content/repositories/snapshots")
-  else
-    Some("releases"  at nexus + "service/local/staging/deploy/maven2")
-}
+lazy val publishSettings = Seq(
+  pomExtra := pom,
+  publishMavenStyle := true,
+  useGpg := true,
+  pomIncludeRepository := { _ => false },
+  licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php")),
+  publishTo := {
+    val nexus = "https://oss.sonatype.org/"
+    if (isSnapshot.value)
+      Some("snapshots" at nexus + "content/repositories/snapshots")
+    else
+      Some("releases"  at nexus + "service/local/staging/deploy/maven2")
+  }
+)
 
 lazy val pom =
-  <licenses>
-    <license>
-      <name>MIT License</name>
-      <url>http://www.opensource.org/licenses/mit-license.php</url>
-    </license>
-  </licenses>
   <developers>
     <developer>
       <name>Vincent Zorge</name>

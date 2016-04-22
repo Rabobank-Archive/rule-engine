@@ -16,25 +16,25 @@ case class Percentage private[finance] (percentage: BigDecimal) extends Ordered[
   /** Het percentage als een fractie tussen 0 en 1. */
   val alsFractie: BigDecimal = percentage / 100
 
-  /** Returnt de som van dit percentage en p, als [[Percentage]]. */
+  /** Returnt de som van dit percentage en p, als Percentage. */
   def + (p: Percentage): Percentage = Percentage(percentage + p.percentage)
 
-  /** Returnt het verschil tussen dit percentage en p, als [[Percentage]]. */
+  /** Returnt het verschil tussen dit percentage en p, als Percentage. */
   def - (p: Percentage): Percentage = Percentage(percentage - p.percentage)
 
-  /** Returnt het percentage van p, als [[BigDecimal]] factor. */
+  /** Returnt het percentage van p, als BigDecimal factor. */
   def * (p: Percentage): BigDecimal = alsFractie * p.alsFractie
 
-  /** Returnt het percentage van n, als type [[T]]. */
+  /** Returnt het percentage van n, als type T. */
   def *[T : NumberLike](n: T): T = implicitly[NumberLike[T]].multiply(n, alsFractie)
 
-  /** Returnt het percentage van n, als [[BigDecimal]] factor zodat het geen precisie verliest. */
+  /** Returnt het percentage van n, als BigDecimal factor zodat het geen precisie verliest. */
   def * (n: Int): BigDecimal = alsFractie * n
 
-  /** Returnt het quotiënt van het percentage en p, als [[BigDecimal]] factor. */
+  /** Returnt het quotiënt van het percentage en p, als BigDecimal factor. */
   def / (p: Percentage): BigDecimal = alsFractie / p.alsFractie
 
-  /** Returnt het quotiënt van het percentage en n, als [[BigDecimal]] factor. */
+  /** Returnt het quotiënt van het percentage en n, als BigDecimal factor. */
   def / (n: BigDecimal): BigDecimal = alsFractie / n
 
   override def compare(that: Percentage) = percentage compare that.percentage
@@ -60,11 +60,11 @@ trait PercentageImplicits {
   implicit class StringToPercentage(waarde: String) extends ToPercentage(BigDecimal(waarde))
 
   implicit class IntWithPercentage(waarde: Int) {
-    /** Returnt het product van deze [[Int]] en [[Percentage]] n als [[BigDecimal]]. */
+    /** Returnt het product van deze Int en Percentage n als BigDecimal. */
     def * (p: Percentage): BigDecimal = p * BigDecimal(waarde)
   }
   implicit class NumberLikeWithPercentage[T : NumberLike](waarde: T) {
-    /** Returnt het product van deze [[NumberLike]] T en [[Percentage]] n als T. */
+    /** Returnt het product van deze NumberLike T en Percentage n als T. */
     def * (p: Percentage): T = p * waarde
   }
 }
