@@ -4,11 +4,13 @@ import sbt.Keys._
 
 // *** Settings ***
 
+useGpg := false
+
 lazy val commonSettings = Seq(
   organization := "org.scala-rules",
   organizationHomepage := Some(url("https://github.com/scala-rules/scala-rules")),
   homepage := Some(url("https://github.com/scala-rules/scala-rules")),
-  version := "0.2-SNAPSHOT",
+  version := "0.2.2-SNAPSHOT",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings")
 ) ++ staticAnalysisSettings ++ publishSettings
