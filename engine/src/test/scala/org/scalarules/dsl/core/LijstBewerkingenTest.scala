@@ -6,7 +6,7 @@ import org.scalarules.dsl.nl.grammar.aanwezig
 import org.scalarules.utils.{InternalBerekeningenTester, lijst}
 
 class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewerkingen, new LijstOptellingen, new LijstSubtracties, new LijstVermenigvuldigingen,
-  new LijstDelingen, new LijstElementKeuzes, new LijstGemiddelden, new LijstSommaties, new LijstConditionals, new LijstInLijstOptelling) {
+  new LijstDelingen, new LijstElementKeuzes, new LijstGemiddelden, new LijstSommaties, new LijstConditionals, new LijstInLijstOptelling, new LijstFilter) {
 
   val standaardInvoer = waardes(
     InvoerLijstA is List(1, 2, 3, 4, 5, 6, 7, 8),
@@ -186,4 +186,9 @@ class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewer
     DelingLijstEnLijst is List(1, 1)
   )
 
+  test("of filteren van lijst werkt") gegeven (
+    LijstOnGefilterd is List(0,1,2,3,4,5,6)
+  ) verwacht (
+    LijstGefilterd is List(1,2,3,4)
+  )
 }

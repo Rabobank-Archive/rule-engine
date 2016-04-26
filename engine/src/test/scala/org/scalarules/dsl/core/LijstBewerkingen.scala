@@ -3,7 +3,9 @@ package org.scalarules.dsl.core
 import org.scalarules.dsl.nl.finance._
 import org.scalarules.dsl.nl.grammar._
 import LijstBewerkingenGlossary$._
+import org.scalarules.dsl.core.projections.ProjectableFields
 import org.scalarules.dsl.nl.grammar.DslCondition._
+import org.scalarules.dsl.nl.grammar.DslListFilter.filter
 import org.scalarules.engine._
 
 class NietLijstBewerkingen extends Berekening (
@@ -104,6 +106,20 @@ class LijstInLijstOptelling extends Berekening (
     LijstInLijstOptellingA is (totaal van LijstInLijstA) en
     LijstInLijstBO is (totaal van LijstInLijstInLijstA)
 )
+
+class LijstFilter extends Berekening (
+  Gegeven (altijd)
+    Bereken
+      LijstGefilterd is (filter lijst LijstOnGefilterd op (1,2,3,4)) en
+      LijstGefilterdComplexObject is (filter lijst LijstOnGefilterdComplexObject op (_.value == 1))
+)
+
+class ComplexObject(val value: Int)
+class ComplexObjectProjections(complexObjectFact: SingularFact[ComplexObject]) extends ProjectableFields[ComplexObject] {
+  def outerFact: Fact[ComplexObject] = complexObjectFact
+
+  val value: DslEvaluation[Int] = projectField(_.value)
+}
 
 object DummyFunction {
   def apply[T](input: DslEvaluation[List[Bedrag]], wegingPositiefInkomen: DslEvaluation[Percentage], wegingNegatiefInkomen: DslEvaluation[Percentage]): DslEvaluation[List[Percentage]] = {
