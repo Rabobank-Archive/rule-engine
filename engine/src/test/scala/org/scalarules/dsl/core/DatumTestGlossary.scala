@@ -10,10 +10,10 @@ object DatumTestGlossary extends Glossary {
   val DatumA = SingularFact[DslDate]("DatumA")
   val DatumB = SingularFact[DslDate]("DatumB")
 
-  val KleinerDan = SingularFact[String]("KleinerDan")
-  val KleinerDanGelijk = SingularFact[String]("KleinerDanGelijk")
-  val GroterDan = SingularFact[String]("GroterDan")
-  val GroterDanGelijk = SingularFact[String]("GroterDanGelijk")
+  val EerderDan = SingularFact[String]("KleinerDan")
+  val EerderDanGelijk = SingularFact[String]("KleinerDanGelijk")
+  val LaterDan = SingularFact[String]("GroterDan")
+  val LaterDanGelijk = SingularFact[String]("GroterDanGelijk")
   val GelijkAan = SingularFact[String]("GelijkAan")
 
 }

@@ -6,16 +6,16 @@ import org.scalarules.dsl.nl.grammar._
 class DatumTestsBerekening extends Berekening (
 
   Gegeven (DatumA < "01-01-2015".datum)
-    Bereken KleinerDan is "success"
+    Bereken EerderDan is "success"
   ,
   Gegeven (DatumA <= "01-01-2015".datum)
-    Bereken KleinerDanGelijk is "success"
+    Bereken EerderDanGelijk is "success"
   ,
   Gegeven (DatumA > "01-01-2015".datum)
-    Bereken GroterDan is "success"
+    Bereken LaterDan is "success"
   ,
   Gegeven (DatumA >= "01-01-2015".datum)
-    Bereken GroterDanGelijk is "success"
+    Bereken LaterDanGelijk is "success"
   ,
   Gegeven (DatumA is "01-01-2015".datum)
     Bereken GelijkAan is "success"

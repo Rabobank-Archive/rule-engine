@@ -24,30 +24,30 @@ class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) wit
     test(s"${pattern} parsen werkt (1/3)") gegeven (
       DatumA is datumKleiner.toString(pattern).datum
     ) verwacht (
-      KleinerDan is "success",
-      KleinerDanGelijk is "success",
-      GroterDan niet aanwezig,
-      GroterDanGelijk niet aanwezig,
+      EerderDan is "success",
+      EerderDanGelijk is "success",
+      LaterDan niet aanwezig,
+      LaterDanGelijk niet aanwezig,
       GelijkAan niet aanwezig
     )
 
     test(s"${pattern} parsen werkt (2/3)") gegeven (
       DatumA is datumGroter.toString(pattern).datum
     ) verwacht (
-      KleinerDan niet aanwezig,
-      KleinerDan niet aanwezig,
-      GroterDan is "success",
-      GroterDanGelijk is "success",
+      EerderDan niet aanwezig,
+      EerderDan niet aanwezig,
+      LaterDan is "success",
+      LaterDanGelijk is "success",
       GelijkAan niet aanwezig
     )
 
     test(s"${pattern} parsen werkt (3/3)") gegeven (
       DatumA is datumGelijk.toString(pattern).datum
     ) verwacht (
-      KleinerDan niet aanwezig,
-      KleinerDanGelijk is "success",
-      GroterDan niet aanwezig,
-      GroterDanGelijk is "success",
+      EerderDan niet aanwezig,
+      EerderDanGelijk is "success",
+      LaterDan niet aanwezig,
+      LaterDanGelijk is "success",
       GelijkAan is "success"
     )
 
