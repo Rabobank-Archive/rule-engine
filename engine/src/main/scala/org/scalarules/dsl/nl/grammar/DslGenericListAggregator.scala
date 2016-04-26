@@ -18,7 +18,6 @@ trait DslGenericListAggregator {
 
 class SelectElementOnLiteralIndex(index: Int) extends DslGenericListAggregator {
   private[grammar] def toEvaluation[A](listEvaluation: Evaluation[List[A]]): Evaluation[A] = new ListIndexSelectionEvaluation[A](listEvaluation, index)
-
 }
 
 // scalastyle:off object.name
@@ -26,4 +25,3 @@ object element {
   def apply(literal: Int): SelectElementOnLiteralIndex = new SelectElementOnLiteralIndex(literal)
 }
 // scalastyle:on object.name
-
