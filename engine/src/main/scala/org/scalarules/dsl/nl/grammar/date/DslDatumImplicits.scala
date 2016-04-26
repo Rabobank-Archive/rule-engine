@@ -27,7 +27,7 @@ trait DslDatumImplicits {
 
   lazy val dtf = DateTimeFormat.forPattern("dd-MM-yyyy")
 
-  implicit class JodaLocalTimeToDslDate(external: LocalDate) extends ToDslDate(external)
+  implicit class JodaLocalDateToDslDate(external: LocalDate) extends ToDslDate(external)
   implicit class JavaDateToDslDate(external: Date) extends ToDslDate(new LocalDate(external))
   implicit class StringToDslDate(external: String) extends ToDslDate(dtf.parseLocalDate(external))
 
