@@ -25,3 +25,4 @@ object element {
   def apply(literal: Int): SelectElementOnLiteralIndex = new SelectElementOnLiteralIndex(literal)
 }
 // scalastyle:on object.name
+
