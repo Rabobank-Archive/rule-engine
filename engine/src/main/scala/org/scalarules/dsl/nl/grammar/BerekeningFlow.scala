@@ -29,6 +29,7 @@ object Specificatie {
  * DslNumericalListAggregator  ::= (`totaal van` | `gemiddelde van`)
  *
  * DslEvaluation
+ * SubRunData :== SubBerekening over [ListFact] vul [Fact] geeft [outputFact] door [Berekening]
  *
  */
 
