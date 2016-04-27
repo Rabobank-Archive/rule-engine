@@ -3,7 +3,7 @@ package org.scalarules.dsl.nl.grammar.datum
 import org.joda.time.LocalDate
 import org.scalarules.dsl.nl.grammar.aanwezig
 import org.scalarules.utils.InternalBerekeningenTester
-import org.scalarules.dsl.nl.grammar.datum.DatumImplicits
+import org.scalarules.dsl.nl.grammar.datum.DatumTestGlossary._
 
 class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) with DatumImplicits {
 
