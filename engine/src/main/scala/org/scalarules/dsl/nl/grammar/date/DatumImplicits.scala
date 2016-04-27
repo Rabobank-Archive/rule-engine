@@ -2,33 +2,33 @@ package org.scalarules.dsl.nl.grammar.date
 
 import java.util.Date
 
-import org.joda.time.LocalDate
+import org.joda.time.{LocalDate => JodaLocalDate}
 import org.joda.time.format.DateTimeFormat
-import org.scalarules.dsl.core.grammar.date.DslDate
+import org.scalarules.dsl.core.temporal.LocalDate
 
 /**
   * Provides the implicit conversions to DslDate for the NL version of the DSL.
-  * It defines a Dutch type alias `Datum` for [[org.scalarules.dsl.core.grammar.date.DslDate]].
+  * It defines a Dutch type alias `Datum` for [[LocalDate]].
   *
   * Currently supported conversions are:
   * - [[java.lang.String]] (formatted as dd-MM-yyyy)
   * - JodaTime [[org.joda.time.LocalDate]]
   * - [[java.util.Date]]
   */
-trait DslDatumImplicits {
+trait DatumImplicits {
 
-  type Datum = DslDate
+  type Datum = LocalDate
 
-  abstract class ToDslDate(internal: LocalDate) {
+  abstract class ToDslDate(internal: JodaLocalDate) {
     /** Builds DslDate from the provided value. */
-    def datum: Datum = DslDate(internal)
+    def datum: Datum = LocalDate(internal)
 
   }
 
   lazy val dtf = DateTimeFormat.forPattern("dd-MM-yyyy")
 
-  implicit class JodaLocalDateToDslDate(external: LocalDate) extends ToDslDate(external)
-  implicit class JavaDateToDslDate(external: Date) extends ToDslDate(new LocalDate(external))
+  implicit class JodaLocalDateToDslDate(external: JodaLocalDate) extends ToDslDate(external)
+  implicit class JavaDateToDslDate(external: Date) extends ToDslDate(new JodaLocalDate(external))
   implicit class StringToDslDate(external: String) extends ToDslDate(dtf.parseLocalDate(external))
 
 }

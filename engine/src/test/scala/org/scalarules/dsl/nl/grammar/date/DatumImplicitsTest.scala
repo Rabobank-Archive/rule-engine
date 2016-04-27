@@ -5,7 +5,7 @@ import org.scalarules.engine.{Context, FactEngine, SingularFact}
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalarules.dsl.nl.grammar._
 
-class DslDatumImplicitsTest extends FlatSpec with Matchers {
+class DatumImplicitsTest extends FlatSpec with Matchers {
 
   val sutDatumA = new SingularFact[Datum]("sutDatumA")
   val sutDatumB = new SingularFact[Datum]("sutDatumB")

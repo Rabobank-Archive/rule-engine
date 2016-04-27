@@ -1,11 +1,11 @@
 package org.scalarules.dsl.nl
 
-import org.scalarules.dsl.nl.grammar.date.DslDatumImplicits
+import org.scalarules.dsl.nl.grammar.date.DatumImplicits
 import org.scalarules.engine._
 
 package object grammar extends DslConditionImplicits
     with DslEvaluationImplicits
-    with DslDatumImplicits {
+    with DatumImplicits {
 
   type ConditionFunction = (Condition, Condition) => Condition
 

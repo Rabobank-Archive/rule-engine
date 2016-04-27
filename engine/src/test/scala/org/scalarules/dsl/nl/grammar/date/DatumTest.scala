@@ -1,12 +1,11 @@
-package org.scalarules.dsl.core
+package org.scalarules.dsl.nl.grammar.date
 
 import org.joda.time.LocalDate
-import org.scalarules.dsl.core.DatumTestGlossary._
 import org.scalarules.dsl.nl.grammar.aanwezig
 import org.scalarules.utils.InternalBerekeningenTester
-import org.scalarules.dsl.nl.grammar.date.DslDatumImplicits
+import org.scalarules.dsl.nl.grammar.date.DatumTestGlossary._
 
-class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) with DslDatumImplicits {
+class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) with DatumImplicits {
 
   val supportedDateFormats = Set(
     "d-M-yyyy",
@@ -15,14 +14,14 @@ class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) wit
     "dd-MM-yyyy"
   )
 
-  val datumKleiner = new LocalDate(2014, 1, 1)
+  val datumEerder = new LocalDate(2014, 1, 1)
   val datumGelijk = new LocalDate(2015, 1, 1)
-  val datumGroter = new LocalDate(2016, 1, 1)
+  val datumLater = new LocalDate(2016, 1, 1)
 
   supportedDateFormats.foreach( pattern => {
 
     test(s"${pattern} parsen werkt (1/3)") gegeven (
-      DatumA is datumKleiner.toString(pattern).datum
+      InvoerDatum is datumEerder.toString(pattern).datum
     ) verwacht (
       EerderDan is "success",
       EerderDanGelijk is "success",
@@ -32,7 +31,7 @@ class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) wit
     )
 
     test(s"${pattern} parsen werkt (2/3)") gegeven (
-      DatumA is datumGroter.toString(pattern).datum
+      InvoerDatum is datumLater.toString(pattern).datum
     ) verwacht (
       EerderDan niet aanwezig,
       EerderDan niet aanwezig,
@@ -42,7 +41,7 @@ class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) wit
     )
 
     test(s"${pattern} parsen werkt (3/3)") gegeven (
-      DatumA is datumGelijk.toString(pattern).datum
+      InvoerDatum is datumGelijk.toString(pattern).datum
     ) verwacht (
       EerderDan niet aanwezig,
       EerderDanGelijk is "success",
