@@ -35,7 +35,7 @@ class LijstSubtracties extends Berekening (
     SubtractieEnkeleLijstEnEnkeleLijst is InvoerLijstEnkeleC - InvoerLijstEnkeleD en
     SubtractieEnkeleLijstEnGetal is InvoerLijstEnkeleC - GetalA en
     SubtractieGetalEnEnkeleLijst is GetalA - InvoerLijstEnkeleD en
-    SubtractieLijstVanLijstResultaat is substractie van SubtractieLijstVanLijst
+    SubtractieLijstVanLijstResultaat is (substractie van SubtractieLijstVanLijst)
 )
 
 class LijstVermenigvuldigingen extends Berekening (
@@ -63,32 +63,32 @@ class LijstDelingen extends Berekening (
 class LijstElementKeuzes extends Berekening (
   Gegeven (altijd)
   Bereken
-    EersteElementVan is element(0) van InvoerLijstA en
-    LaagsteElementA is laagste van InvoerLijstB en
-    LaagsteElementB is laagste van InvoerLijstSerieE en
-    LaagsteElementC is laagste van InvoerLijstF en
-    HoogsteElementA is hoogste van InvoerLijstB en
-    HoogsteElementB is hoogste van InvoerLijstSerieE en
-    HoogsteElementC is hoogste van InvoerLijstF
+    EersteElementVan is (element(0) van InvoerLijstA) en
+    LaagsteElementA is (laagste van InvoerLijstB) en
+    LaagsteElementB is (laagste van InvoerLijstSerieE) en
+    LaagsteElementC is (laagste van InvoerLijstF) en
+    HoogsteElementA is (hoogste van InvoerLijstB) en
+    HoogsteElementB is (hoogste van InvoerLijstSerieE) en
+    HoogsteElementC is (hoogste van InvoerLijstF)
 )
 
 class LijstGemiddelden extends Berekening (
   Gegeven (altijd)
   Bereken
-    GemiddeldeA is gemiddelde van InvoerLijstB en
-    GemiddeldeB is gemiddelde van InvoerLijstSerieE en
-    GemiddeldeC is gemiddelde van InvoerLijstF en
-    GemiddeldeD is gemiddelde van InvoerLijstEnkeleC en
-    GemiddeldeE is gemiddelde van InvoerLijstLeegG
+    GemiddeldeA is (gemiddelde van InvoerLijstB) en
+    GemiddeldeB is (gemiddelde van InvoerLijstSerieE) en
+    GemiddeldeC is (gemiddelde van InvoerLijstF) en
+    GemiddeldeD is (gemiddelde van InvoerLijstEnkeleC) en
+    GemiddeldeE is (gemiddelde van InvoerLijstLeegG)
 
 )
 
 class LijstSommaties extends Berekening (
   Gegeven (altijd)
   Bereken
-    SommatieA is totaal van InvoerLijstA en
-    SommatieB is totaal van InvoerLijstEnkeleC en
-    SommatieC is totaal van InvoerLijstLeegG
+    SommatieA is (totaal van InvoerLijstA) en
+    SommatieB is (totaal van InvoerLijstEnkeleC) en
+    SommatieC is (totaal van InvoerLijstLeegG)
 )
 
 class LijstConditionals extends Berekening (
@@ -101,8 +101,8 @@ class LijstInLijstOptelling extends Berekening (
   Gegeven (altijd)
   Bereken
     LijstInLijstC is LijstInLijstA + LijstInLijstB en
-    LijstInLijstOptellingA is totaal van LijstInLijstA en
-    LijstInLijstBO is totaal van LijstInLijstInLijstA
+    LijstInLijstOptellingA is (totaal van LijstInLijstA) en
+    LijstInLijstBO is (totaal van LijstInLijstInLijstA)
 )
 
 object DummyFunction {
