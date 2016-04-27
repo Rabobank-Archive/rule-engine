@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.grammar.date
+package org.scalarules.dsl.nl.grammar.datum
 
 import java.util.Date
 

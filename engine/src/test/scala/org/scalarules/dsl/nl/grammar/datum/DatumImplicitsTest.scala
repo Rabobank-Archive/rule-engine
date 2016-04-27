@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.grammar.date
+package org.scalarules.dsl.nl.grammar.datum
 
 import org.scalarules.dsl.nl.finance.{Bedrag, Percentage}
 import org.scalarules.engine.{Context, FactEngine, SingularFact}
