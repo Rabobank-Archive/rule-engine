@@ -5,14 +5,8 @@ import org.scalarules.engine.{Derivation, Evaluation, Fact}
 
 trait DslNumberLikeListAggregator {
   private[grammar] def toEvaluation[A : NumberLike](listEvaluation: Evaluation[List[A]]): Evaluation[A]
-}
 
-class DslNumberLikeListAggregationOperation[A : NumberLike](listOperation: DslNumberLikeListAggregator, condition: DslCondition, output: Fact[A], derivations: List[Derivation]) {
-  def van(operation: DslEvaluation[List[A]]): BerekeningAccumulator = {
-    val dslEvaluation: DslEvaluation[A] = new DslEvaluation[A](operation.condition, listOperation.toEvaluation(operation.evaluation))
-
-    new BerekeningAccumulator(condition, Specificatie(condition, output, dslEvaluation) :: derivations)
-  }
+  def van[A : NumberLike](operation: DslEvaluation[List[A]]): DslEvaluation[A] = new DslEvaluation[A](operation.condition, toEvaluation(operation.evaluation))
 }
 
 // scalastyle:off object.name
