@@ -1,9 +1,10 @@
 package org.scalarules.dsl.nl.grammar
 
 import DslCondition._
+import org.scalarules.dsl.core.temporal.LocalDate
 import org.scalarules.dsl.core.operators._
 import org.scalarules.dsl.core.types.NumberLike
-import org.scalarules.dsl.nl.finance.{Percentage, Bedrag}
+import org.scalarules.dsl.nl.finance.{Bedrag, Percentage}
 import org.scalarules.engine._
 
 import scala.language.implicitConversions
@@ -81,5 +82,5 @@ trait DslEvaluationImplicits {
   implicit def bedragToDslEvaluation(value: Bedrag): DslEvaluation[Bedrag] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[Bedrag](value))
   implicit def stringToDslEvaluation(value: String): DslEvaluation[String] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[String](value))
   implicit def percentageToDslEvaluation(value: Percentage): DslEvaluation[Percentage] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[Percentage](value))
-
+  implicit def dslDatumToDslEvaluation(value: LocalDate): DslEvaluation[LocalDate] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[Datum](value))
 }
