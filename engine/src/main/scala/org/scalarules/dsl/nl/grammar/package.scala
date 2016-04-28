@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl
 
-import org.scalarules.dsl.nl.grammar.datum.DatumImplicits
+import org.scalarules.dsl.nl.datum.DatumImplicits
 import org.scalarules.engine._
 
 package object grammar extends DslConditionImplicits
