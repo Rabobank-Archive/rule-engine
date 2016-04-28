@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.en.grammar
 
 import org.scalarules.dsl.core.grammar.{DslEvaluation, ListAggregationEvaluation}
 import org.scalarules.dsl.core.types.NumberLike
@@ -7,21 +7,21 @@ import org.scalarules.engine.Evaluation
 trait DslNumberLikeListAggregator {
   private[grammar] def toEvaluation[A : NumberLike](listEvaluation: Evaluation[List[A]]): Evaluation[A]
 
-  def van[A : NumberLike](operation: DslEvaluation[List[A]]): DslEvaluation[A] = new DslEvaluation[A](operation.condition, toEvaluation(operation.evaluation))
+  def of[A : NumberLike](operation: DslEvaluation[List[A]]): DslEvaluation[A] = new DslEvaluation[A](operation.condition, toEvaluation(operation.evaluation))
 }
 
 // scalastyle:off object.name
-object totaal extends DslNumberLikeListAggregator {
+object total extends DslNumberLikeListAggregator {
   private[grammar] def toEvaluation[A : NumberLike](listEvaluation: Evaluation[List[A]]): Evaluation[A] =
     new ListAggregationEvaluation[A](listEvaluation, _.reduceLeft((a, b) => implicitly[NumberLike[A]].plus(a, b) ))
 }
 
-object substractie extends DslNumberLikeListAggregator {
+object substract extends DslNumberLikeListAggregator {
   private[grammar] def toEvaluation[A : NumberLike](listEvaluation: Evaluation[List[A]]): Evaluation[A] =
     new ListAggregationEvaluation[A](listEvaluation, _.reduceLeft((a, b) => implicitly[NumberLike[A]].minus(a, b) ))
 }
 
-object gemiddelde extends DslNumberLikeListAggregator {
+object average extends DslNumberLikeListAggregator {
   private[grammar] def toEvaluation[A : NumberLike](listEvaluation: Evaluation[List[A]]): Evaluation[A] = {
     val ev = implicitly[NumberLike[A]]
 

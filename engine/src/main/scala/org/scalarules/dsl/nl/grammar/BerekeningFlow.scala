@@ -1,13 +1,13 @@
 package org.scalarules.dsl.nl.grammar
 
-import DslCondition.{factFilledCondition, andCombineConditions}
-import org.scalarules.dsl.core.types.NumberLike
+import org.scalarules.dsl.core.grammar.DslEvaluation
+import org.scalarules.dsl.core.grammar.DslCondition._
 import org.scalarules.engine._
 
 //scalastyle:off method.name
 
 object Specificatie {
-  def apply[T](dslCondition: DslCondition, output: Fact[T], dslEvaluation: DslEvaluation[T]): Derivation = {
+  def apply[T](dslCondition: DslConditionNL, output: Fact[T], dslEvaluation: DslEvaluation[T]): Derivation = {
     val condition = andCombineConditions(dslCondition, dslEvaluation.condition).condition
     val input = dslCondition.facts.toList ++ dslEvaluation.condition.facts
 
@@ -33,16 +33,16 @@ object Specificatie {
  *
  */
 
-class GegevenWord(condition: DslCondition) {
+class GegevenWord(condition: DslConditionNL) {
   def Bereken[A](fact: SingularFact[A]): SingularBerekenStart[A] = new SingularBerekenStart(condition, fact, List())
   def Bereken[A](fact: ListFact[A]): ListBerekenStart[A] = new ListBerekenStart(condition, fact, List())
 }
 
-class SingularBerekenStart[T] private[grammar](condition: DslCondition, output: Fact[T], berekeningenAcc: List[Derivation]) {
+class SingularBerekenStart[T] private[grammar](condition: DslConditionNL, output: Fact[T], berekeningenAcc: List[Derivation]) {
   def is[T1 >: T](operation: DslEvaluation[T1]): BerekeningAccumulator = new BerekeningAccumulator(condition, Specificatie(condition, output, operation) :: berekeningenAcc)
 }
 
-class ListBerekenStart[T] private[grammar](condition: DslCondition, output: Fact[List[T]], berekeningenAcc: List[Derivation]) {
+class ListBerekenStart[T] private[grammar](condition: DslConditionNL, output: Fact[List[T]], berekeningenAcc: List[Derivation]) {
   def is[T1 <: T](operation: DslEvaluation[List[T1]]): BerekeningAccumulator = new BerekeningAccumulator(condition, Specificatie(condition, output, operation) :: berekeningenAcc)
 
   def is[B](subRunData : SubRunData[T, B]) : BerekeningAccumulator = {
@@ -53,7 +53,7 @@ class ListBerekenStart[T] private[grammar](condition: DslCondition, output: Fact
   }
 }
 
-class BerekeningAccumulator private[grammar](condition: DslCondition, val derivations: List[Derivation]) {
+class BerekeningAccumulator private[grammar](condition: DslConditionNL, val derivations: List[Derivation]) {
   def en[T](fact: SingularFact[T]): SingularBerekenStart[T] = new SingularBerekenStart(condition, fact, derivations)
   def en[A](fact: ListFact[A]): ListBerekenStart[A] = new ListBerekenStart(condition, fact, derivations)
 }

@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.core.grammar
 
 import DslCondition._
 import org.scalarules.dsl.core.temporal.LocalDate
@@ -82,5 +82,5 @@ trait DslEvaluationImplicits {
   implicit def bedragToDslEvaluation(value: Bedrag): DslEvaluation[Bedrag] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[Bedrag](value))
   implicit def stringToDslEvaluation(value: String): DslEvaluation[String] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[String](value))
   implicit def percentageToDslEvaluation(value: Percentage): DslEvaluation[Percentage] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[Percentage](value))
-  implicit def dslDatumToDslEvaluation(value: LocalDate): DslEvaluation[LocalDate] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[Datum](value))
+  implicit def dslDatumToDslEvaluation(value: LocalDate): DslEvaluation[LocalDate] = DslEvaluation(emptyTrueCondition, new ConstantValueEvaluation[LocalDate](value))
 }

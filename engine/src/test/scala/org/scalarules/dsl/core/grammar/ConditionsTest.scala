@@ -1,6 +1,6 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.core.grammar
 
-import DslCondition.{andPredicate, orPredicate}
+import org.scalarules.dsl.core.grammar.DslCondition._
 import org.scalarules.engine._
 import org.scalatest.{FlatSpec, Matchers}
 

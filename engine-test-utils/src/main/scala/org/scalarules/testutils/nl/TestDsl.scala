@@ -1,7 +1,8 @@
 package org.scalarules.testutils.nl
 
+import org.scalarules.dsl.core.grammar.PresentWord
 import org.scalarules.dsl.nl.finance.{Bedrag, Per}
-import org.scalarules.dsl.nl.grammar.{Aanwezigheid, Berekening}
+import org.scalarules.dsl.nl.grammar.Berekening
 import org.scalarules.engine.{Context, Fact, FactEngine}
 import org.scalarules.utils.PrettyPrinter
 import org.scalatest.{FlatSpec, Matchers}
@@ -58,7 +59,7 @@ class BerekeningenTester(verplichteBerekening: Berekening, optioneleBerekeningen
 
   implicit class FactToFactValues[A](fact: Fact[A]) {
     def is(value: A): FactValues = FactValues(List((fact, value)))
-    def niet(aanwezigheid: Aanwezigheid): FactValues = FactValues(List((fact, None)))
+    def niet(aanwezigheid: PresentWord): FactValues = FactValues(List((fact, None)))
   }
 }
 

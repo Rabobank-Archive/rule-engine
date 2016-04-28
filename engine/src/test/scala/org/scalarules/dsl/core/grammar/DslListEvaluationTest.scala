@@ -1,7 +1,7 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.core.grammar
 
-import org.scalarules.dsl.nl.finance.{Percentage, Bedrag}
-import org.scalarules.engine.{SingularFact, ListFact, Fact}
+import org.scalarules.dsl.nl.finance.{Bedrag, Percentage}
+import org.scalarules.engine.{ListFact, SingularFact}
 import org.scalatest.{FlatSpec, Matchers}
 
 class DslListEvaluationTest extends FlatSpec with Matchers {

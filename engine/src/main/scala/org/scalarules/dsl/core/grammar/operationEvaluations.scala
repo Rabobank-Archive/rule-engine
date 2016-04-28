@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.core.grammar
 
 import org.scalarules.engine._
 
@@ -13,22 +13,22 @@ import org.scalarules.engine._
   * @param facts a List of Facts to search values for.
   * @tparam A the type returned by this Evaluation. It is inferred from the type of Facts in the input Sequence.
   */
-class EersteEvaluation[A](facts: Seq[Fact[A]]) extends Evaluation[A] {
+class FirstEvaluation[A](facts: Seq[Fact[A]]) extends Evaluation[A] {
   def apply(c: Context): Option[A] = facts.find(f => f.toEval(c).isDefined) match {
     case Some(x) => x.toEval(c)
     case _ => None
   }
 
-  override def toString: String = facts.mkString("eerste(", ", ", ")")
+  override def toString: String = facts.mkString("first(", ", ", ")")
 }
 
-class EersteElementEvaluation[A](fact: Fact[List[A]]) extends Evaluation[A] {
+class FirstElementEvaluation[A](fact: Fact[List[A]]) extends Evaluation[A] {
   def apply(c: Context): Option[A] = fact.toEval(c) match {
     case Some(x :: xs) => Some(x)
     case _ => None
   }
 
-  override def toString: String = s"eerste element van(${fact.name})"
+  override def toString: String = s"first element of(${fact.name})"
 }
 
 /**
@@ -56,12 +56,12 @@ class ReducableEvaluation[A, B >: A](val operationName: String, val operation: (
   * used, otherwise the andersFact will be used.
   *
   * @param condition the Condition on which to base the choice of values.
-  * @param danEvaluation the Evaluation to resolve the value of when the condition is true.
-  * @param andersEvaluation the Evaluation to resolve the value of when the condition is false.
+  * @param thenEvaluation the Evaluation to resolve the value of when the condition is true.
+  * @param elseEvaluation the Evaluation to resolve the value of when the condition is false.
   * @tparam A type of the result and consequently the input Facts.
   */
-class AlsDanElseEvaluation[A](val condition: Condition, val danEvaluation: Evaluation[A], val andersEvaluation: Evaluation[A]) extends Evaluation[A] {
-  override def apply(c: Context): Option[A] = if (condition(c)) danEvaluation(c) else andersEvaluation(c)
+class IfThenElseEvaluation[A](val condition: Condition, val thenEvaluation: Evaluation[A], val elseEvaluation: Evaluation[A]) extends Evaluation[A] {
+  override def apply(c: Context): Option[A] = if (condition(c)) thenEvaluation(c) else elseEvaluation(c)
 }
 
 class ListIndexSelectionEvaluation[+A](eval: Evaluation[List[A]], index: Int) extends Evaluation[A] {
