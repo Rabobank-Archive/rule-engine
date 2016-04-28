@@ -8,12 +8,12 @@ import org.scalarules.dsl.core.temporal.LocalDate
 
 /**
   * Provides the implicit conversions to DslDate for the NL version of the DSL.
-  * It defines a Dutch type alias `Datum` for [[LocalDate]].
+  * It defines a Dutch type alias `Datum` for `org.scalarules.dsl.core.temporal.LocalDate`.
   *
   * Currently supported conversions are:
-  * - [[java.lang.String]] (formatted as dd-MM-yyyy)
-  * - JodaTime [[org.joda.time.LocalDate]]
-  * - [[java.util.Date]]
+  * - `String` (formatted as dd-MM-yyyy)
+  * - JodaTime `org.joda.time.LocalDate`
+  * - `java.util.Date`
   */
 trait DatumImplicits {
 

@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.finance
 
-/** Mogelijke periodes om te gebruiken met [[Per]]. */
+/** Mogelijke periodes om te gebruiken met `Per`. */
 sealed trait Termijn extends Periode
 
 // scalastyle:off magic.number
