@@ -1,7 +1,7 @@
-package org.scalarules.dsl.nl.grammar.datum
+package org.scalarules.dsl.nl.datum
 
 import org.scalarules.dsl.nl.grammar._
-import org.scalarules.dsl.nl.grammar.datum.DatumTestGlossary._
+import org.scalarules.dsl.nl.datum.DatumTestGlossary._
 
 class DatumTestsBerekening extends Berekening (
 
