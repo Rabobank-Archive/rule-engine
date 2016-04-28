@@ -7,7 +7,7 @@ import org.scalarules.dsl.core.types.NumberLike
 /**
  * Representeert een percentage.
  *
- * Een [[percentage]] moet tussen 0.0 en 100.0 liggen.
+ * Een `percentage` moet tussen 0.0 en 100.0 liggen.
  */
 case class Percentage private[finance] (percentage: BigDecimal) extends Ordered[Percentage] {
   require (percentage >= 0)
@@ -51,7 +51,7 @@ trait PercentageImplicits {
    */
 
   abstract class ToPercentage(waarde: BigDecimal) {
-    /** Maakt een [[Percentage]]. */
+    /** Maakt een `Percentage`. */
     def procent: Percentage = Percentage(waarde)
   }
 

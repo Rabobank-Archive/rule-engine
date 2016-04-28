@@ -1,6 +1,5 @@
-package org.scalarules.dsl.nl.grammar.datum
+package org.scalarules.dsl.nl.datum
 
-import org.scalarules.dsl.nl.grammar._
 import org.scalarules.engine.SingularFact
 import org.scalarules.utils.Glossary
 

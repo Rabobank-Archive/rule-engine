@@ -1,9 +1,9 @@
-package org.scalarules.dsl.nl.grammar.datum
+package org.scalarules.dsl.nl.datum
 
 import org.joda.time.LocalDate
 import org.scalarules.dsl.nl.grammar.aanwezig
 import org.scalarules.utils.InternalBerekeningenTester
-import org.scalarules.dsl.nl.grammar.datum.DatumTestGlossary._
+import org.scalarules.dsl.nl.datum.DatumTestGlossary._
 
 class DatumTest extends InternalBerekeningenTester(new DatumTestsBerekening) with DatumImplicits {
 

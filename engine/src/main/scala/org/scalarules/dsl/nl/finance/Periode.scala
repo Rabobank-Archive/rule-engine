@@ -23,7 +23,7 @@ case class Periode private[finance](inMaanden: Int) {
   /** Kapt deze periode af (naar beneden) op hele jaren. */
   def afgekaptOpJaren: Periode = inAfgekapteJaren.jaar
 
-  /** Past f toe op alle jaren binnen deze [[Periode]], beginnend bij 0, en afgekapt op hele jaren. */
+  /** Past f toe op alle jaren binnen deze `Periode`, beginnend bij 0, en afgekapt op hele jaren. */
   def mapOverJaren[T](f: Int => T): Seq[T] = (0 until inAfgekapteJaren) map f
 
   override def toString = s"$inMaanden maanden"
