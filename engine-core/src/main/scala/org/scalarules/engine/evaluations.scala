@@ -43,3 +43,10 @@ class ProjectionEvaluation[-A, +B](src: Evaluation[A], f: A => B) extends Evalua
     case None => None
   }
 }
+
+class ProjectionListEvaluation[-A, +B](src: Evaluation[List[A]], f: A => B) extends Evaluation[List[B]] {
+  override def apply(c: Context): Option[List[B]] = src(c) match {
+    case Some(x) => Some(x.map(f))
+    case None => None
+  }
+}
