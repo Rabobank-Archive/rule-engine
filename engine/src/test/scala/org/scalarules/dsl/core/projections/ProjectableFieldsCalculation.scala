@@ -18,12 +18,14 @@ object ComplexObjectProjections {
   implicit def toProjections(fact: SingularFact[ComplexObject]): ComplexObjectProjections = new ComplexObjectProjections(fact)
   implicit def toProjections(fact: ListFact[ComplexObject]): ComplexObjectListProjections = new ComplexObjectListProjections(fact)
 }
+
 class ComplexObjectProjections(complexFact: Fact[ComplexObject]) extends ProjectableFields[ComplexObject] {
   override protected def outerFact: Fact[ComplexObject] = complexFact
 
   val intValue: DslEvaluation[Int] = projectField(_.intValue)
   val stringValue: DslEvaluation[String] = projectField(_.stringValue)
 }
+
 class ComplexObjectListProjections(complexFact: ListFact[ComplexObject]) extends ProjectableListFields[ComplexObject] {
   override protected def outerFact: Fact[List[ComplexObject]] = complexFact
 
