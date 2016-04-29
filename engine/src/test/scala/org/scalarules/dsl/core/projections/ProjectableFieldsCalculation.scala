@@ -27,7 +27,7 @@ class ComplexObjectProjections(complexFact: Fact[ComplexObject]) extends Project
 }
 
 class ComplexObjectListProjections(complexFact: ListFact[ComplexObject]) extends ProjectableListFields[ComplexObject] {
-  override protected def outerFact: Fact[List[ComplexObject]] = complexFact
+  override protected def outerFact: ListFact[ComplexObject] = complexFact
 
   val intValue: DslEvaluation[List[Int]] = projectField(_.intValue)
   val stringValue: DslEvaluation[List[String]] = projectField(_.stringValue)
