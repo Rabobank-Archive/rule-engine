@@ -87,9 +87,9 @@ trait ProjectableListFields[C] {
   /**
     * Any implementing class should provide the fact from which to project the fields through this method.
     *
-    * @return the Fact of type List[C] from which fields will be projected.
+    * @return the ListFact of type C from which fields will be projected.
     */
-  protected def outerFact: Fact[List[C]]
+  protected def outerFact: ListFact[C]
 
   /**
     * Provides a utility method to construct the DslEvaluation which entails the field projection.
