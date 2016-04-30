@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.dsl.nl.finance.{Percentage, Bedrag}
+import org.scalarules.finance.nl.{Percentage, Bedrag}
 import org.scalarules.engine.{SingularFact, ListFact, Fact}
 import org.scalatest.{FlatSpec, Matchers}
 

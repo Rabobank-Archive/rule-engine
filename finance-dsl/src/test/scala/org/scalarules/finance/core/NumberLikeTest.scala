@@ -1,7 +1,6 @@
-package org.scalarules.dsl.core
+package org.scalarules.finance.core
 
-import org.scalarules.dsl.core.types.NumberLike
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.nl._
 import org.scalatest.{FlatSpec, Matchers}
 
 class NumberLikeTest extends FlatSpec with Matchers {

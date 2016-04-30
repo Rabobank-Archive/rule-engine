@@ -1,6 +1,6 @@
 package org.scalarules.utils
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.nl._
 import org.scalarules.engine.SingularFact
 import org.scalarules.utils.TestDslTestGlossary.{BedragPerJaarA, BedragPerJaarB}
 

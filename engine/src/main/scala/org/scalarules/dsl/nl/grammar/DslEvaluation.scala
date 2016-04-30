@@ -3,8 +3,8 @@ package org.scalarules.dsl.nl.grammar
 import DslCondition._
 import org.scalarules.dsl.core.temporal.LocalDate
 import org.scalarules.dsl.core.operators._
-import org.scalarules.dsl.core.types.NumberLike
-import org.scalarules.dsl.nl.finance.{Bedrag, Percentage}
+import org.scalarules.finance.core.NumberLike
+import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.engine._
 
 import scala.language.implicitConversions

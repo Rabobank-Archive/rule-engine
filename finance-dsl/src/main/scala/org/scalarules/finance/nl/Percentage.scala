@@ -1,6 +1,6 @@
-package org.scalarules.dsl.nl.finance
+package org.scalarules.finance.nl
 
-import org.scalarules.dsl.core.types.NumberLike
+import org.scalarules.finance.core.NumberLike
 
 // scalastyle:off method.name
 

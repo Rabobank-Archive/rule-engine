@@ -1,6 +1,6 @@
 package org.scalarules.utils
 
-import org.scalarules.dsl.nl.finance.{Bedrag, Per}
+import org.scalarules.finance.nl.{Bedrag, Per}
 import org.scalarules.dsl.nl.grammar.{Aanwezigheid, Berekening}
 import org.scalarules.engine.{Context, Fact, FactEngine}
 import org.scalatest.{FlatSpec, Matchers}

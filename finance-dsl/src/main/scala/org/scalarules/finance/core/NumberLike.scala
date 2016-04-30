@@ -1,6 +1,6 @@
-package org.scalarules.dsl.core.types
+package org.scalarules.finance.core
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.nl._
 
 import scala.annotation.implicitNotFound
 

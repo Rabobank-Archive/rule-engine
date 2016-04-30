@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.dsl.core.types.NumberLike
+import org.scalarules.finance.core.NumberLike
 import org.scalarules.engine.{Derivation, Evaluation, Fact}
 
 trait DslNumberLikeListAggregator {

@@ -1,5 +1,7 @@
 package org.scalarules.dsl.core.types
 
+import org.scalarules.finance.core.NumberLike
+
 import scala.annotation.implicitNotFound
 
 /**
