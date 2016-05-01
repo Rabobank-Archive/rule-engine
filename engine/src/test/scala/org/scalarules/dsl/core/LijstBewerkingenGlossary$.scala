@@ -86,4 +86,9 @@ object LijstBewerkingenGlossary$ extends Glossary {
 
   val LijstInLijstInLijstA = defineListFact[List[List[BigDecimal]]]("LijstInLijstInLijstA")
   val LijstInLijstBO = defineListFact[List[BigDecimal]]("LijstInLijstBO")
+
+  val LijstGefilterd = defineListFact[Int]("LijstGefilterd")
+  val LijstOnGefilterd = defineListFact[Int]("LijstOnGefilterd")
+  val LijstGefilterdComplexObject = defineListFact[ComplexFilterObject]("LijstGefilterdComplexObject")
+  val LijstOnGefilterdComplexObject = defineListFact[ComplexFilterObject]("LijstOnGefilterdComplexObject")
 }
