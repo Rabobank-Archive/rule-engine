@@ -99,9 +99,10 @@ trait ProjectableListFields[C] {
     * @return a DslEvaluation of the same type as the projected field. This evaluation will at runtime
     *         provide the value of the projected field of the accompanying Fact.
     */
-  protected def projectField[F](f: C => F): DslEvaluation[List[F]] = DslEvaluation(
+  protected def projectField[F](f: C => F): ProjectedDslEvaluation[C, F] = new ProjectedDslEvaluation(f,
     DslCondition.factFilledCondition(outerFact),
     new ProjectionListEvaluation[C, F](outerFact.toEval, f)
   )
-
 }
+
+class ProjectedDslEvaluation[C, F](val transform: C => F, condition: DslCondition, evaluation: Evaluation[List[F]]) extends DslEvaluation[List[F]](condition, evaluation)

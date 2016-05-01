@@ -3,10 +3,13 @@ package org.scalarules.dsl.core
 import org.scalarules.dsl.nl.finance._
 import org.scalarules.dsl.nl.grammar._
 import LijstBewerkingenGlossary$._
-import org.scalarules.dsl.core.projections.ProjectableFields
+import org.scalarules.dsl.core.projections.{ProjectableFields, ProjectableListFields, ProjectedDslEvaluation}
+import org.scalarules.dsl.core.ComplexObjectProjections._
 import org.scalarules.dsl.nl.grammar.DslCondition._
 import org.scalarules.dsl.nl.grammar.DslListFilter.filter
 import org.scalarules.engine._
+
+import scala.language.implicitConversions
 
 class NietLijstBewerkingen extends Berekening (
   Gegeven (altijd)
@@ -111,14 +114,17 @@ class LijstFilter extends Berekening (
   Gegeven (altijd)
     Bereken
       LijstGefilterd is (filter lijst LijstOnGefilterd op (1,2,3,4)) en
-      LijstGefilterdComplexObject is (filter lijst LijstOnGefilterdComplexObject op (_.value == 1))
+      LijstGefilterdComplexObject is (filter lijst LijstOnGefilterdComplexObject met LijstOnGefilterdComplexObject.value op (3,4,6))
 )
 
-class ComplexObject(val value: Int)
-class ComplexObjectProjections(complexObjectFact: SingularFact[ComplexObject]) extends ProjectableFields[ComplexObject] {
-  def outerFact: Fact[ComplexObject] = complexObjectFact
+case class ComplexFilterObject(value: Int)
+class ComplexObjectProjections(complexObjectFact: ListFact[ComplexFilterObject]) extends ProjectableListFields[ComplexFilterObject] {
+  def outerFact: ListFact[ComplexFilterObject] = complexObjectFact
 
-  val value: DslEvaluation[Int] = projectField(_.value)
+  val value: ProjectedDslEvaluation[ComplexFilterObject, Int] = projectField(_.value)
+}
+object ComplexObjectProjections {
+  implicit def toProjection(f: ListFact[ComplexFilterObject]): ComplexObjectProjections = new ComplexObjectProjections(f)
 }
 
 object DummyFunction {
