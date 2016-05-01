@@ -8,8 +8,8 @@ import scala.annotation.implicitNotFound
  * Type class die ervoor zorgt dat er gerekend kan worden met instanties van Per,
  * als de type class ook gedefinieerd is voor het 'waarde' gedeelte van de Per instantie.
  */
-@implicitNotFound("No member of type class NumberLike available in scope for type ${T}")
-trait NumberLike[T] {
+@implicitNotFound("No member of type class Quantity available in scope for type ${T}")
+trait Quantity[T] {
   /** Returnt de som van n en m. */
   def plus(n: T, m: T): T
 
@@ -35,8 +35,8 @@ trait NumberLike[T] {
   def one: T
 }
 
-object NumberLike {
-  implicit object NumberLikeBigDecimal extends NumberLike[BigDecimal] {
+object Quantity {
+  implicit object QuantityBigDecimal extends Quantity[BigDecimal] {
     override def plus(n: BigDecimal, m: BigDecimal) = n + m
     override def minus(n: BigDecimal, m: BigDecimal) = n - m
     override def multiply(n: BigDecimal, m: BigDecimal) = n * m
@@ -46,7 +46,7 @@ object NumberLike {
     override def zero = 0
     override def one = 1
   }
-  implicit object NumberLikeBedrag extends NumberLike[Bedrag] {
+  implicit object QuantityBedrag extends Quantity[Bedrag] {
     override def plus(n: Bedrag, m: Bedrag) = n + m
     override def minus(n: Bedrag, m: Bedrag) = n - m
     override def multiply(n: Bedrag, m: BigDecimal) = n * m
@@ -56,26 +56,26 @@ object NumberLike {
     override def zero = 0.euro
     override def one = 1.euro
   }
-  private def numberLikePerPeriode[W : NumberLike, T <: Termijn](termijn: T): NumberLike[W Per T] = new NumberLike[W Per T] {
+  private def quantityPerPeriode[W : Quantity, T <: Termijn](termijn: T): Quantity[W Per T] = new Quantity[W Per T] {
     override def plus(n: W Per T, m: W Per T): W Per T = n + m
     override def minus(n: W Per T, m: W Per T): W Per T = n - m
     override def multiply(n: W Per T, m: BigDecimal): W Per T = n * m
     override def divide(n: W Per T, m: BigDecimal): W Per T = n / m
     override def divideAsFraction(n: W Per T, m: W Per T): BigDecimal = {
-      val ev = implicitly[NumberLike[W]]
+      val ev = implicitly[Quantity[W]]
       ev.divideAsFraction(n.waarde, m.waarde)
     }
     override def negate(n: W Per T): W Per T = n * -1
-    override def zero = Per(implicitly[NumberLike[W]].zero, termijn)
-    override def one = Per(implicitly[NumberLike[W]].one, termijn)
+    override def zero = Per(implicitly[Quantity[W]].zero, termijn)
+    override def one = Per(implicitly[Quantity[W]].one, termijn)
   }
-  implicit def numberLikePerMaand[W : NumberLike]: NumberLike[W Per Maand] = numberLikePerPeriode(Maand)
-  implicit def numberLikePerKwartaal[W : NumberLike]: NumberLike[W Per Kwartaal] = numberLikePerPeriode(Kwartaal)
-  implicit def numberLikePerHalfjaar[W : NumberLike]: NumberLike[W Per Halfjaar] = numberLikePerPeriode(Halfjaar)
-  implicit def numberLikePerJaar[W : NumberLike]: NumberLike[W Per Jaar] = numberLikePerPeriode(Jaar)
+  implicit def quantityPerMaand[W : Quantity]: Quantity[W Per Maand] = quantityPerPeriode(Maand)
+  implicit def quantityPerKwartaal[W : Quantity]: Quantity[W Per Kwartaal] = quantityPerPeriode(Kwartaal)
+  implicit def quantityPerHalfjaar[W : Quantity]: Quantity[W Per Halfjaar] = quantityPerPeriode(Halfjaar)
+  implicit def quantityPerJaar[W : Quantity]: Quantity[W Per Jaar] = quantityPerPeriode(Jaar)
 
   // TODO : Why is this not covered by the Addable/Subtractable/Multipliable/Divisible type classes???
-  implicit def numberLikeList[N : NumberLike](implicit ev: NumberLike[N]): NumberLike[List[N]] = new NumberLike[List[N]] {
+  implicit def quantityList[N : Quantity](implicit ev: Quantity[N]): Quantity[List[N]] = new Quantity[List[N]] {
     override def plus(n: List[N], m: List[N]): List[N] = n.zipAll(m, ev.zero, ev.zero).map(t => ev.plus(t._1, t._2))
     override def minus(n: List[N], m: List[N]): List[N] = n.zipAll(m, ev.zero, ev.zero).map(t => ev.minus(t._1, t._2))
     override def multiply(n: List[N], m: BigDecimal): List[N] = n.map( ev.multiply(_, m) )

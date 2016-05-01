@@ -16,7 +16,7 @@ Units:
      * ...
 
 
-* NumberLike comes into our project (maybe duplicate in Finance)
+* Quantity comes into our project (maybe duplicate in Finance)
 * Split into three projects
 * Push to GitHub
 *

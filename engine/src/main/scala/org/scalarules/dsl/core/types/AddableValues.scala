@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core.types
 
-import org.scalarules.finance.core.NumberLike
+import org.scalarules.finance.core.Quantity
 
 import scala.annotation.implicitNotFound
 
@@ -30,8 +30,8 @@ object AddableValues {
     override def leftUnit: Int = 0
     override def rightUnit: Int = 0
   }
-  implicit def numberLikeAddedToNumberLike[N : NumberLike]: AddableValues[N, N, N] = new AddableValues[N, N, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def quantityAddedToQuantity[N : Quantity]: AddableValues[N, N, N] = new AddableValues[N, N, N] {
+    private val ev = implicitly[Quantity[N]]
     override def plus(a: N, b: N): N = ev.plus(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: N = ev.zero

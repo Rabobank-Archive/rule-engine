@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core.types
 
-import org.scalarules.finance.core.NumberLike
+import org.scalarules.finance.core.Quantity
 
 import scala.annotation.implicitNotFound
 
@@ -25,8 +25,8 @@ object SubtractableValues {
     override def leftUnit: BigDecimal = 0
     override def rightUnit: BigDecimal = 0
   }
-  implicit def numberLikeSubtractedByNumberLike[N : NumberLike]: SubtractableValues[N, N, N] = new SubtractableValues[N, N, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def quantitySubtractedByQuantity[N : Quantity]: SubtractableValues[N, N, N] = new SubtractableValues[N, N, N] {
+    private val ev = implicitly[Quantity[N]]
     override def minus(a: N, b: N): N = ev.minus(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: N = ev.zero
