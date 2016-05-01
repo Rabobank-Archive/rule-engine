@@ -23,6 +23,11 @@ object AddableValues {
     override def leftUnit: BigDecimal = 0
     override def rightUnit: BigDecimal = 0
   }
+  implicit def intAddedToInt: AddableValues[Int, Int, Int] = new AddableValues[Int, Int, Int] {
+    override def plus(a: Int, b: Int): Int = a + b
+    override def leftUnit: Int = 0
+    override def rightUnit: Int = 0
+  }
   implicit def numberLikeAddedToNumberLike[N : NumberLike]: AddableValues[N, N, N] = new AddableValues[N, N, N] {
     private val ev = implicitly[NumberLike[N]]
     override def plus(a: N, b: N): N = ev.plus(a, b)
