@@ -18,7 +18,6 @@ Units:
 
 * Quantity comes into our project (maybe duplicate in Finance)
 * Split into three projects
-* Push to GitHub
 *
 * Finance DSL Translate to English
 * Decouple Finance DSL from Engine (add Bridge package)
