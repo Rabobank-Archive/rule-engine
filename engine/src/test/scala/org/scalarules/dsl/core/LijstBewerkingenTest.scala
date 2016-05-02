@@ -6,7 +6,7 @@ import org.scalarules.dsl.nl.grammar.aanwezig
 import org.scalarules.utils.{InternalBerekeningenTester, lijst}
 
 class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewerkingen, new LijstOptellingen, new LijstSubtracties, new LijstVermenigvuldigingen,
-  new LijstDelingen, new LijstElementKeuzes, new LijstGemiddelden, new LijstSommaties, new LijstConditionals, new LijstInLijstOptelling, new LijstFilter) {
+  new LijstDelingen, new LijstElementKeuzes, new LijstGemiddelden, new LijstSommaties, new LijstConditionals, new LijstInLijstOptelling) {
 
   val standaardInvoer = waardes(
     InvoerLijstA is List(1, 2, 3, 4, 5, 6, 7, 8),
@@ -184,18 +184,5 @@ class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewer
     InvoerLijstB is List[BigDecimal](1, 2)
   ) verwacht (
     DelingLijstEnLijst is List(1, 1)
-  )
-
-  test("of filteren van lijst werkt") gegeven (
-    LijstOnGefilterd is List(0, 1, 2, 3, 4, 5, 6)
-  ) verwacht (
-    LijstGefilterd is List(1, 2, 3, 4)
-  )
-
-  test("of filteren van lijst werkt met complexe objecten") gegeven (
-    LijstOnGefilterdComplexObject is List(ComplexFilterObject(0), ComplexFilterObject(1), ComplexFilterObject(2), ComplexFilterObject(3),
-      ComplexFilterObject(4), ComplexFilterObject(5))
-  ) verwacht (
-    LijstGefilterdComplexObject is List(ComplexFilterObject(3),ComplexFilterObject(4))
   )
 }
