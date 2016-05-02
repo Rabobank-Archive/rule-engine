@@ -19,10 +19,10 @@ class DslListFilter[A](toFilter: DslEvaluation[List[A]]) {
 }
 
 class ComplexFilterWord[A, B](toFilter: DslEvaluation[List[A]], projectedEvaluation: ProjectedDslEvaluation[A, B]) {
-  def met(value: B, values: B*): DslEvaluation[List[A]] = met(value :: values.toList)
-  def met(values: Seq[B]): DslEvaluation[List[A]] = met(values.contains(_))
+  def van(value: B, values: B*): DslEvaluation[List[A]] = van(value :: values.toList)
+  def van(values: Seq[B]): DslEvaluation[List[A]] = van(values.contains(_))
 
-  def met(filterOperation: B => Boolean): DslEvaluation[List[A]] = DslEvaluation(toFilter.condition, new Evaluation[List[A]]{
+  def van(filterOperation: B => Boolean): DslEvaluation[List[A]] = DslEvaluation(toFilter.condition, new Evaluation[List[A]]{
     override def apply(c: Context): Option[List[A]] = toFilter.evaluation(c).map(_.filter(a => filterOperation(projectedEvaluation.transform(a))))
   })
 }

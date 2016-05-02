@@ -12,7 +12,7 @@ class LijstFilter extends Berekening (
     Bereken
       LijstGefilterd is (filter lijst LijstOnGefilterd op (1,2,3,4)) en
       LijstGefilterdMetList is (filter lijst LijstOnGefilterd op List(1,2,3,4)) en
-      LijstGefilterdComplexObject is (filter lijst LijstOnGefilterdComplexObject op LijstOnGefilterdComplexObject.value met (3,4,6))
+      LijstGefilterdComplexObject is (filter lijst LijstOnGefilterdComplexObject op LijstOnGefilterdComplexObject.value van (3,4,6))
 )
 
 case class ComplexFilterObject(value: Int)
