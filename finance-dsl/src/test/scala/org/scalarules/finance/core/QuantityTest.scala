@@ -3,10 +3,10 @@ package org.scalarules.finance.core
 import org.scalarules.finance.nl._
 import org.scalatest.{FlatSpec, Matchers}
 
-class NumberLikeTest extends FlatSpec with Matchers {
+class QuantityTest extends FlatSpec with Matchers {
 
-  behavior of "NumberLike BigDecimal"
-  val evBigDecimal = implicitly[NumberLike[BigDecimal]]
+  behavior of "Quantity BigDecimal"
+  val evBigDecimal = implicitly[Quantity[BigDecimal]]
 
   it should "do addition" in {
     evBigDecimal.plus(1, 2) should be (BigDecimal(3))
@@ -37,8 +37,8 @@ class NumberLikeTest extends FlatSpec with Matchers {
   }
 
 
-  behavior of "NumberLike Bedrag"
-  val evAmount = implicitly[NumberLike[Bedrag]]
+  behavior of "Quantity Bedrag"
+  val evAmount = implicitly[Quantity[Bedrag]]
 
   it should "do addition" in {
     evAmount.plus(1.euro, 2.euro) should be (3.euro)
@@ -69,8 +69,8 @@ class NumberLikeTest extends FlatSpec with Matchers {
   }
 
 
-  behavior of "NumberLike Per"
-  val evPer = implicitly[NumberLike[BigDecimal Per Maand]]
+  behavior of "Quantity Per"
+  val evPer = implicitly[Quantity[BigDecimal Per Maand]]
 
   it should "do addition" in {
     evPer.plus(1 per Maand, 2 per Maand) should be (3 per Maand)
