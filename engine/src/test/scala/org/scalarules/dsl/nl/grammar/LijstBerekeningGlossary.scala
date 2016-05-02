@@ -6,7 +6,7 @@ import org.scalarules.utils.Glossary
 object LijstBerekeningGlossary extends Glossary {
   val LijstGefilterd = defineListFact[Int]("LijstGefilterd")
   val LijstGefilterdMetList = defineListFact[Int]("LijstGefilterdMetList")
-  val LijstOnGefilterd = defineListFact[Int]("LijstOnGefilterd")
+  val LijstOngefilterd = defineListFact[Int]("LijstOngefilterd")
   val LijstGefilterdComplexObject = defineListFact[ComplexFilterObject]("LijstGefilterdComplexObject")
-  val LijstOnGefilterdComplexObject = defineListFact[ComplexFilterObject]("LijstOnGefilterdComplexObject")
+  val LijstOngefilterdComplexObject = defineListFact[ComplexFilterObject]("LijstOngefilterdComplexObject")
 }
