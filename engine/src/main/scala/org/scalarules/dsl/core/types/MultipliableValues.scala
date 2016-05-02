@@ -12,8 +12,8 @@ import scala.annotation.implicitNotFound
   * @tparam B type of the right hand side of the adding multiply
   * @tparam C type of the result of the adding multiply
   */
-@implicitNotFound("No member of type class Addable available in scope for combination ${A} * ${B} = ${C}")
-sealed trait MultipliableValues[A, B, C] {
+@implicitNotFound("No member of type class MultipliableValues available in scope for combination ${A} * ${B} = ${C}")
+trait MultipliableValues[A, B, C] {
   def multiply(a: A, b: B): C
 
   def leftUnit: A

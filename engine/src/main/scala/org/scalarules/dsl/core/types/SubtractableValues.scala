@@ -11,7 +11,7 @@ import scala.annotation.implicitNotFound
   * @tparam B type of the right hand side of the adding multiply
   * @tparam C type of the result of the adding multiply
   */
-@implicitNotFound("No member of type class Subtractable available in scope for combination ${A} - ${B} = ${C}")
+@implicitNotFound("No member of type class SubtractableValues available in scope for combination ${A} - ${B} = ${C}")
 trait SubtractableValues[A, B, C] {
   def minus(a: A, b: B): C
 

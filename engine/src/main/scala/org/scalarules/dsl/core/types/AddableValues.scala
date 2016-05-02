@@ -11,8 +11,8 @@ import scala.annotation.implicitNotFound
   * @tparam B type of the right hand side of the adding multiply
   * @tparam C type of the result of the adding multiply
   */
-@implicitNotFound("No member of type class Addable available in scope for combination ${A} + ${B} = ${C}")
-sealed trait AddableValues[A, B, C] {
+@implicitNotFound("No member of type class AddableValue available in scope for combination ${A} + ${B} = ${C}")
+trait AddableValues[A, B, C] {
   def plus(a: A, b: B): C
 
   def leftUnit: A

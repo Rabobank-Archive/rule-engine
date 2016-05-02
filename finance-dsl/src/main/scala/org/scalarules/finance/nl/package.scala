@@ -5,20 +5,6 @@ package org.scalarules.finance
   *     import nl.rabobank.itn.fpx.moa.calculation.dsl._
   * genoeg om alle implicits van de DSL in scope te brengen.
   */
-package object nl extends BedragImplicits
-    with PeriodeImplicits
-    with PercentageImplicits
-    with PerImplicits
-    with Ordering.ExtraImplicits {
+package object nl extends FinanceDsl {
 
-  type Looptijd = Periode
-
-  /** Singleton Termijn-instantie van 1 maand. */
-  val Maand = Termijn.Maand
-  /** Singleton Termijn-instantie van 3 maanden. */
-  val Kwartaal = Termijn.Kwartaal
-  /** Singleton Termijn-instantie van 6 maanden. */
-  val Halfjaar = Termijn.Halfjaar
-  /** Singleton Termijn-instantie van 12 maanden / 1 jaar. */
-  val Jaar = Termijn.Jaar
 }

@@ -13,7 +13,7 @@ import scala.annotation.implicitNotFound
   * @tparam C type of the result of the adding multiply
   */
 @implicitNotFound("No member of type class DivisibleValues available in scope for combination ${A} / ${B} = ${C}")
-sealed trait DivisibleValues[A, B, C] {
+trait DivisibleValues[A, B, C] {
   def divide(a: A, b: B): C
 
   def leftUnit: A

@@ -185,5 +185,4 @@ class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewer
   ) verwacht (
     DelingLijstEnLijst is List(1, 1)
   )
-
 }

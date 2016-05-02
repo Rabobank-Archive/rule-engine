@@ -6,6 +6,8 @@ import LijstBewerkingenGlossary$._
 import org.scalarules.dsl.nl.grammar.DslCondition._
 import org.scalarules.engine._
 
+import scala.language.implicitConversions
+
 class NietLijstBewerkingen extends Berekening (
   Gegeven (altijd)
   Bereken
