@@ -31,6 +31,14 @@ object DivisibleValues {
     override def leftUnit: N = ev.zero
     override def rightUnit: BigDecimal = 1
   }
+
+  implicit def somethingDividedByInt[N : NumberLike]: DivisibleValues[N, Int, N] = new DivisibleValues[N, Int, N] {
+    // Currently BigDecimal gets wrapped in a NumberLike, which is why this will also work for BigDecimal.
+    private val ev = implicitly[NumberLike[N]]
+    override def divide(a: N, b: Int): N = ev.divide(a, b)
+    override def leftUnit: N = ev.zero
+    override def rightUnit: Int = 1
+  }
   implicit def percentageDividedByBigDecimal: DivisibleValues[Percentage, BigDecimal, BigDecimal] = new DivisibleValues[Percentage, BigDecimal, BigDecimal] {
     override def divide(a: Percentage, b: BigDecimal): BigDecimal = a / b
     override def leftUnit: Percentage = 0.procent
