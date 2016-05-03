@@ -16,7 +16,8 @@ class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewer
     InvoerLijstSerieE is (lijst van 10 waarde 10),
     InvoerLijstF is List(8, 7, 6, 5, 4, 3, 2, 1),
     InvoerLijstLeegG is List(),
-    GetalA is 10
+    GetalA is 10,
+    InvoerLijstVanLijstA is List(lijst van 10 waarde 10, lijst van 10 waarde 10, lijst van 10 waarde 10, lijst van 10 waarde 10)
   )
 
   test("eenvoudige getal-bewerkingen") gegeven (
@@ -114,7 +115,8 @@ class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewer
     GemiddeldeB is 10,
     GemiddeldeC is 4.5,
     GemiddeldeD is 1,
-    GemiddeldeE niet aanwezig
+    GemiddeldeE niet aanwezig,
+    GemiddeldeListA is (lijst van 10 waarde 10)
   )
 
   test("bereken sommaties") gegeven (
@@ -122,7 +124,8 @@ class LijstBewerkingenTest extends InternalBerekeningenTester(new NietLijstBewer
   ) verwacht (
     SommatieA is 36,
     SommatieB is 1,
-    SommatieC niet aanwezig
+    SommatieC niet aanwezig,
+    SommatieListA is (lijst van 10 waarde 40)
   )
 
   test("bepalen inkomen wegingsfactor") gegeven (

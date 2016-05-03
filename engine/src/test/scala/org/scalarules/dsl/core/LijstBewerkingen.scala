@@ -81,8 +81,8 @@ class LijstGemiddelden extends Berekening (
     GemiddeldeB is (gemiddelde van InvoerLijstSerieE) en
     GemiddeldeC is (gemiddelde van InvoerLijstF) en
     GemiddeldeD is (gemiddelde van InvoerLijstEnkeleC) en
-    GemiddeldeE is (gemiddelde van InvoerLijstLeegG)
-
+    GemiddeldeE is (gemiddelde van InvoerLijstLeegG) en
+    GemiddeldeListA is (gemiddelde van InvoerLijstVanLijstA)
 )
 
 class LijstSommaties extends Berekening (
@@ -90,7 +90,8 @@ class LijstSommaties extends Berekening (
   Bereken
     SommatieA is (totaal van InvoerLijstA) en
     SommatieB is (totaal van InvoerLijstEnkeleC) en
-    SommatieC is (totaal van InvoerLijstLeegG)
+    SommatieC is (totaal van InvoerLijstLeegG) en
+    SommatieListA is (totaal van InvoerLijstVanLijstA)
 )
 
 class LijstConditionals extends Berekening (
