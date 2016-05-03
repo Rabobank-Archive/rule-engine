@@ -1,6 +1,7 @@
 package org.scalarules.dsl.core.types
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.core.Quantity
+import org.scalarules.finance.nl._
 
 import scala.annotation.implicitNotFound
 
@@ -25,26 +26,26 @@ object MultipliableValues {
     override def leftUnit: BigDecimal = 0
     override def rightUnit: BigDecimal = 0
   }
-  implicit def somethingTimesBigDecimal[N : NumberLike]: MultipliableValues[N, BigDecimal, N] = new MultipliableValues[N, BigDecimal, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def somethingTimesBigDecimal[N : Quantity]: MultipliableValues[N, BigDecimal, N] = new MultipliableValues[N, BigDecimal, N] {
+    private val ev = implicitly[Quantity[N]]
     override def multiply(a: N, b: BigDecimal): N = ev.multiply(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: BigDecimal = 0
   }
-  implicit def bigDecimalTimesSomething[N : NumberLike]: MultipliableValues[BigDecimal, N, N] = new MultipliableValues[BigDecimal, N, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def bigDecimalTimesSomething[N : Quantity]: MultipliableValues[BigDecimal, N, N] = new MultipliableValues[BigDecimal, N, N] {
+    private val ev = implicitly[Quantity[N]]
     override def multiply(a: BigDecimal, b: N): N = ev.multiply(b, a)
     override def leftUnit: BigDecimal = 0
     override def rightUnit: N = ev.zero
   }
-  implicit def numberLikeTimesPercentage[N : NumberLike]: MultipliableValues[N, Percentage, N] = new MultipliableValues[N, Percentage, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def quantityTimesPercentage[N : Quantity]: MultipliableValues[N, Percentage, N] = new MultipliableValues[N, Percentage, N] {
+    private val ev = implicitly[Quantity[N]]
     override def multiply(a: N, b: Percentage): N = b * a
     override def leftUnit: N = ev.zero
     override def rightUnit: Percentage = 0.procent
   }
-  implicit def percentageTimesNumberLike[N : NumberLike]: MultipliableValues[Percentage, N, N] = new MultipliableValues[Percentage, N, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def percentageTimesQuantity[N : Quantity]: MultipliableValues[Percentage, N, N] = new MultipliableValues[Percentage, N, N] {
+    private val ev = implicitly[Quantity[N]]
     override def multiply(a: Percentage, b: N): N = a * b
     override def leftUnit: Percentage = 0.procent
     override def rightUnit: N = ev.zero
