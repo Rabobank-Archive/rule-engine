@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.finance
+package org.scalarules.finance.nl
 
 import java.text.NumberFormat
 import java.util.Locale

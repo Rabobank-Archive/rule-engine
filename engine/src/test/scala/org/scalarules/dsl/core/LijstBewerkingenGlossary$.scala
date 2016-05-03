@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core
 
-import org.scalarules.dsl.nl.finance.{Bedrag, Percentage}
+import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.utils.Glossary
 
 object LijstBewerkingenGlossary$ extends Glossary {
@@ -22,6 +22,7 @@ object LijstBewerkingenGlossary$ extends Glossary {
   val InvoerLijstSerieE = defineListFact[BigDecimal]("InvoerLijstSerieE")
   val InvoerLijstF = defineListFact[BigDecimal]("InvoerLijstF")
   val InvoerLijstLeegG = defineListFact[BigDecimal]("InvoerLijstLeegG")
+  val InvoerLijstVanLijstA = defineListFact[List[BigDecimal]]("InvoerLijstVanLijstA")
 
   val InvoerLijstBedragen = defineListFact[Bedrag]("InvoerLijstBedragen")
 
@@ -71,10 +72,12 @@ object LijstBewerkingenGlossary$ extends Glossary {
   val GemiddeldeC = defineFact[BigDecimal]("GemiddeldeC")
   val GemiddeldeD = defineFact[BigDecimal]("GemiddeldeD")
   val GemiddeldeE = defineFact[BigDecimal]("GemiddeldeE")
+  val GemiddeldeListA = defineListFact[BigDecimal]("GemiddeldeListA")
 
   val SommatieA = defineFact[BigDecimal]("SommatieA")
   val SommatieB = defineFact[BigDecimal]("SommatieB")
   val SommatieC = defineFact[BigDecimal]("SommatieC")
+  val SommatieListA = defineListFact[BigDecimal]("SommatieListA")
 
   val AlsDanPerElementA = defineListFact[Percentage]("AlsDanPerElementA")
 
