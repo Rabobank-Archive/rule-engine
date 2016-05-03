@@ -33,9 +33,9 @@ object DivisibleValues {
     override def rightUnit: BigDecimal = 1
   }
 
-  implicit def somethingDividedByInt[N : NumberLike]: DivisibleValues[N, Int, N] = new DivisibleValues[N, Int, N] {
+  implicit def somethingDividedByInt[N : Quantity]: DivisibleValues[N, Int, N] = new DivisibleValues[N, Int, N] {
     // Currently BigDecimal gets wrapped in a NumberLike, which is why this will also work for BigDecimal.
-    private val ev = implicitly[NumberLike[N]]
+    private val ev = implicitly[Quantity[N]]
     override def divide(a: N, b: Int): N = ev.divide(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: Int = 1
