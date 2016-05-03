@@ -9,19 +9,26 @@ trait DslLoopWordTrait {
   private[grammar] val counter = new AtomicLong()
   val Loop = new DslLoopWord
 }
+
 class DslLoopWord {
   def over[A](listFact: ListFact[A]): DslLoopOverWord[A] = new DslLoopOverWord(listFact)
 }
 
 class DslLoopOverWord[A](listFact: ListFact[A]) {
-  def per(fact: SingularFact[A]): DslLoop[A] = new DslLoop(listFact, fact)
+  def per(fact: Fact[A]): DslLoop[A] = new DslLoop(listFact, fact)
 }
 
-class DslLoop[A](listFact: ListFact[A], fact: SingularFact[A]) {
-  def doe[B, C](dslEvaluation: SubRunData[B, C]): SubRunData[List[B], A] = {
-    val resultFact: Fact[List[B]] = new ListFact("Anonymous_Loop_Fact_" + counter.incrementAndGet())
-    val derivation: SubRunDerivation = new SubRunDerivation(List(listFact), resultFact, factFilledCondition(dslEvaluation.inputList).condition, dslEvaluation)
-    new SubRunData[List[B], A](List(derivation), (x: A) => Map(fact -> x), listFact, resultFact)
+class DslLoop[A](listFact: ListFact[A], fact: Fact[A]) {
+  def doe[B, C](subRunData: SubRunData[B, C]): SubRunData[List[B], A] =
+    shortInnerLoop((resultFact: Fact[List[B]]) => new SubRunDerivation(List(listFact), resultFact, factFilledCondition(subRunData.inputList).condition, subRunData))
+
+  def doe[B](dslEvaluation: DslEvaluation[B]): SubRunData[List[B], A] =
+    shortInnerLoop((resultFact: Fact[List[B]]) => new DefaultDerivation(List(listFact), resultFact, dslEvaluation.condition.condition, dslEvaluation.evaluation))
+
+  private def shortInnerLoop[B](derivationFunction: Fact[List[B]] => Derivation): SubRunData[List[B], A] = {
+    val yieldFact: Fact[List[B]] = new ListFact("Anonymous_Loop_Fact_" + counter.incrementAndGet())
+    val derivation = derivationFunction(yieldFact)
+    new SubRunData[List[B], A](derivations = List(derivation), contextAdditions = (x: A) => Map(fact -> x), inputList = listFact, yieldFact = yieldFact)
   }
 
   def geeft[B](resultFact: Fact[B]): SubBerekening[A, B] = {
