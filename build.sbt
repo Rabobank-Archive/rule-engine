@@ -23,7 +23,7 @@ lazy val root = (project in file("."))
     name := "scala-rules",
     description := "Scala Rules"
   )
-  .aggregate(engineCore, engine, engineTestUtils)
+  .aggregate(engineCore, engine, financeDsl, engineTestUtils)
 
 lazy val financeDsl = (project in file("finance-dsl"))
   .settings(commonSettings: _*)
