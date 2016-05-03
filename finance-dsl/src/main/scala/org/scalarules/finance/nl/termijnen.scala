@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.finance
+package org.scalarules.finance.nl
 
 /** Mogelijke periodes om te gebruiken met `Per`. */
 sealed trait Termijn extends Periode

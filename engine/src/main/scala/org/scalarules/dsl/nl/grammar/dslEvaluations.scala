@@ -1,7 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
 import DslCondition._
-import org.scalarules.dsl.nl.finance.Bedrag
+import org.scalarules.finance.nl.Bedrag
 import org.scalarules.engine._
 
 //scalastyle:off object.name

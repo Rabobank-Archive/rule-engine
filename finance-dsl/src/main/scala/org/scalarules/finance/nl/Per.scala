@@ -1,6 +1,6 @@
-package org.scalarules.dsl.nl.finance
+package org.scalarules.finance.nl
 
-import org.scalarules.dsl.core.types.NumberLike
+import org.scalarules.finance.core.Quantity
 
 // scalastyle:off method.name
 
@@ -9,22 +9,22 @@ import org.scalarules.dsl.core.types.NumberLike
  */
 case class Per[W, T <: Termijn](waarde: W, termijn: T) {
   /** Returnt de som van deze W en n; per T. */
-  def + (n: W Per T)(implicit ev: NumberLike[W]): W Per T = applySafely(ev.plus, this, n)
+  def + (n: W Per T)(implicit ev: Quantity[W]): W Per T = applySafely(ev.plus, this, n)
 
   /** Returnt het verschil tussen deze W en n; per T. */
-  def - (n: W Per T)(implicit ev: NumberLike[W]): W Per T = applySafely(ev.minus, this, n)
+  def - (n: W Per T)(implicit ev: Quantity[W]): W Per T = applySafely(ev.minus, this, n)
 
   /** Returnt het product van deze W en n; per T. */
-  def * (n: BigDecimal)(implicit ev: NumberLike[W]): W Per T = Per(ev.multiply(waarde, n), termijn)
+  def * (n: BigDecimal)(implicit ev: Quantity[W]): W Per T = Per(ev.multiply(waarde, n), termijn)
 
   /** Returnt het quotiënt van deze W en n; per T. */
-  def / (n: BigDecimal)(implicit ev: NumberLike[W]): W Per T = Per(ev.divide(waarde, n), termijn)
+  def / (n: BigDecimal)(implicit ev: Quantity[W]): W Per T = Per(ev.divide(waarde, n), termijn)
 
   /** Converteert dit naar de equivalente waarde per maand. */
-  def maandelijks(implicit ev: NumberLike[W]): W Per Maand = Per(ev.divide(waarde, termijn.inMaanden), Maand)
+  def maandelijks(implicit ev: Quantity[W]): W Per Maand = Per(ev.divide(waarde, termijn.inMaanden), Maand)
 
   /** Converteert dit naar de equivalente waarde per jaar. */
-  def jaarlijks(implicit ev: NumberLike[W]): W Per Jaar = Per(ev.multiply(waarde, termijn.frequentiePerJaar), Jaar)
+  def jaarlijks(implicit ev: Quantity[W]): W Per Jaar = Per(ev.multiply(waarde, termijn.frequentiePerJaar), Jaar)
 
   /** Past f toe op waarde en returnt het resultaat, per termijn. */
   def map[V](f: W => V): V Per T = Per(f(waarde), termijn)
@@ -79,7 +79,7 @@ trait PerImplicits {
    * Zorgt ervoor dat Numeric en Ordering operaties toegepast kunnen worden op Per
    * voor types W waarvoor Numeric gedefinieerd is, en waarvoor de Termijn ongespecificeerd is.
    */
-  implicit def numericPerTermijn[W : NumberLike : Numeric]: Numeric[W Per Termijn] = new Numeric[W Per Termijn] {
+  implicit def numericPerTermijn[W : Quantity : Numeric]: Numeric[W Per Termijn] = new Numeric[W Per Termijn] {
     val ev = implicitly[Numeric[W]]
     override def plus(x: W Per Termijn, y: W Per Termijn): W Per Termijn = x + y
     override def minus(x: W Per Termijn, y: W Per Termijn): W Per Termijn = x - y

@@ -1,6 +1,5 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.dsl.nl.finance.{Bedrag, Percentage}
 import org.scalarules.utils.Glossary
 
 object LijstBerekeningGlossary extends Glossary {

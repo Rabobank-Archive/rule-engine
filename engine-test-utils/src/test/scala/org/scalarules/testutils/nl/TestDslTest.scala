@@ -1,6 +1,6 @@
 package org.scalarules.testutils.nl
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.nl._
 import org.scalarules.engine.{ListFact, SingularFact}
 import org.scalarules.testutils.nl.TestDslTestGlossary._
 

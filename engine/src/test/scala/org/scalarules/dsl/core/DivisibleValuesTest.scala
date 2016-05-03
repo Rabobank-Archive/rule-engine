@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.nl._
 import DivisibleValuesGlossary._
 import org.scalarules.utils.InternalBerekeningenTester
 

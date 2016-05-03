@@ -1,7 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
-import DslCondition.{factFilledCondition, andCombineConditions}
-import org.scalarules.dsl.core.types.NumberLike
+import DslCondition.{andCombineConditions, factFilledCondition}
+import org.scalarules.finance.core.Quantity
 import org.scalarules.engine._
 
 //scalastyle:off method.name
