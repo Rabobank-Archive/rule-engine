@@ -1,6 +1,7 @@
 package org.scalarules.dsl.core.types
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.core.Quantity
+import org.scalarules.finance.nl._
 
 import scala.annotation.implicitNotFound
 
@@ -25,8 +26,8 @@ object DivisibleValues {
     override def leftUnit: BigDecimal = 0
     override def rightUnit: BigDecimal = 1
   }
-  implicit def somethingDividedByBigDecimal[N : NumberLike]: DivisibleValues[N, BigDecimal, N] = new DivisibleValues[N, BigDecimal, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def somethingDividedByBigDecimal[N : Quantity]: DivisibleValues[N, BigDecimal, N] = new DivisibleValues[N, BigDecimal, N] {
+    private val ev = implicitly[Quantity[N]]
     override def divide(a: N, b: BigDecimal): N = ev.divide(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: BigDecimal = 1
@@ -45,9 +46,9 @@ object DivisibleValues {
     override def rightUnit: BigDecimal = 1
   }
   implicit def somethingDividedBySomethingAsPercentage: DivisibleValues[Bedrag, Bedrag, Percentage] = new DivisibleValues[Bedrag, Bedrag, Percentage] {
-    // Note: this type class instance was initially as NumberLike x NumberLike => Percentage, but the NumberLikeBigDecimal throws a fit if we do that
+    // Note: this type class instance was initially as Quantity x Quantity => Percentage, but the QuantityBigDecimal throws a fit if we do that
     // and makes it ambiguous to choose when trying to divide two BigDecimals
-    //    private val ev = implicitly[NumberLike[Bedrag]]
+    //    private val ev = implicitly[Quantity[Bedrag]]
     override def divide(a: Bedrag, b: Bedrag): Percentage = (a.waarde / b.waarde * 100).procent
     override def leftUnit: Bedrag = 0.euro
     override def rightUnit: Bedrag = 1.euro

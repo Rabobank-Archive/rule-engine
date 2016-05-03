@@ -1,6 +1,5 @@
-import sbt.Keys._
-
 // scalastyle:off
+
 
 // *** Settings ***
 
@@ -26,6 +25,14 @@ lazy val root = (project in file("."))
   )
   .aggregate(engineCore, engine, engineTestUtils)
 
+lazy val financeDsl = (project in file("finance-dsl"))
+  .settings(commonSettings: _*)
+  .settings(
+    name := "finance-dsl",
+    description := "Finance DSL",
+    libraryDependencies ++= financeDslDependencies
+  )
+
 lazy val engineCore = (project in file("engine-core"))
   .settings(commonSettings: _*)
   .settings(
@@ -41,7 +48,7 @@ lazy val engine = (project in file("engine"))
     description := "Rule Engine",
     libraryDependencies ++= engineDependencies
   )
-  .dependsOn(engineCore)
+  .dependsOn(financeDsl, engineCore)
 
 lazy val engineTestUtils = (project in file("engine-test-utils"))
   .settings(commonSettings: _*)
@@ -50,7 +57,7 @@ lazy val engineTestUtils = (project in file("engine-test-utils"))
     description := "Rule Engine Test Utils",
     libraryDependencies ++= testUtilDependencies
   )
-  .dependsOn(engine)
+  .dependsOn(financeDsl, engine)
 
 
 
@@ -71,6 +78,8 @@ lazy val commonDependencies = Seq(
   "org.scalacheck" %% "scalacheck" % "1.12.5" % Test,
   "com.storm-enroute" %% "scalameter" % "0.7" % Test
 )
+
+lazy val financeDslDependencies = commonDependencies
 
 lazy val engineCoreDependencies = commonDependencies
 

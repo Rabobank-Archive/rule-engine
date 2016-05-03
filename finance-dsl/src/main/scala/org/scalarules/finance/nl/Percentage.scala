@@ -1,6 +1,6 @@
-package org.scalarules.dsl.nl.finance
+package org.scalarules.finance.nl
 
-import org.scalarules.dsl.core.types.NumberLike
+import org.scalarules.finance.core.Quantity
 
 // scalastyle:off method.name
 
@@ -26,7 +26,7 @@ case class Percentage private[finance] (percentage: BigDecimal) extends Ordered[
   def * (p: Percentage): BigDecimal = alsFractie * p.alsFractie
 
   /** Returnt het percentage van n, als type T. */
-  def *[T : NumberLike](n: T): T = implicitly[NumberLike[T]].multiply(n, alsFractie)
+  def *[T : Quantity](n: T): T = implicitly[Quantity[T]].multiply(n, alsFractie)
 
   /** Returnt het percentage van n, als BigDecimal factor zodat het geen precisie verliest. */
   def * (n: Int): BigDecimal = alsFractie * n
@@ -63,8 +63,8 @@ trait PercentageImplicits {
     /** Returnt het product van deze Int en Percentage n als BigDecimal. */
     def * (p: Percentage): BigDecimal = p * BigDecimal(waarde)
   }
-  implicit class NumberLikeWithPercentage[T : NumberLike](waarde: T) {
-    /** Returnt het product van deze NumberLike T en Percentage n als T. */
+  implicit class QuantityWithPercentage[T : Quantity](waarde: T) {
+    /** Returnt het product van deze Quantity T en Percentage n als T. */
     def * (p: Percentage): T = p * waarde
   }
 }
