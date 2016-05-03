@@ -1,9 +1,12 @@
 package org.scalarules.dsl.nl.grammar
 
+import java.util.concurrent.atomic.AtomicLong
+
 import org.scalarules.dsl.nl.grammar.DslCondition.factFilledCondition
 import org.scalarules.engine._
 
 trait DslLoopWordTrait {
+  private[grammar] val counter = new AtomicLong()
   val Loop = new DslLoopWord
 }
 class DslLoopWord {
@@ -16,7 +19,7 @@ class DslLoopOverWord[A](listFact: ListFact[A]) {
 
 class DslLoop[A](listFact: ListFact[A], fact: SingularFact[A]) {
   def doe[B, C](dslEvaluation: SubRunData[B, C]): SubRunData[List[B], A] = {
-    val resultFact: Fact[List[B]] = new ListFact("LoopFact")
+    val resultFact: Fact[List[B]] = new ListFact("Anonymous_Loop_Fact_" + counter.incrementAndGet())
     val derivation: SubRunDerivation = new SubRunDerivation(List(listFact), resultFact, factFilledCondition(dslEvaluation.inputList).condition, dslEvaluation)
     new SubRunData[List[B], A](List(derivation), (x: A) => Map(fact -> x), listFact, resultFact)
   }
