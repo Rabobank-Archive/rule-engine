@@ -9,27 +9,34 @@ trait DslLoopWordTrait {
   private[grammar] val counter = new AtomicLong()
   val Loop = new DslLoopWord
 }
+
 class DslLoopWord {
-  def over[A](listFact: ListFact[A]): DslLoopOverWord[A] = new DslLoopOverWord(listFact)
+  def over[I](listFact: ListFact[I]): DslLoopOverWord[I] = new DslLoopOverWord(listFact)
 }
 
-class DslLoopOverWord[A](listFact: ListFact[A]) {
-  def per(fact: SingularFact[A]): DslLoop[A] = new DslLoop(listFact, fact)
+class DslLoopOverWord[I](inputList: ListFact[I]) {
+  def per(element: Fact[I]): DslLoop[I] = new DslLoop(inputList, contextAddition(element))
+
+  private def contextAddition(element: Fact[I]): I => Context = (x: I) => Map(element -> x)
 }
 
-class DslLoop[A](listFact: ListFact[A], fact: SingularFact[A]) {
-  def doe[B, C](dslEvaluation: SubRunData[B, C]): SubRunData[List[B], A] = {
-    val resultFact: Fact[List[B]] = new ListFact("Anonymous_Loop_Fact_" + counter.incrementAndGet())
-    val derivation: SubRunDerivation = new SubRunDerivation(List(listFact), resultFact, factFilledCondition(dslEvaluation.inputList).condition, dslEvaluation)
-    new SubRunData[List[B], A](List(derivation), (x: A) => Map(fact -> x), listFact, resultFact)
+class DslLoop[I](inputList: ListFact[I], contextAddition: I => Context) {
+
+  def doe[O](dslEvaluation: DslEvaluation[O]): SubRunData[O, I] = {
+    val yieldFact: Fact[O] = new SingularFact("Anonymous_Loop_Fact_" + counter.incrementAndGet())
+    val derivation = new DefaultDerivation(List(inputList), yieldFact, dslEvaluation.condition.condition, dslEvaluation.evaluation)
+    new SubRunData[O, I](List(derivation), contextAddition, inputList, yieldFact)
   }
 
-  def geeft[B](resultFact: Fact[B]): SubBerekening[A, B] = {
-    val operation: A => Context = (x: A) => Map(fact -> x)
-    new SubBerekening(listFact, operation, resultFact)
+  def doe[O, C](subRunData: SubRunData[O, C]): SubRunData[List[O], I] = {
+    val yieldFact: Fact[List[O]] = new ListFact("Anonymous_Loop_Fact_" + counter.incrementAndGet())
+    val derivation = new SubRunDerivation(List(inputList), yieldFact, factFilledCondition(subRunData.inputList).condition, subRunData)
+    new SubRunData[List[O], I](List(derivation), contextAddition, inputList, yieldFact)
   }
+
+  def geeft[O](resultFact: Fact[O]): SubBerekening[I, O] = new SubBerekening(inputList, contextAddition, resultFact)
 }
 
-class SubBerekening[A, B](listFact: ListFact[A], operation: A => Context, resultFact: Fact[B]) {
-  def door(berekening: Berekening): SubRunData[B, A] = new SubRunData(berekening.berekeningen, operation, listFact, resultFact)
+class SubBerekening[I, O](inputList: ListFact[I], contextAddition: I => Context, yieldFact: Fact[O]) {
+  def door(berekening: Berekening): SubRunData[O, I] = new SubRunData(berekening.berekeningen, contextAddition, inputList, yieldFact)
 }
