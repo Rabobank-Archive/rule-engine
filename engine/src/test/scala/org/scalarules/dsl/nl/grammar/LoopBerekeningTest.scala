@@ -33,6 +33,4 @@ class LoopBerekeningTest extends InternalBerekeningenTester(new LoopBerekening) 
     enhancedLoopListInListResult niet aanwezig
   )
 
-
-
 }
