@@ -31,19 +31,55 @@ The rule engine uses a `Fact` as the base for all of its derivations. A `Fact` d
 class MyGlossary extends Glossary {
 	val factA = defineFact[Int]("factA")
 	val factB = defineFact[Int]("factB")
+	val factC = defineFact[Int]("factC")
 }
 ```
 
 *Note: the name of the fact is currently repeated as the first argument of the `defineFact` function. This string is actually used inside the engine and must be unique for all `Facts` used by the engine. We are looking for ways to remove this parameter, if you have any suggestions, let us know.*
 
-Using 
+Using this glossary, it is now possible to define derivations. The Scala Rules DSL (currently only in Dutch) provides an easy way to express how facts interact come together to form your logic. To enable the DSL, create a class that extends `Berekening`:
 
 ```scala
+import org.scalarules.dsl.nl.grammar._
+import MyGlossary._
 
+class MyArithmics extends Berekening {
+	Gegeven (factA > 0) Bereken factC is factB - factA 
+}
+```
+
+The two listings above are actually all you need to define your calculations, validations or evaluations. The engine will have enough information to start working for you. Only one thing is still missing for the scenario to make sense to you: values.
+
+The engine requires you to construct a `Context` mapping a set of initial `Facts` to their values. When you have that, you can let the engine do the rest:
+
+```scala
+val initialContext: Context = Context(
+  factA -> 4,
+  factB -> 10
+)
+val derivations: List[Derivation] = new MyArithmics().berekeningen
+
+val resultContext: Context = FactEngine.runNormalDerivations(initialContext, derivations)
+```
+
+### Debugging
+
+If you want to see exactly what the engine is doing, you can replace the `runNormalDerivations` with `runDebugDerivations`. The return type of that function is a tuple containing the resulting `Context` and a list of `Step` objects. The latter describe exactly what actions the engine performed and why:
+
+```scala
+val initialContext: Context = Context(
+  factA -> 4,
+  factB -> 10
+)
+val derivations: List[Derivation] = new MyArithmics().berekeningen
+
+val (resultContext, steps) = FactEngine.runDebugDerivations(initialContext, derivations)
+
+println(PrettyPrinter.printSteps(steps))
 ```
 
 
-
+# Future Work
 
 The DSL is currently only available in Dutch. We are working on translating it into English and expect this to be releasable in the next month.
 
