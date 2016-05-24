@@ -17,13 +17,13 @@ class Glossary {
     facts += (name -> newFact)
   }
 
-  def defineFact[A: TypeTag](naam: String, omschrijving: String = "Geen beschrijving"): SingularFact[A] = {
+  def defineFact[A](naam: String, omschrijving: String = "Geen beschrijving"): SingularFact[A] = {
     val newFact = new SingularFact[A](naam, false, omschrijving)
     addAndCheckFacts( newFact )
     newFact
   }
 
-  def defineListFact[A: TypeTag](naam: String, omschrijving: String = "Geen beschrijving"): ListFact[A] = {
+  def defineListFact[A](naam: String, omschrijving: String = "Geen beschrijving"): ListFact[A] = {
     val newFact = new ListFact[A](naam, true, omschrijving)
     addAndCheckFacts( newFact )
     newFact
