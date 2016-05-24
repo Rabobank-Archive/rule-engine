@@ -50,6 +50,8 @@ class MyArithmics extends Berekening (
 
 *Note the parenthesis behind `Berekening`, using braces won’t work*
 
+*Note 2: for more information about the possibilities of the DSL, see the [Wiki page about it](https://github.com/scala-rules/rule-engine/wiki/DSL-Description---Dutch)*
+
 The two listings above are actually all you need to define your calculations, validations or evaluations. The engine will have enough information to start working for you. Only one thing is still missing for the scenario to make sense to you: values.
 
 The engine requires you to construct a `Context` mapping a set of initial `Facts` to their values. When you have that, you can let the engine do the rest:
