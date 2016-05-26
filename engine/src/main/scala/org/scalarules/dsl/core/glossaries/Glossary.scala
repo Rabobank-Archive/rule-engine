@@ -1,33 +1,20 @@
 package org.scalarules.utils
 
 import org.scalarules.engine.{Fact, ListFact, SingularFact}
+import org.scalarules.finance.nl.Bedrag
 
-import scala.reflect.runtime.universe._
+import scala.language.experimental.macros
 
 class Glossary {
-  private var facts: Map[String, Fact[Any]] = Map()
+  def defineFact[A](omschrijving: String = "Geen beschrijving"): SingularFact[A] = macro FactMacros.defineFactMacroImpl[A]
 
-  protected def addAndCheckFacts(newFact: Fact[Any]): Unit = {
-    val name: String = newFact.name.toLowerCase
-    if (facts contains name) {
-      throw new IllegalArgumentException(s"Attemping to add a second fact with the name '${name}', please keep the variable name and String value in " +
-        s"sync. Note also that Fact names are case insensitive, so FaCt and fAcT are considered the same.")
-    }
+  def defineListFact[A](omschrijving: String = "Geen beschrijving"): ListFact[A] = macro FactMacros.defineListFactMacroImpl[A]
 
-    facts += (name -> newFact)
-  }
-
-  def defineFact[A](naam: String, omschrijving: String = "Geen beschrijving"): SingularFact[A] = {
-    val newFact = new SingularFact[A](naam, false, omschrijving)
-    addAndCheckFacts( newFact )
-    newFact
-  }
-
-  def defineListFact[A](naam: String, omschrijving: String = "Geen beschrijving"): ListFact[A] = {
-    val newFact = new ListFact[A](naam, true, omschrijving)
-    addAndCheckFacts( newFact )
-    newFact
-  }
-
-  def getFacts: Map[String, Fact[Any]] = facts
+  def getFacts: Map[String, Fact[Any]] = ??? /* {
+    val map: Array[(String, Fact[Any])] = this.getClass().getDeclaredFields().filter(field => classOf[Fact[Any]].isAssignableFrom(field.getType()))
+      .map(field => field.get(this).asInstanceOf[Fact[Any]])
+      .map(value => (value.name -> value))
+    map
+      .toMap
+  }*/
 }

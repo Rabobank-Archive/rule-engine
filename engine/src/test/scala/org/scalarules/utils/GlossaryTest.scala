@@ -1,36 +1,31 @@
 package org.scalarules.utils
 
-import org.scalarules.engine.SingularFact
+import org.scalarules.engine.{Fact, ListFact, SingularFact}
 import org.scalatest.{FlatSpec, Matchers}
+
+import scala.language.reflectiveCalls
 
 class GlossaryTest extends FlatSpec with Matchers {
 
-  "Glossary" should "not allow two facts with equal names to be added" in {
+  it should "work with macros to define facts" in {
 
-    intercept[IllegalArgumentException](new Glossary {
-      val a = addAndCheckFacts(new SingularFact[String]("factA"))
-      val b = addAndCheckFacts(new SingularFact[String]("factA"))
-    })
-
-  }
-
-  it should "consider different casing of fact names as equal and not allow them to be added" in {
-
-    intercept[IllegalArgumentException](new Glossary {
-      val a = addAndCheckFacts(new SingularFact[String]("factA"))
-      val b = addAndCheckFacts(new SingularFact[String]("fActa"))
-    })
-
-  }
-
-  it should "allow facts with different names to be created" in {
-
-    new Glossary {
-      val a = addAndCheckFacts(new SingularFact[String]("factA"))
-      val b = addAndCheckFacts(new SingularFact[String]("factB"))
+    val g = new Glossary {
+      val factA = defineFact[String]("First fact")
+      val factB = defineFact[String]("Second fact")
+      val factC = defineListFact[String]("Third fact")
+      val factD = defineListFact[String]("Fourth fact")
     }
 
-  }
+    g.factA.name should be("factA")
+    g.factB.name should be("factB")
+    g.factC.name should be("factC")
+    g.factD.name should be("factD")
 
+    g.factA.isInstanceOf[SingularFact[String]] should be(true)
+    g.factB.isInstanceOf[SingularFact[String]] should be(true)
+    g.factC.isInstanceOf[ListFact[String]] should be(true)
+    g.factD.isInstanceOf[ListFact[String]] should be(true)
+
+  }
 
 }
