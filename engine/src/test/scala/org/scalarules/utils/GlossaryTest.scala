@@ -1,6 +1,6 @@
 package org.scalarules.utils
 
-import org.scalarules.engine.{Fact, ListFact, SingularFact}
+import org.scalarules.engine.{ListFact, SingularFact}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.language.reflectiveCalls
@@ -26,6 +26,12 @@ class GlossaryTest extends FlatSpec with Matchers {
     g.factC.isInstanceOf[ListFact[String]] should be(true)
     g.factD.isInstanceOf[ListFact[String]] should be(true)
 
+    g.getFacts.size should be(4)
+
+    g.getFacts.get("factA").get should be(g.factA)
+    g.getFacts.get("factB").get should be(g.factB)
+    g.getFacts.get("factC").get should be(g.factC)
+    g.getFacts.get("factD").get should be(g.factD)
   }
 
 }

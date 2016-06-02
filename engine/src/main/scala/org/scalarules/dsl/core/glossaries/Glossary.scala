@@ -1,5 +1,7 @@
 package org.scalarules.utils
 
+import java.lang.reflect.Field
+
 import org.scalarules.engine.{Fact, ListFact, SingularFact}
 import org.scalarules.finance.nl.Bedrag
 
@@ -10,11 +12,19 @@ class Glossary {
 
   def defineListFact[A](omschrijving: String = "Geen beschrijving"): ListFact[A] = macro FactMacros.defineListFactMacroImpl[A]
 
-  def getFacts: Map[String, Fact[Any]] = ??? /* {
-    val map: Array[(String, Fact[Any])] = this.getClass().getDeclaredFields().filter(field => classOf[Fact[Any]].isAssignableFrom(field.getType()))
-      .map(field => field.get(this).asInstanceOf[Fact[Any]])
-      .map(value => (value.name -> value))
-    map
+  /**
+    *
+    */
+  lazy val getFacts: Map[String, Fact[Any]] = {
+    val declaredFields: Array[Field] = this.getClass.getDeclaredFields
+    declaredFields
+      .filter( field => classOf[Fact[Any]].isAssignableFrom( field.getType ) )
+      .map( field => {
+        field.setAccessible(true)
+        val fact: Fact[Any] = field.get(this).asInstanceOf[Fact[Any]]
+        (fact.name, fact)
+      })
       .toMap
-  }*/
+  }
+
 }
