@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
   organization := "org.scala-rules",
   organizationHomepage := Some(url("https://github.com/scala-rules/scala-rules")),
   homepage := Some(url("https://github.com/scala-rules/scala-rules")),
-  version := "0.2.9SNAPSHOT",
+  version := "0.2.10-SNAPSHOT",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings")
 ) ++ staticAnalysisSettings ++ publishSettings
@@ -118,7 +118,6 @@ addCommandAlias("verify", ";compileScalastyle;testScalastyle;coverage;test;cover
 lazy val publishSettings = Seq(
   pomExtra := pom,
   publishMavenStyle := true,
-  useGpg := true,
   pomIncludeRepository := { _ => false },
   licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php")),
   publishTo := {
