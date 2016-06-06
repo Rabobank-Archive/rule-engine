@@ -6,6 +6,8 @@ import org.scalarules.engine.DerivationTools._
 
 object FactEngine {
 
+  var graphCache: Map[List[Derivation], Levels] = Map()
+
   /**
     * Constructs a Dependency graph for the provided list of Derivations. Each Derivation will yield a Node describing its output and other Nodes requiring its
     * output.
@@ -91,12 +93,15 @@ object FactEngine {
     * @return the resulting state of the last invocation to the evaluator function.
     */
   def runDerivations[A](state: A, derivations: List[Derivation], evaluator: (A, Derivation) => A): A = {
-    val graph = FactEngine.constructGraph(derivations)
-    val levels = FactEngine.levelSorter(graph)
+    if (!graphCache.contains(derivations)) {
+      graphCache += derivations -> FactEngine.levelSorter(FactEngine.constructGraph(derivations))
+    }
+
+    val graph: Levels = graphCache.get(derivations).get
 
     def levelRunner(state: A, level: Level): A = level.foldLeft(state)( (b, n) => evaluator(b, n.derivation) )
 
-    levels.foldLeft(state)( levelRunner )
+    graph.foldLeft(state)( levelRunner )
   }
 
   case class EvaluationException(message: String, derivation: Derivation, cause: Throwable) extends Exception(message, cause)
