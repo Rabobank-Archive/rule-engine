@@ -1,12 +1,13 @@
 package org.scalarules.engine
 
+import org.scalarules.engine.DerivationTools._
+
 import scala.annotation.tailrec
 import scala.util.{Failure, Success, Try}
-import org.scalarules.engine.DerivationTools._
 
 object FactEngine {
 
-  var graphCache: Map[List[Derivation], Levels] = Map()
+  private var graphCache = new LRUCache[List[Derivation], Levels]()
 
   /**
     * Constructs a Dependency graph for the provided list of Derivations. Each Derivation will yield a Node describing its output and other Nodes requiring its
@@ -93,8 +94,8 @@ object FactEngine {
     * @return the resulting state of the last invocation to the evaluator function.
     */
   def runDerivations[A](state: A, derivations: List[Derivation], evaluator: (A, Derivation) => A): A = {
-    if (!graphCache.contains(derivations)) {
-      graphCache += derivations -> FactEngine.levelSorter(FactEngine.constructGraph(derivations))
+    if (!graphCache.get(derivations).isDefined) {
+      graphCache.add(derivations, FactEngine.levelSorter(FactEngine.constructGraph(derivations)))
     }
 
     val graph: Levels = graphCache.get(derivations).get
