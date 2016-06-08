@@ -38,6 +38,6 @@ class LRUCache[K, V](val maxSize: Int = LRUCache.GRAPH_CACHE_MAX_SIZE, val clean
 }
 
 object LRUCache {
-  val GRAPH_CACHE_MAX_SIZE: Int = 15
+  val GRAPH_CACHE_MAX_SIZE: Int = 100
   val GRAPH_CACHE_CLEANUP_INTERVAL_MS: Long = 5000
 }
