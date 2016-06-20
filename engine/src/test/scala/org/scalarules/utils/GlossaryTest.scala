@@ -26,12 +26,12 @@ class GlossaryTest extends FlatSpec with Matchers {
     g.factC.isInstanceOf[ListFact[String]] should be(true)
     g.factD.isInstanceOf[ListFact[String]] should be(true)
 
-    g.getFacts.size should be(4)
+    g.facts.size should be(4)
 
-    g.getFacts.get("factA").get should be(g.factA)
-    g.getFacts.get("factB").get should be(g.factB)
-    g.getFacts.get("factC").get should be(g.factC)
-    g.getFacts.get("factD").get should be(g.factD)
+    g.facts.get("factA").get should be(g.factA)
+    g.facts.get("factB").get should be(g.factB)
+    g.facts.get("factC").get should be(g.factC)
+    g.facts.get("factD").get should be(g.factD)
   }
 
 }

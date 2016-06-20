@@ -18,7 +18,7 @@ object GlossaryConverter {
        """.stripMargin
     }
 
-    g.getFacts.map( factToJson ).mkString("{", ", ", "}")
+    g.facts.map( factToJson ).mkString("{", ", ", "}")
   }
 
 }
