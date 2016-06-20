@@ -1,10 +1,13 @@
 package org.scalarules.engine
 
-import scala.annotation.tailrec
-import scala.util.{Failure, Success, Try}
 import org.scalarules.engine.DerivationTools._
 
+import scala.annotation.tailrec
+import scala.util.{Failure, Success, Try}
+
 object FactEngine {
+
+  private var graphCache = new LRUCache[List[Derivation], Levels]()
 
   /**
     * Constructs a Dependency graph for the provided list of Derivations. Each Derivation will yield a Node describing its output and other Nodes requiring its
@@ -91,12 +94,15 @@ object FactEngine {
     * @return the resulting state of the last invocation to the evaluator function.
     */
   def runDerivations[A](state: A, derivations: List[Derivation], evaluator: (A, Derivation) => A): A = {
-    val graph = FactEngine.constructGraph(derivations)
-    val levels = FactEngine.levelSorter(graph)
+    if (!graphCache.get(derivations).isDefined) {
+      graphCache.add(derivations, FactEngine.levelSorter(FactEngine.constructGraph(derivations)))
+    }
+
+    val graph: Levels = graphCache.get(derivations).get
 
     def levelRunner(state: A, level: Level): A = level.foldLeft(state)( (b, n) => evaluator(b, n.derivation) )
 
-    levels.foldLeft(state)( levelRunner )
+    graph.foldLeft(state)( levelRunner )
   }
 
   case class EvaluationException(message: String, derivation: Derivation, cause: Throwable) extends Exception(message, cause)

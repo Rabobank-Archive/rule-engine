@@ -118,7 +118,6 @@ addCommandAlias("verify", ";compileScalastyle;testScalastyle;coverage;test;cover
 lazy val publishSettings = Seq(
   pomExtra := pom,
   publishMavenStyle := true,
-  useGpg := true,
   pomIncludeRepository := { _ => false },
   licenses := Seq("MIT License" -> url("http://www.opensource.org/licenses/mit-license.php")),
   publishTo := {
