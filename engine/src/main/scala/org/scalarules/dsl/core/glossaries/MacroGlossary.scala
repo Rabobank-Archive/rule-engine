@@ -22,8 +22,7 @@ class MacroGlossary {
     * Collects all declared `Fact`s in this `Glossary` and returns them mapped from their names to their definitions.
     */
   lazy val facts: Map[String, Fact[Any]] = {
-    val declaredFields: Array[Field] = this.getClass.getDeclaredFields
-    declaredFields
+    this.getClass.getDeclaredFields
       .filter( field => classOf[Fact[Any]].isAssignableFrom( field.getType ) )
       .map( field => {
         field.setAccessible(true)
