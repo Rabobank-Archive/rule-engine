@@ -1,92 +1,92 @@
 package org.scalarules.dsl.core
 
 import org.scalarules.finance.nl.{Bedrag, Percentage}
-import org.scalarules.utils.Glossary
+import org.scalarules.utils.MacroGlossary
 
-object LijstBewerkingenGlossary$ extends Glossary {
+object LijstBewerkingenGlossary$ extends MacroGlossary {
 
-  val GetalA = defineFact[BigDecimal]("GetalA")
-  val GetalB = defineFact[BigDecimal]("GetalB")
-  val GetalC = defineFact[BigDecimal]("GetalC")
-  val GetalD = defineFact[BigDecimal]("GetalD")
-  val GetalE = defineFact[BigDecimal]("GetalE")
-  val GetalF = defineFact[BigDecimal]("GetalF")
+  val GetalA = defineFact[BigDecimal]
+  val GetalB = defineFact[BigDecimal]
+  val GetalC = defineFact[BigDecimal]
+  val GetalD = defineFact[BigDecimal]
+  val GetalE = defineFact[BigDecimal]
+  val GetalF = defineFact[BigDecimal]
 
-  val BedragA = defineFact[Bedrag]("BedragA")
-  val BedragB = defineFact[Bedrag]("BedragB")
+  val BedragA = defineFact[Bedrag]
+  val BedragB = defineFact[Bedrag]
 
-  val InvoerLijstA = defineListFact[BigDecimal]("InvoerLijstA")
-  val InvoerLijstB = defineListFact[BigDecimal]("InvoerLijstB")
-  val InvoerLijstEnkeleC = defineListFact[BigDecimal]("InvoerLijstEnkeleC")
-  val InvoerLijstEnkeleD = defineListFact[BigDecimal]("InvoerLijstEnkeleD")
-  val InvoerLijstSerieE = defineListFact[BigDecimal]("InvoerLijstSerieE")
-  val InvoerLijstF = defineListFact[BigDecimal]("InvoerLijstF")
-  val InvoerLijstLeegG = defineListFact[BigDecimal]("InvoerLijstLeegG")
-  val InvoerLijstVanLijstA = defineListFact[List[BigDecimal]]("InvoerLijstVanLijstA")
+  val InvoerLijstA = defineListFact[BigDecimal]
+  val InvoerLijstB = defineListFact[BigDecimal]
+  val InvoerLijstEnkeleC = defineListFact[BigDecimal]
+  val InvoerLijstEnkeleD = defineListFact[BigDecimal]
+  val InvoerLijstSerieE = defineListFact[BigDecimal]
+  val InvoerLijstF = defineListFact[BigDecimal]
+  val InvoerLijstLeegG = defineListFact[BigDecimal]
+  val InvoerLijstVanLijstA = defineListFact[List[BigDecimal]]
 
-  val InvoerLijstBedragen = defineListFact[Bedrag]("InvoerLijstBedragen")
+  val InvoerLijstBedragen = defineListFact[Bedrag]
 
-  val OptellingLijstEnLijst = defineListFact[BigDecimal]("OptellingLijstEnLijst")
-  val OptellingLijstEnGetal = defineListFact[BigDecimal]("OptellingLijstEnGetal")
-  val OptellingGetalEnLijst = defineListFact[BigDecimal]("OptellingGetalEnLijst")
-  val OptellingEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]("OptellingEnkeleLijstEnEnkeleLijst")
-  val OptellingEnkeleLijstEnGetal = defineListFact[BigDecimal]("OptellingEnkeleLijstEnGetal")
-  val OptellingGetalEnEnkeleLijst = defineListFact[BigDecimal]("OptellingGetalEnEnkeleLijst")
+  val OptellingLijstEnLijst = defineListFact[BigDecimal]
+  val OptellingLijstEnGetal = defineListFact[BigDecimal]
+  val OptellingGetalEnLijst = defineListFact[BigDecimal]
+  val OptellingEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]
+  val OptellingEnkeleLijstEnGetal = defineListFact[BigDecimal]
+  val OptellingGetalEnEnkeleLijst = defineListFact[BigDecimal]
 
-  val SubtractieLijstVanLijstResultaat = defineListFact[BigDecimal]("SubtractieLijstVanLijstResultaat")
-  val SubtractieLijstVanLijst = defineListFact[List[BigDecimal]]("SubtractieLijstVanLijst")
+  val SubtractieLijstVanLijstResultaat = defineListFact[BigDecimal]
+  val SubtractieLijstVanLijst = defineListFact[List[BigDecimal]]
 
-  val SubtractieLijstEnLijst = defineListFact[BigDecimal]("SubtractieLijstEnLijst")
-  val SubtractieLijstEnGetal = defineListFact[BigDecimal]("SubtractieLijstEnGetal")
-  val SubtractieGetalEnLijst = defineListFact[BigDecimal]("SubtractieGetalEnLijst")
-  val SubtractieEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]("SubtractieEnkeleLijstEnEnkeleLijst")
-  val SubtractieEnkeleLijstEnGetal = defineListFact[BigDecimal]("SubtractieEnkeleLijstEnGetal")
-  val SubtractieGetalEnEnkeleLijst = defineListFact[BigDecimal]("SubtractieGetalEnEnkeleLijst")
+  val SubtractieLijstEnLijst = defineListFact[BigDecimal]
+  val SubtractieLijstEnGetal = defineListFact[BigDecimal]
+  val SubtractieGetalEnLijst = defineListFact[BigDecimal]
+  val SubtractieEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]
+  val SubtractieEnkeleLijstEnGetal = defineListFact[BigDecimal]
+  val SubtractieGetalEnEnkeleLijst = defineListFact[BigDecimal]
 
-  val VermenigvuldigingLijstEnLijst = defineListFact[BigDecimal]("VermenigvuldigingLijstEnLijst")
-  val VermenigvuldigingLijstEnGetal = defineListFact[BigDecimal]("VermenigvuldigingLijstEnGetal")
-  val VermenigvuldigingGetalEnLijst = defineListFact[BigDecimal]("VermenigvuldigingGetalEnLijst")
-  val VermenigvuldigingEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]("VermenigvuldigingEnkeleLijstEnEnkeleLijst")
-  val VermenigvuldigingEnkeleLijstEnGetal = defineListFact[BigDecimal]("VermenigvuldigingEnkeleLijstEnGetal")
-  val VermenigvuldigingGetalEnEnkeleLijst = defineListFact[BigDecimal]("VermenigvuldigingGetalEnEnkeleLijst")
+  val VermenigvuldigingLijstEnLijst = defineListFact[BigDecimal]
+  val VermenigvuldigingLijstEnGetal = defineListFact[BigDecimal]
+  val VermenigvuldigingGetalEnLijst = defineListFact[BigDecimal]
+  val VermenigvuldigingEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]
+  val VermenigvuldigingEnkeleLijstEnGetal = defineListFact[BigDecimal]
+  val VermenigvuldigingGetalEnEnkeleLijst = defineListFact[BigDecimal]
 
-  val DelingLijstEnLijst = defineListFact[BigDecimal]("DelingLijstEnLijst")
-  val DelingLijstEnGetal = defineListFact[BigDecimal]("DelingLijstEnGetal")
-  val DelingGetalEnLijst = defineListFact[BigDecimal]("DelingGetalEnLijst")
-  val DelingEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]("DelingEnkeleLijstEnEnkeleLijst")
-  val DelingEnkeleLijstEnGetal = defineListFact[BigDecimal]("DelingEnkeleLijstEnGetal")
-  val DelingGetalEnEnkeleLijst = defineListFact[BigDecimal]("DelingGetalEnEnkeleLijst")
+  val DelingLijstEnLijst = defineListFact[BigDecimal]
+  val DelingLijstEnGetal = defineListFact[BigDecimal]
+  val DelingGetalEnLijst = defineListFact[BigDecimal]
+  val DelingEnkeleLijstEnEnkeleLijst = defineListFact[BigDecimal]
+  val DelingEnkeleLijstEnGetal = defineListFact[BigDecimal]
+  val DelingGetalEnEnkeleLijst = defineListFact[BigDecimal]
 
-  val EersteElementVan = defineFact[BigDecimal]("EersteElementVan")
+  val EersteElementVan = defineFact[BigDecimal]
 
-  val LaagsteElementA = defineFact[BigDecimal]("LaagsteElementA")
-  val LaagsteElementB = defineFact[BigDecimal]("LaagsteElementB")
-  val LaagsteElementC = defineFact[BigDecimal]("LaagsteElementC")
+  val LaagsteElementA = defineFact[BigDecimal]
+  val LaagsteElementB = defineFact[BigDecimal]
+  val LaagsteElementC = defineFact[BigDecimal]
 
-  val HoogsteElementA = defineFact[BigDecimal]("HoogsteElementA")
-  val HoogsteElementB = defineFact[BigDecimal]("HoogsteElementB")
-  val HoogsteElementC = defineFact[BigDecimal]("HoogsteElementC")
+  val HoogsteElementA = defineFact[BigDecimal]
+  val HoogsteElementB = defineFact[BigDecimal]
+  val HoogsteElementC = defineFact[BigDecimal]
 
-  val GemiddeldeA = defineFact[BigDecimal]("GemiddeldeA")
-  val GemiddeldeB = defineFact[BigDecimal]("GemiddeldeB")
-  val GemiddeldeC = defineFact[BigDecimal]("GemiddeldeC")
-  val GemiddeldeD = defineFact[BigDecimal]("GemiddeldeD")
-  val GemiddeldeE = defineFact[BigDecimal]("GemiddeldeE")
-  val GemiddeldeListA = defineListFact[BigDecimal]("GemiddeldeListA")
+  val GemiddeldeA = defineFact[BigDecimal]
+  val GemiddeldeB = defineFact[BigDecimal]
+  val GemiddeldeC = defineFact[BigDecimal]
+  val GemiddeldeD = defineFact[BigDecimal]
+  val GemiddeldeE = defineFact[BigDecimal]
+  val GemiddeldeListA = defineListFact[BigDecimal]
 
-  val SommatieA = defineFact[BigDecimal]("SommatieA")
-  val SommatieB = defineFact[BigDecimal]("SommatieB")
-  val SommatieC = defineFact[BigDecimal]("SommatieC")
-  val SommatieListA = defineListFact[BigDecimal]("SommatieListA")
+  val SommatieA = defineFact[BigDecimal]
+  val SommatieB = defineFact[BigDecimal]
+  val SommatieC = defineFact[BigDecimal]
+  val SommatieListA = defineListFact[BigDecimal]
 
-  val AlsDanPerElementA = defineListFact[Percentage]("AlsDanPerElementA")
+  val AlsDanPerElementA = defineListFact[Percentage]
 
-  val LijstInLijstA = defineListFact[List[BigDecimal]]("LijstInLijstA")
-  val LijstInLijstB = defineListFact[List[BigDecimal]]("LijstInLijstB")
-  val LijstInLijstC = defineListFact[List[BigDecimal]]("LijstInLijstC")
+  val LijstInLijstA = defineListFact[List[BigDecimal]]
+  val LijstInLijstB = defineListFact[List[BigDecimal]]
+  val LijstInLijstC = defineListFact[List[BigDecimal]]
 
-  val LijstInLijstOptellingA = defineListFact[BigDecimal]("LijstInLijstOptellingA")
+  val LijstInLijstOptellingA = defineListFact[BigDecimal]
 
-  val LijstInLijstInLijstA = defineListFact[List[List[BigDecimal]]]("LijstInLijstInLijstA")
-  val LijstInLijstBO = defineListFact[List[BigDecimal]]("LijstInLijstBO")
+  val LijstInLijstInLijstA = defineListFact[List[List[BigDecimal]]]
+  val LijstInLijstBO = defineListFact[List[BigDecimal]]
 }

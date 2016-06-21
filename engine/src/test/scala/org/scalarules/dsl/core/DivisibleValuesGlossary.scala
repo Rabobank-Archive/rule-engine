@@ -1,13 +1,13 @@
 package org.scalarules.dsl.core
 
-import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.engine.SingularFact
-import org.scalarules.utils.Glossary
+import org.scalarules.finance.nl.{Bedrag, Percentage}
+import org.scalarules.utils.MacroGlossary
 
-object DivisibleValuesGlossary extends Glossary {
-  val BedragA = SingularFact[Bedrag]("bedragA")
-  val BedragB = SingularFact[Bedrag]("bedragB")
+object DivisibleValuesGlossary extends MacroGlossary {
+  val BedragA = defineFact[Bedrag]
+  val BedragB = defineFact[Bedrag]
 
-  val PercentageA = SingularFact[Percentage]("percentageA")
+  val PercentageA = defineFact[Percentage]
 
 }

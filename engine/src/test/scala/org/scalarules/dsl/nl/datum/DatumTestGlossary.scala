@@ -1,16 +1,15 @@
 package org.scalarules.dsl.nl.datum
 
-import org.scalarules.engine.SingularFact
-import org.scalarules.utils.Glossary
+import org.scalarules.utils.MacroGlossary
 
-object DatumTestGlossary extends Glossary {
+object DatumTestGlossary extends MacroGlossary {
 
-  val InvoerDatum = SingularFact[Datum]("DatumA")
+  val InvoerDatum = defineFact[Datum]
 
-  val EerderDan = SingularFact[String]("EerderDan")
-  val EerderDanGelijk = SingularFact[String]("EerderDanGelijk")
-  val LaterDan = SingularFact[String]("LaterDan")
-  val LaterDanGelijk = SingularFact[String]("LaterDanGelijk")
-  val GelijkAan = SingularFact[String]("GelijkAan")
+  val EerderDan = defineFact[String]
+  val EerderDanGelijk = defineFact[String]
+  val LaterDan = defineFact[String]
+  val LaterDanGelijk = defineFact[String]
+  val GelijkAan = defineFact[String]
 
 }

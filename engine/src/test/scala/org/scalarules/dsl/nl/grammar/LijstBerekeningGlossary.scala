@@ -1,11 +1,11 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.utils.Glossary
+import org.scalarules.utils.MacroGlossary
 
-object LijstBerekeningGlossary extends Glossary {
-  val LijstGefilterd = defineListFact[Int]("LijstGefilterd")
-  val LijstGefilterdMetList = defineListFact[Int]("LijstGefilterdMetList")
-  val LijstOngefilterd = defineListFact[Int]("LijstOngefilterd")
-  val LijstGefilterdComplexObject = defineListFact[ComplexFilterObject]("LijstGefilterdComplexObject")
-  val LijstOngefilterdComplexObject = defineListFact[ComplexFilterObject]("LijstOngefilterdComplexObject")
+object LijstBerekeningGlossary extends MacroGlossary {
+  val LijstGefilterd = defineListFact[Int]
+  val LijstGefilterdMetList = defineListFact[Int]
+  val LijstOngefilterd = defineListFact[Int]
+  val LijstGefilterdComplexObject = defineListFact[ComplexFilterObject]
+  val LijstOngefilterdComplexObject = defineListFact[ComplexFilterObject]
 }
