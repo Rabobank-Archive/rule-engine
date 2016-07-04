@@ -1,8 +1,8 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.utils.MacroGlossary
+import org.scalarules.utils.Glossary
 
-object LijstBerekeningGlossary extends MacroGlossary {
+object LijstBerekeningGlossary extends Glossary {
   val LijstGefilterd = defineListFact[Int]
   val LijstGefilterdMetList = defineListFact[Int]
   val LijstOngefilterd = defineListFact[Int]

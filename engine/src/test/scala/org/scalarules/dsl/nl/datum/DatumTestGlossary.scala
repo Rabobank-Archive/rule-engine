@@ -1,8 +1,8 @@
 package org.scalarules.dsl.nl.datum
 
-import org.scalarules.utils.MacroGlossary
+import org.scalarules.utils.Glossary
 
-object DatumTestGlossary extends MacroGlossary {
+object DatumTestGlossary extends Glossary {
 
   val InvoerDatum = defineFact[Datum]
 

@@ -1,9 +1,9 @@
 package org.scalarules.dsl.core
 
 import org.scalarules.dsl.nl.grammar.Table
-import org.scalarules.utils.MacroGlossary
+import org.scalarules.utils.Glossary
 
-object TableSelectorGlossary extends MacroGlossary {
+object TableSelectorGlossary extends Glossary {
 
   val IndexX = defineFact[Int]
   val IndexY = defineFact[Int]

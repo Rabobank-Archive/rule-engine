@@ -1,9 +1,9 @@
 package org.scalarules.dsl.core
 
 import org.scalarules.finance.nl.{Bedrag, Percentage}
-import org.scalarules.utils.MacroGlossary
+import org.scalarules.utils.Glossary
 
-object LijstBewerkingenGlossary$ extends MacroGlossary {
+object LijstBewerkingenGlossary$ extends Glossary {
 
   val GetalA = defineFact[BigDecimal]
   val GetalB = defineFact[BigDecimal]

@@ -9,7 +9,7 @@ class MacroGlossaryTest extends FlatSpec with Matchers {
 
   it should "work with macros to define facts" in {
 
-    val g = new MacroGlossary {
+    val g = new Glossary {
       val factA = defineFact[String]("First fact")
       val factB = defineFact[String]("Second fact")
       val factC = defineListFact[String]("Third fact")

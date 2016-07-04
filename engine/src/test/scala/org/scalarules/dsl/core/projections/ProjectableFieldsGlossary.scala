@@ -1,8 +1,8 @@
 package org.scalarules.dsl.core.projections
 
-import org.scalarules.utils.MacroGlossary
+import org.scalarules.utils.Glossary
 
-object ProjectableFieldsGlossary extends MacroGlossary {
+object ProjectableFieldsGlossary extends Glossary {
   val ComplexFact = defineFact[ComplexObject]
   val IntFact = defineFact[Int]
   val IntFact2 = defineFact[Int]

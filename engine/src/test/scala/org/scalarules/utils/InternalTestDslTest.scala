@@ -25,7 +25,7 @@ class TestDslTest extends InternalBerekeningenTester(new TestDslTestBerekening) 
 
 }
 
-object TestDslTestGlossary extends MacroGlossary {
+object TestDslTestGlossary extends Glossary {
   val BedragPerJaarA = defineFact[Bedrag Per Jaar]
   val BedragPerJaarB = defineFact[Bedrag Per Jaar]
 }

@@ -6,7 +6,7 @@ import scala.reflect.ClassTag
 
 object GlossaryConverter {
 
-  def toJson(g: MacroGlossary): String = {
+  def toJson(g: Glossary): String = {
     g.facts.map( factToJson ).mkString("{", ", ", "}")
   }
 

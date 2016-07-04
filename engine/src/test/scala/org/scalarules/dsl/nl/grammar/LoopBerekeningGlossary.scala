@@ -1,8 +1,8 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.utils.MacroGlossary
+import org.scalarules.utils.Glossary
 
-object LoopBerekeningGlossary extends MacroGlossary {
+object LoopBerekeningGlossary extends Glossary {
   val loopInput = defineListFact[BigDecimal]
   val intermediateBigDecimal = defineFact[BigDecimal]
   val simpleLoopResult = defineListFact[BigDecimal]

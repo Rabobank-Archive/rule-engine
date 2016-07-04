@@ -11,7 +11,7 @@ import scala.language.experimental.macros
   * Utility base class for collecting and namespacing `Fact`s. You can extend this class, define facts in it and receive a
   * utility collection of all facts declared in your class.
   */
-class MacroGlossary {
+class Glossary {
   def defineFact[A](): SingularFact[A] = macro FactMacros.defineFactMacroImpl[A]
   def defineFact[A](description: String = "No description"): SingularFact[A] = macro FactMacros.defineFactMacroWithDescriptionImpl[A]
 
