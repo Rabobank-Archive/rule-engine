@@ -9,10 +9,42 @@ import scala.language.experimental.macros
   * utility collection of all facts declared in your class.
   */
 class Glossary {
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @return a `SingularFact` initialized with the name of the val declaration.
+    */
   def defineFact[A](): SingularFact[A] = macro FactMacros.defineFactMacroImpl[A]
+
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @param description description of the `Fact`, to be passed along to the `Fact`'s constructor.
+    * @return a `SingularFact` initialized with the name of the val declaration.
+    */
   def defineFact[A](description: String): SingularFact[A] = macro FactMacros.defineFactMacroWithDescriptionImpl[A]
 
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @return a `ListFact` initialized with the name of the val declaration.
+    */
   def defineListFact[A](): ListFact[A] = macro FactMacros.defineListFactMacroImpl[A]
+
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @param description description of the `Fact`, to be passed along to the `Fact`'s constructor.
+    * @return a `ListFact` initialized with the name of the val declaration.
+    */
   def defineListFact[A](description: String): ListFact[A] = macro FactMacros.defineListFactMacroWithDescriptionImpl[A]
 
   /**
