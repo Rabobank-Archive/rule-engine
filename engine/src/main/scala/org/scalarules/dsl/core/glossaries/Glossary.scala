@@ -1,9 +1,6 @@
 package org.scalarules.utils
 
-import java.lang.reflect.Field
-
 import org.scalarules.engine.{Fact, ListFact, SingularFact}
-import org.scalarules.finance.nl.Bedrag
 
 import scala.language.experimental.macros
 
@@ -13,10 +10,10 @@ import scala.language.experimental.macros
   */
 class Glossary {
   def defineFact[A](): SingularFact[A] = macro FactMacros.defineFactMacroImpl[A]
-  def defineFact[A](description: String = "No description"): SingularFact[A] = macro FactMacros.defineFactMacroWithDescriptionImpl[A]
+  def defineFact[A](description: String): SingularFact[A] = macro FactMacros.defineFactMacroWithDescriptionImpl[A]
 
   def defineListFact[A](): ListFact[A] = macro FactMacros.defineListFactMacroImpl[A]
-  def defineListFact[A](description: String = "No description"): ListFact[A] = macro FactMacros.defineListFactMacroWithDescriptionImpl[A]
+  def defineListFact[A](description: String): ListFact[A] = macro FactMacros.defineListFactMacroWithDescriptionImpl[A]
 
   /**
     * Collects all declared `Fact`s in this `Glossary` and returns them mapped from their names to their definitions.
