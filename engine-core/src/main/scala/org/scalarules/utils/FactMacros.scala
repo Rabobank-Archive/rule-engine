@@ -75,28 +75,28 @@ object FactMacros {
   def defineFactMacroImpl[A : c.WeakTypeTag](c: Context)(): c.Expr[SingularFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new SingularFact[A](factNameExpr.splice, false, "") }
+    c.universe.reify { new SingularFact[A](factNameExpr.splice, "") }
   }
 
   @compileTimeOnly("This is a compile-time macro implementation, do not call it at runtime")
   def defineFactMacroWithDescriptionImpl[A : c.WeakTypeTag](c: Context)(description: c.Expr[String]): c.Expr[SingularFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new SingularFact[A](factNameExpr.splice, false, description.splice) }
+    c.universe.reify { new SingularFact[A](factNameExpr.splice, description.splice) }
   }
 
   @compileTimeOnly("This is a compile-time macro implementation, do not call it at runtime")
   def defineListFactMacroImpl[A : c.WeakTypeTag](c: Context)(): c.Expr[ListFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new ListFact[A](factNameExpr.splice, false, "") }
+    c.universe.reify { new ListFact[A](factNameExpr.splice, "") }
   }
 
   @compileTimeOnly("This is a compile-time macro implementation, do not call it at runtime")
   def defineListFactMacroWithDescriptionImpl[A : c.WeakTypeTag](c: Context)(description: c.Expr[String]): c.Expr[ListFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new ListFact[A](factNameExpr.splice, false, description.splice) }
+    c.universe.reify { new ListFact[A](factNameExpr.splice, description.splice) }
   }
 
   /**
