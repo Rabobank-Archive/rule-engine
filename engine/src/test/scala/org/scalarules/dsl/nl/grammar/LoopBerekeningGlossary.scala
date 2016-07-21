@@ -3,17 +3,17 @@ package org.scalarules.dsl.nl.grammar
 import org.scalarules.utils.Glossary
 
 object LoopBerekeningGlossary extends Glossary {
-  val loopInput = defineListFact[BigDecimal]("loopInput")
-  val intermediateBigDecimal = defineFact[BigDecimal]("intermediateBigDecimal")
-  val simpleLoopResult = defineListFact[BigDecimal]("simpleLoopResult")
+  val loopInput = defineListFact[BigDecimal]
+  val intermediateBigDecimal = defineFact[BigDecimal]
+  val simpleLoopResult = defineListFact[BigDecimal]
 
-  val enhancedLoopResult = defineListFact[BigDecimal]("enhancedLoopResult")
-  val innerLoopReturnValue = defineFact[BigDecimal]("innerLoopReturnValue")
-  val innerLoopAdditionValue = defineFact[BigDecimal]("innerLoopAdditionValue")
+  val enhancedLoopResult = defineListFact[BigDecimal]
+  val innerLoopReturnValue = defineFact[BigDecimal]
+  val innerLoopAdditionValue = defineFact[BigDecimal]
 
-  val innerLoopInput = defineListFact[BigDecimal]("innerLoopInput")
-  val intermediateInnerLoopBigDecimal = defineFact[BigDecimal]("intermediateInnerLoopBigDecimal")
-  val enhancedLoopListInListResult = defineListFact[List[BigDecimal]]("enhancedLoopListInListResult")
-  val innerLoopListReturnValue = defineListFact[BigDecimal]("innerLoopListReturnValue")
-  val innerLoopAdditionListValue = defineListFact[BigDecimal]("innerLoopAdditionListValue")
+  val innerLoopInput = defineListFact[BigDecimal]
+  val intermediateInnerLoopBigDecimal = defineFact[BigDecimal]
+  val enhancedLoopListInListResult = defineListFact[List[BigDecimal]]
+  val innerLoopListReturnValue = defineListFact[BigDecimal]
+  val innerLoopAdditionListValue = defineListFact[BigDecimal]
 }

@@ -2,32 +2,63 @@ package org.scalarules.utils
 
 import org.scalarules.engine.{Fact, ListFact, SingularFact}
 
-import scala.reflect.runtime.universe._
+import scala.language.experimental.macros
 
+/**
+  * Utility base class for collecting and namespacing `Fact`s. You can extend this class, define facts in it and receive a
+  * utility collection of all facts declared in your class.
+  */
 class Glossary {
-  private var facts: Map[String, Fact[Any]] = Map()
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @return a `SingularFact` initialized with the name of the val declaration.
+    */
+  def defineFact[A](): SingularFact[A] = macro FactMacros.defineFactMacroImpl[A]
 
-  protected def addAndCheckFacts(newFact: Fact[Any]): Unit = {
-    val name: String = newFact.name.toLowerCase
-    if (facts contains name) {
-      throw new IllegalArgumentException(s"Attemping to add a second fact with the name '${name}', please keep the variable name and String value in " +
-        s"sync. Note also that Fact names are case insensitive, so FaCt and fAcT are considered the same.")
-    }
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @param description description of the `Fact`, to be passed along to the `Fact`'s constructor.
+    * @return a `SingularFact` initialized with the name of the val declaration.
+    */
+  def defineFact[A](description: String): SingularFact[A] = macro FactMacros.defineFactMacroWithDescriptionImpl[A]
 
-    facts += (name -> newFact)
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @return a `ListFact` initialized with the name of the val declaration.
+    */
+  def defineListFact[A](): ListFact[A] = macro FactMacros.defineListFactMacroImpl[A]
+
+  /**
+    * Defines a `Fact`, using the name of the `val` it is assigned to as the name of the `Fact`. Note: the value of this
+    * macro *must* be assigned to a `val`, otherwise a compiler error will be raised.
+    *
+    * @tparam A the value type of the resulting `Fact`.
+    * @param description description of the `Fact`, to be passed along to the `Fact`'s constructor.
+    * @return a `ListFact` initialized with the name of the val declaration.
+    */
+  def defineListFact[A](description: String): ListFact[A] = macro FactMacros.defineListFactMacroWithDescriptionImpl[A]
+
+  /**
+    * Collects all declared `Fact`s in this `Glossary` and returns them mapped from their names to their definitions.
+    */
+  lazy val facts: Map[String, Fact[Any]] = {
+    this.getClass.getDeclaredFields
+      .filter( field => classOf[Fact[Any]].isAssignableFrom( field.getType ) )
+      .map( field => {
+        field.setAccessible(true)
+        val fact: Fact[Any] = field.get(this).asInstanceOf[Fact[Any]]
+        (fact.name, fact)
+      })
+      .toMap
   }
 
-  def defineFact[A](naam: String, omschrijving: String = "Geen beschrijving"): SingularFact[A] = {
-    val newFact = new SingularFact[A](naam, false, omschrijving)
-    addAndCheckFacts( newFact )
-    newFact
-  }
-
-  def defineListFact[A](naam: String, omschrijving: String = "Geen beschrijving"): ListFact[A] = {
-    val newFact = new ListFact[A](naam, true, omschrijving)
-    addAndCheckFacts( newFact )
-    newFact
-  }
-
-  def getFacts: Map[String, Fact[Any]] = facts
 }
