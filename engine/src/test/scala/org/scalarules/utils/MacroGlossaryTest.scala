@@ -9,11 +9,17 @@ class MacroGlossaryTest extends FlatSpec with Matchers {
 
   it should "work with macros to define facts" in {
 
+    val firstDescription = "First fact"
+    val secondDescription = "Second fact"
+    val thirdDescription = "Third fact"
+    val fourthDescription = "Fourth fact"
+
+
     val g = new Glossary {
-      val factA = defineFact[String]("First fact")
-      val factB = defineFact[String]("Second fact")
-      val factC = defineListFact[String]("Third fact")
-      val factD = defineListFact[String]("Fourth fact")
+      val factA = defineFact[String](firstDescription)
+      val factB = defineFact[String](secondDescription)
+      val factC = defineListFact[String](thirdDescription)
+      val factD = defineListFact[String](fourthDescription)
     }
 
     g.factA.name should be("factA")
@@ -32,6 +38,11 @@ class MacroGlossaryTest extends FlatSpec with Matchers {
     g.facts.get("factB").get should be(g.factB)
     g.facts.get("factC").get should be(g.factC)
     g.facts.get("factD").get should be(g.factD)
+
+    g.facts.get("factA").get.description should be(firstDescription)
+    g.facts.get("factB").get.description should be(secondDescription)
+    g.facts.get("factC").get.description should be(thirdDescription)
+    g.facts.get("factD").get.description should be(fourthDescription)
   }
 
 }
