@@ -29,13 +29,13 @@ The rule engine uses a `Fact` as the base for all of its derivations. A `Fact` d
 
 ```scala
 class MyGlossary extends Glossary {
-	val factA = defineFact[Int]("factA")
-	val factB = defineFact[Int]("factB")
-	val factC = defineFact[Int]("factC")
+	val factA = defineFact[Int]
+	val factB = defineFact[Int]
+	val factC = defineFact[Int]
 }
 ```
 
-*Note: the name of the fact is currently repeated as the first argument of the `defineFact` function. This string is actually used inside the engine and must be unique for all `Facts` used by the engine. We are looking for ways to remove this parameter, if you have any suggestions, let us know.*
+*Note: the name of the fact is automatically deduced from the variable it is assigned to. `defineFact` has an optional parameter for a description of the fact.*
 
 Using this glossary, it is now possible to define derivations. The Scala Rules DSL provides an easy way to express how facts interact and come together to form your logic. To enable the DSL, create a class that extends `Berekening`:
 
