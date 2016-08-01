@@ -10,8 +10,6 @@ import org.scalarules.finance.core.Quantity
  * Een `percentage` moet tussen 0.0 en 100.0 liggen.
  */
 case class Percentage private[finance] (percentage: BigDecimal) extends Ordered[Percentage] {
-  require (percentage >= 0)
-  require (percentage <= 100)
 
   /** Het percentage als een fractie tussen 0 en 1. */
   val alsFractie: BigDecimal = percentage / 100

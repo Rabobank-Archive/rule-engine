@@ -4,16 +4,12 @@ import org.scalatest.{FlatSpec, Matchers}
 
 class PercentageTest extends FlatSpec with Matchers {
 
-  it should "not accept a percentage below 0" in {
-    intercept[IllegalArgumentException] {
+  it should "accept a percentage below 0" in {
       (-1).procent
-    }
   }
 
-  it should "not accept a percentage above 100" in {
-    intercept[IllegalArgumentException] {
+  it should "accept a percentage above 100" in {
       101.procent
-    }
   }
 
   it should "do addition on a Percentage" in {
