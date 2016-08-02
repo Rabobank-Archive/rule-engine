@@ -129,8 +129,7 @@ object FactEngine {
         val operation = d match {
           case der: SubRunDerivation => {
             val options: Seq[Option[Any]] = runSubCalculations(c, der.subRunData)
-            val values = options.flatten
-            if (values.size == options.size) Some(values) else None
+            Some(options.flatten)
           }
           case der: DefaultDerivation => der.operation(c)
         }
@@ -164,8 +163,7 @@ object FactEngine {
           case der: SubRunDerivation => {
             val (results, subSteps): (List[Context], List[List[Step]]) = runSubCalculations(c, der.subRunData, d).unzip
             val options = results.map(der.subRunData.yieldValue)
-            val values = options.flatten
-            processStep(d, c, subSteps.flatten ::: steps, if (values.size == options.size) Some(values) else None)
+            processStep(d, c, subSteps.flatten ::: steps, Some(options.flatten))
           }
           case der: DefaultDerivation => processStep(d, c, steps, der.operation(c))
         }

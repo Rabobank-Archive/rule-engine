@@ -30,7 +30,13 @@ class LoopBerekeningTest extends InternalBerekeningenTester(new LoopBerekening) 
   test("of loop met inner loop goed omgaat met niet aanwezige innerloop waardes") gegeven (
     loopInput is List[BigDecimal](0, 1, 2)
   ) verwacht (
-    enhancedLoopListInListResult niet aanwezig
+    enhancedLoopListInListResult is List()
+  )
+
+  test("of loop goed omgaat met gefilterde return values") gegeven (
+    loopInput is List[BigDecimal](0, 1, 2)
+  ) verwacht (
+    filteredLoopResult is List[BigDecimal](4)
   )
 
 }
