@@ -99,12 +99,15 @@ class FactEngineTestRunDefaultDerivations extends FlatSpec with Matchers with Ge
     } )
   }
 
+  private val SPEED_OF_LIGHT_M_PER_S: Int = 299792458
+  private val DISTANCE_SUN_EARTH_METRES: Long = 148996851626L
+
   it should "handle derivations without inputs correctly" in {
     val c: Context = Map()
     val result: Context = FactEngine.runNormalDerivations(c, List(FactEngineTestValues.derivationWithoutInputs1))
 
     result should have size 1
-    SpeedOfLightMetresPerSecondConstant.toEval.apply(result) shouldEqual Some(BigDecimal("299792458"))
+    SpeedOfLightMetresPerSecondConstant.toEval.apply(result) shouldEqual Some(BigDecimal(SPEED_OF_LIGHT_M_PER_S))
   }
 
   it should "handle derivations without inputs correctly when used in other derivations" in {
@@ -112,8 +115,8 @@ class FactEngineTestRunDefaultDerivations extends FlatSpec with Matchers with Ge
     val result: Context = FactEngine.runNormalDerivations(c, FactEngineTestValues.derivationsBasedOnInEngineConstants)
 
     result should have size 3
-    SpeedOfLightMetresPerSecondConstant.toEval.apply(result) shouldEqual Some(BigDecimal("299792458"))
-    DistanceBetweenEarthAndSunInMetres.toEval.apply(result) shouldEqual Some(BigDecimal("148996851626"))
+    SpeedOfLightMetresPerSecondConstant.toEval.apply(result) shouldEqual Some(BigDecimal(SPEED_OF_LIGHT_M_PER_S))
+    DistanceBetweenEarthAndSunInMetres.toEval.apply(result) shouldEqual Some(BigDecimal(DISTANCE_SUN_EARTH_METRES))
   }
 
 
