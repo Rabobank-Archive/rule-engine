@@ -22,4 +22,8 @@ object FactEngineTestGlossary {
   val SubRunOutput = ListFact[BigDecimal]("SubRunOutput")
   val SubRunIntermediateInput = SingularFact[BigDecimal]("SubRunIntermediateInput")
   val SubRunIntermediateResult = SingularFact[BigDecimal]("SubRunIntermediateResult")
+
+  val SpeedOfLightMetresPerSecondConstant = SingularFact[BigDecimal]("SpeedOfLightMetresPerSecondConstant")
+  val TimeLightTravelsToEarthInSecondsConstant = SingularFact[BigDecimal]("TimeLightTravelsToEarthInSecondsConstant")
+  val DistanceBetweenEarthAndSunInMetres = SingularFact[BigDecimal]("DistanceBetweenEarthAndSunInMetres")
 }
