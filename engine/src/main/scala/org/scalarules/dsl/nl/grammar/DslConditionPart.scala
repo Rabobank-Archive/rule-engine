@@ -7,8 +7,16 @@ import scala.reflect.ClassTag
 
 //scalastyle:off method.name object.name
 
-sealed trait Aanwezigheid
-object aanwezig extends Aanwezigheid
+sealed trait Aanwezigheid {
+  def buildCondition[A](fact: Fact[A]): Condition
+}
+
+object aanwezig extends Aanwezigheid {
+  override def buildCondition[A](fact: Fact[A]): Condition = Conditions.exists(fact)
+}
+object afwezig extends Aanwezigheid {
+  override def buildCondition[A](fact: Fact[A]): Condition = Conditions.notExists(fact)
+}
 
 sealed trait DslConditionComparators[T] {
 
@@ -52,6 +60,6 @@ case class DslConditionPart[T] private[grammar](oldPart: DslCondition, fact: Fac
   override private[grammar] def lhsEvaluation: Evaluation[T] = fact.toEval
   override private[grammar] def combineWith(condition: Condition): DslCondition = DslCondition(oldPart.facts + fact, combineMethod(oldPart.condition, condition))
 
-  def is(value: Aanwezigheid): DslCondition = combineWith(Conditions.exists(fact))
+  def is(value: Aanwezigheid): DslCondition = combineWith(value.buildCondition(fact))
 
 }
