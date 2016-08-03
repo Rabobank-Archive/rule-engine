@@ -52,6 +52,6 @@ case class DslConditionPart[T] private[grammar](oldPart: DslCondition, fact: Fac
   override private[grammar] def lhsEvaluation: Evaluation[T] = fact.toEval
   override private[grammar] def combineWith(condition: Condition): DslCondition = DslCondition(oldPart.facts + fact, combineMethod(oldPart.condition, condition))
 
-  def is(value: Aanwezigheid): DslCondition = combineWith(isAanwezig(fact))
+  def is(value: Aanwezigheid): DslCondition = combineWith(Conditions.exists(fact))
 
 }
