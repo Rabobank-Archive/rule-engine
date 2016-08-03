@@ -17,4 +17,11 @@ class LoopBerekening extends Berekening (
         Loop over innerLoopInput per intermediateInnerLoopBigDecimal doe (intermediateInnerLoopBigDecimal + intermediateBigDecimal)
       )
     )
+  ,
+  Gegeven(altijd) Bereken
+    filteredLoopResult is (
+      Loop over loopInput per intermediateBigDecimal geeft innerLoopReturnValue door new Berekening(
+        Gegeven (intermediateBigDecimal is 2) Bereken innerLoopReturnValue is (intermediateBigDecimal * BigDecimal(2))
+      )
+    )
 )

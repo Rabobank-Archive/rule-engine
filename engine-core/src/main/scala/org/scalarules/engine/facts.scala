@@ -7,16 +7,21 @@ trait Fact[+A] {
   def description: String
 
   def toEval: Evaluation[A]
+
+  override def toString: String = name
+}
+
+private[engine] case object OriginFact extends Fact[Nothing] {
+  def name: String = "___meta___OriginFact___meta___"
+  def description: String = "Meta-fact used in graph construction"
+
+  def toEval: Evaluation[Nothing] = new ErrorEvaluation("The OriginFact is a meta-fact used in graph construction to indicate top-level constant evaluations")
 }
 
 case class SingularFact[+A](name: String, description: String = "") extends Fact[A] {
   def toEval: Evaluation[A] = new SingularFactEvaluation(this)
-
-  override def toString: String = name
 }
 
 case class ListFact[+A](name: String, description: String = "") extends Fact[List[A]] {
   def toEval: Evaluation[List[A]] = new ListFactEvaluation[A](this)
-
-  override def toString: String = name
 }

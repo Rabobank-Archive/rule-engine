@@ -68,10 +68,10 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
     })
   }
 
-  it should "not allow DefaultDerivations with 0 inputs" in {
-    intercept[IllegalArgumentException] {
-      FactEngine.constructGraph(List(FactEngineTestValues.derivationWithoutInputs))
-    }
+  it should "allow DefaultDerivations with 0 inputs" in {
+    val nodes = FactEngine.constructGraph(List(FactEngineTestValues.derivationWithoutInputs1))
+
+    nodes should have size 1
   }
 
 }
@@ -98,6 +98,28 @@ class FactEngineTestRunDefaultDerivations extends FlatSpec with Matchers with Ge
       result should have size (c.size + 3)
     } )
   }
+
+  private val SPEED_OF_LIGHT_M_PER_S: Int = 299792458
+  private val DISTANCE_SUN_EARTH_METRES: Long = 148996851626L
+
+  it should "handle derivations without inputs correctly" in {
+    val c: Context = Map()
+    val result: Context = FactEngine.runNormalDerivations(c, List(FactEngineTestValues.derivationWithoutInputs1))
+
+    result should have size 1
+    SpeedOfLightMetresPerSecondConstant.toEval.apply(result) shouldEqual Some(BigDecimal(SPEED_OF_LIGHT_M_PER_S))
+  }
+
+  it should "handle derivations without inputs correctly when used in other derivations" in {
+    val c: Context = Map()
+    val result: Context = FactEngine.runNormalDerivations(c, FactEngineTestValues.derivationsBasedOnInEngineConstants)
+
+    result should have size 3
+    SpeedOfLightMetresPerSecondConstant.toEval.apply(result) shouldEqual Some(BigDecimal(SPEED_OF_LIGHT_M_PER_S))
+    DistanceBetweenEarthAndSunInMetres.toEval.apply(result) shouldEqual Some(BigDecimal(DISTANCE_SUN_EARTH_METRES))
+  }
+
+
 
 }
 
@@ -178,11 +200,25 @@ object FactEngineTestValues {
     condition = Conditions.trueCondition,
     operation = new NoopEvaluation[BigDecimal])
 
-  // --- DefaultDerivation that has no inputs (currently unsupported)
-  val derivationWithoutInputs = DefaultDerivation(input = List(),
-    output = MarketValueAdded,
+  // --- DefaultDerivation that has no inputs
+  val derivationWithoutInputs1 = DefaultDerivation(input = List(),
+    output = SpeedOfLightMetresPerSecondConstant,
     condition = Conditions.trueCondition,
-    operation = new NoopEvaluation[BigDecimal])
+    operation = new ConstantValueEvaluation[BigDecimal](BigDecimal("299792458")))
+
+  val derivationWithoutInputs2 = DefaultDerivation(input = List(),
+    output = TimeLightTravelsToEarthInSecondsConstant,
+    condition = Conditions.trueCondition,
+    operation = new ConstantValueEvaluation[BigDecimal](BigDecimal(497)))
+
+  val derivationDependingOnDeriviationWithoutInput = DefaultDerivation(input = List(SpeedOfLightMetresPerSecondConstant),
+    output = DistanceBetweenEarthAndSunInMetres,
+    condition = Conditions.andCondition(Conditions.exists(SpeedOfLightMetresPerSecondConstant), Conditions.exists(TimeLightTravelsToEarthInSecondsConstant)),
+    operation = new Evaluation[BigDecimal] {
+      def apply(c: Context): Option[BigDecimal] = Some(SpeedOfLightMetresPerSecondConstant.toEval.apply(c).get * TimeLightTravelsToEarthInSecondsConstant.toEval.apply(c).get)
+    })
+
+  val derivationsBasedOnInEngineConstants = List(derivationWithoutInputs1, derivationWithoutInputs2, derivationDependingOnDeriviationWithoutInput)
 
   // --- DefaultDerivations specifically designed to hold loops
 

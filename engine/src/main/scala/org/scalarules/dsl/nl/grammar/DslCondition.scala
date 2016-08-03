@@ -21,8 +21,7 @@ object DslCondition {
   val orPredicate: ConditionFunction = (l, r) => c => l(c) || r(c)
 
   val emptyTrueCondition: DslCondition = DslCondition(Set(), _ => true)
-  def factFilledCondition[A](fact: Fact[A]): DslCondition = DslCondition(Set(fact), isAanwezig(fact))
-  def isAanwezig[A](fact: Fact[A]): Condition = c => fact.toEval(c).isDefined
+  def factFilledCondition[A](fact: Fact[A]): DslCondition = DslCondition(Set(fact), Conditions.exists(fact))
 
   def andCombineConditions(initialDslCondition: DslCondition, dslConditions: DslCondition*): DslCondition = dslConditions.foldLeft(initialDslCondition)(_ en _)
   def orCombineConditions(initialDslCondition: DslCondition, dslConditions: DslCondition*): DslCondition = dslConditions.foldLeft(initialDslCondition)(_ of _)

@@ -16,4 +16,7 @@ object LoopBerekeningGlossary extends Glossary {
   val enhancedLoopListInListResult = defineListFact[List[BigDecimal]]
   val innerLoopListReturnValue = defineListFact[BigDecimal]
   val innerLoopAdditionListValue = defineListFact[BigDecimal]
+
+  val filteredLoopResult = defineListFact[BigDecimal]
+
 }

@@ -12,6 +12,12 @@ class NoopEvaluation[+A] extends Evaluation[A] {
   override def toString: String = "None"
 }
 
+class ErrorEvaluation[+A](val message: String) extends Evaluation[A] {
+  def apply(c: Context): Option[A] = throw new IllegalStateException(message)
+
+  override def toString: String = "Error : " + message
+}
+
 class ListEvaluationWrapper[+A](wrappee: Evaluation[A]) extends Evaluation[List[A]] {
   def apply(c: Context): Option[List[A]] = wrappee(c) match {
     case Some(x) => Some(List(x))
