@@ -6,8 +6,6 @@ import org.scalarules.finance.core.Quantity
 
 /**
  * Representeert een percentage.
- *
- * Een `percentage` moet tussen 0.0 en 100.0 liggen.
  */
 case class Percentage private[finance] (percentage: BigDecimal) extends Ordered[Percentage] {
 
