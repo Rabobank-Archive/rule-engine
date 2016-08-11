@@ -2,6 +2,8 @@ package org.scalarules.finance.nl
 
 import org.scalarules.finance.core.Quantity
 
+import scala.math.BigDecimal.RoundingMode.RoundingMode
+
 // scalastyle:off method.name
 
 /**
@@ -32,6 +34,9 @@ case class Percentage private[finance] (percentage: BigDecimal) extends Ordered[
 
   /** Returnt het quotiënt van het percentage en n, als BigDecimal factor. */
   def / (n: BigDecimal): BigDecimal = alsFractie / n
+
+  def afgerondOp (aantalDecimalen: Integer, afrondingsWijze: RoundingMode): Percentage =
+    percentage.setScale(aantalDecimalen, afrondingsWijze).procent
 
   override def compare(that: Percentage) = percentage compare that.percentage
 
