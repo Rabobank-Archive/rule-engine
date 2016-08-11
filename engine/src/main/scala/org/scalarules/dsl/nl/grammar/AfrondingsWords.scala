@@ -51,7 +51,6 @@ object AfrondingsWords {
       */
     def naarNulToe(afgerond: Afgerond): AfrondingOpWord = new AfrondingOpWord(afTeRondenPercentage, BigDecimal.RoundingMode.DOWN)
 
-
     /**
       * initiates a dsl mathematical rounding sequence: half-up
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
