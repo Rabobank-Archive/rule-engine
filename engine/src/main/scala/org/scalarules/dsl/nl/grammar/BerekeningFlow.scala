@@ -1,6 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
 import DslCondition.{andCombineConditions, factFilledCondition}
+import org.scalarules.dsl.core.utils.SourcePosition
 import org.scalarules.finance.core.Quantity
 import org.scalarules.engine._
 
@@ -33,7 +34,9 @@ object Specificatie {
  *
  */
 
-class GegevenWord(condition: DslCondition) {
+class GegevenWord(condition: DslCondition, val position: SourcePosition) {
+  println( s"Defined Gegeven at : ${position}" ) // scalastyle:ignore
+
   def Bereken[A](fact: SingularFact[A]): SingularBerekenStart[A] = new SingularBerekenStart(condition, fact, List())
   def Bereken[A](fact: ListFact[A]): ListBerekenStart[A] = new ListBerekenStart(condition, fact, List())
 }
