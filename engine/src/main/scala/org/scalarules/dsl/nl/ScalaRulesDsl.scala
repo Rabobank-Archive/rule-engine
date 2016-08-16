@@ -1,14 +1,15 @@
 package org.scalarules.dsl.nl
 
 import org.scalarules.dsl.nl.datum.DatumImplicits
-import org.scalarules.dsl.nl.grammar.{DslCondition, DslConditionImplicits, DslEvaluationImplicits, DslListFilterWord, DslLoopWordTrait, GegevenWord}
+import org.scalarules.dsl.nl.grammar._
 import org.scalarules.engine._
 
 /**
   * Aggregates the keywords and implicit definitions of the Scala-Rules DSL. The implicits available in this
   * trait can be used by importing the `grammar` package object's members, or extending this trait.
   */
-trait ScalaRulesDsl extends DslConditionImplicits
+trait ScalaRulesDsl extends AfrondingsImplicits
+  with DslConditionImplicits
   with DslEvaluationImplicits
   with DatumImplicits
   with DslLoopWordTrait

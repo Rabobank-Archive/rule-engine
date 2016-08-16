@@ -53,10 +53,18 @@ class BedragTest extends FlatSpec with Matchers {
     a.afgekaptOp100Euro should be("1000.0000".euro)
   }
 
-  it should "restore the scale after rounding" in {
+  it should "have a new scale after rounding" in {
     val a = "1099.9999".euro
-    val expected = a.waarde.scale
+    val expected = -2
     val actual = a.afgekaptOp100Euro.waarde.scale
+    actual should be(expected)
+  }
+
+  it should "after rounding and then addition the scale should be the smallest available" in {
+    val a = "1099.9999".euro
+    val b = "2111.1111".euro
+    val expected = b.waarde.scale
+    val actual = (a.afgekaptOp100Euro + b).waarde.scale
     actual should be(expected)
   }
 

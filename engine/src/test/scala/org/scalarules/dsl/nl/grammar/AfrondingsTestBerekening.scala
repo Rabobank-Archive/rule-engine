@@ -33,5 +33,33 @@ class AfrondingsTestBerekening extends Berekening (
 
   Gegeven(afrondingsType is "vanNulAf") Bereken
     afgerondPercentageVanNulAf is (startPercentage vanNulAf afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "halfNaarEven") Bereken
+    afgerondBedragHalfEven is (startBedrag halfNaarEven afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "halfNaarNulToe") Bereken
+    afgerondBedragHalfNaarNulToe is (startBedrag halfNaarNulToe afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "naarBeneden") Bereken
+    afgerondBedragNaarBeneden is (startBedrag naarBeneden afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "naarBoven") Bereken
+    afgerondBedragNaarBoven is (startBedrag naarBoven afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "naarNulToe") Bereken
+    afgerondBedragNaarNulToe is (startBedrag naarNulToe afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "rekenkundig") Bereken
+    afgerondBedragRekenkundig is (startBedrag rekenkundig afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "vanNulAf") Bereken
+    afgerondBedragVanNulAf is (startBedrag vanNulAf afgerond op 0 decimalen)
 
 )
