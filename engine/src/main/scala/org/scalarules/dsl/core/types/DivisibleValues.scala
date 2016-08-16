@@ -64,7 +64,7 @@ object DivisibleValues {
     override def rightUnit: Bedrag = 1.euro
   }
 
-  // Note: there is no somethingDividedByBigDecimal, because the division is not a commutative operation
+  // Note: there is no somethingDividedByBedrag, because the division is not a commutative operation
   // and dividing a BigDecimal by something like a Bedrag would yield a BigDecimal Per Bedrag type, which
   // I do not yet foresee any use for.
 }
