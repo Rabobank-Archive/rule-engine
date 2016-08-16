@@ -92,5 +92,5 @@ object AfrondingsWords {
     }
   }
 
-  class Afgerond
+  sealed class Afgerond
 }
