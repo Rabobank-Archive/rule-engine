@@ -13,4 +13,11 @@ class DivisibleValuesTest extends InternalBerekeningenTester(new DivisibleValues
     PercentageA is 50.procent
   )
 
+  test("Bedrag gedeeld door percentage geeft bedrag") gegeven (
+    BedragD is 400.euro,
+    PercentageB is 50.procent
+    ) verwacht (
+      BedragC is 800.euro
+    )
+
 }

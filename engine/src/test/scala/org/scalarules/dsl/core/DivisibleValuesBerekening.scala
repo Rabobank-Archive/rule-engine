@@ -7,5 +7,9 @@ class DivisibleValuesBerekening extends Berekening (
 
   Gegeven (altijd)
     Bereken PercentageA is BedragA / BedragB
+,
+
+  Gegeven (altijd)
+    Bereken BedragC is BedragD / PercentageB
 
 )

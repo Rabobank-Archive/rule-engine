@@ -3,6 +3,8 @@ package org.scalarules.finance.nl
 import java.text.NumberFormat
 import java.util.Locale
 
+import scala.math.BigDecimal.RoundingMode._
+
 // scalastyle:off method.name
 
 /**
@@ -34,14 +36,13 @@ case class Bedrag private[finance] (waarde: BigDecimal) {
   def afgekaptOpCenten: Bedrag = afgekaptOp(2)
 
   /** Rondt dit bedrag af op hele centen, volgens BigDecimal.RoundingMode.HALF_EVEN. */
-  def afgerondOpCenten: Bedrag = afgerondOp(2)
+  def afgerondOpCenten: Bedrag = afgerondOp(2, BigDecimal.RoundingMode.HALF_EVEN)
+
+  def afgerondOp(aantalDecimalen: Integer, afrondingsWijze: RoundingMode): Bedrag =
+    Bedrag(waarde.setScale(aantalDecimalen, afrondingsWijze))
 
   /** Kapt dit bedrag af (naar beneden) op het gegeven aantal decimalen. */
-  private def afgekaptOp(decimalen: Int): Bedrag =
-    Bedrag(waarde.setScale(decimalen, BigDecimal.RoundingMode.DOWN).setScale(waarde.scale))
-
-  private def afgerondOp(decimalen: Int): Bedrag =
-    Bedrag(waarde.setScale(decimalen, BigDecimal.RoundingMode.HALF_EVEN).setScale(waarde.scale))
+  private def afgekaptOp(decimalen: Int): Bedrag = afgerondOp(decimalen, BigDecimal.RoundingMode.FLOOR)
 
   override def toString = NumberFormat.getCurrencyInstance(Bedrag.nederland).format(waarde)
 }

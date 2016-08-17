@@ -7,7 +7,10 @@ import org.scalarules.utils.Glossary
 object DivisibleValuesGlossary extends Glossary {
   val BedragA = defineFact[Bedrag]
   val BedragB = defineFact[Bedrag]
+  val BedragC = defineFact[Bedrag]
+  val BedragD = defineFact[Bedrag]
 
   val PercentageA = defineFact[Percentage]
+  val PercentageB = defineFact[Percentage]
 
 }
