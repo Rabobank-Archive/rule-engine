@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.finance.nl.Percentage
+import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.utils.Glossary
 
 object AfrondingsTestBerekeningGlossary extends Glossary {
@@ -14,6 +14,15 @@ object AfrondingsTestBerekeningGlossary extends Glossary {
   val afgerondPercentageNaarNulToe = defineFact[Percentage]()
   val afgerondPercentageRekenkundig = defineFact[Percentage]()
   val afgerondPercentageVanNulAf = defineFact[Percentage]()
+
+  val startBedrag = defineFact[Bedrag]()
+  val afgerondBedragHalfEven = defineFact[Bedrag]()
+  val afgerondBedragHalfNaarNulToe = defineFact[Bedrag]()
+  val afgerondBedragNaarBeneden = defineFact[Bedrag]()
+  val afgerondBedragNaarBoven = defineFact[Bedrag]()
+  val afgerondBedragNaarNulToe = defineFact[Bedrag]()
+  val afgerondBedragRekenkundig = defineFact[Bedrag]()
+  val afgerondBedragVanNulAf = defineFact[Bedrag]()
   val afrondingsType = defineFact[String]()
 
 }
