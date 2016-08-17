@@ -26,11 +26,19 @@ object DivisibleValues {
     override def leftUnit: BigDecimal = 0
     override def rightUnit: BigDecimal = 1
   }
+
   implicit def somethingDividedByBigDecimal[N : Quantity]: DivisibleValues[N, BigDecimal, N] = new DivisibleValues[N, BigDecimal, N] {
     private val ev = implicitly[Quantity[N]]
     override def divide(a: N, b: BigDecimal): N = ev.divide(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: BigDecimal = 1
+  }
+
+  implicit def somethingDividedByPercentage[N : Quantity]: DivisibleValues[N, Percentage, N] = new DivisibleValues[N, Percentage, N] {
+    private val ev = implicitly[Quantity[N]]
+    override def divide(a: N, b: Percentage): N = ev.divide(a, b.alsFractie)
+    override def leftUnit: N = ev.zero
+    override def rightUnit: Percentage = 100.procent
   }
 
   implicit def somethingDividedByInt[N : Quantity]: DivisibleValues[N, Int, N] = new DivisibleValues[N, Int, N] {
@@ -40,11 +48,13 @@ object DivisibleValues {
     override def leftUnit: N = ev.zero
     override def rightUnit: Int = 1
   }
+
   implicit def percentageDividedByBigDecimal: DivisibleValues[Percentage, BigDecimal, BigDecimal] = new DivisibleValues[Percentage, BigDecimal, BigDecimal] {
     override def divide(a: Percentage, b: BigDecimal): BigDecimal = a / b
     override def leftUnit: Percentage = 0.procent
     override def rightUnit: BigDecimal = 1
   }
+
   implicit def somethingDividedBySomethingAsPercentage: DivisibleValues[Bedrag, Bedrag, Percentage] = new DivisibleValues[Bedrag, Bedrag, Percentage] {
     // Note: this type class instance was initially as Quantity x Quantity => Percentage, but the QuantityBigDecimal throws a fit if we do that
     // and makes it ambiguous to choose when trying to divide two BigDecimals
@@ -54,7 +64,7 @@ object DivisibleValues {
     override def rightUnit: Bedrag = 1.euro
   }
 
-  // Note: there is no somethingDividedByBigDecimal, because the division is not a commutative operation
+  // Note: there is no somethingDividedByBedrag, because the division is not a commutative operation
   // and dividing a BigDecimal by something like a Bedrag would yield a BigDecimal Per Bedrag type, which
   // I do not yet foresee any use for.
 }
