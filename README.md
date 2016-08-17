@@ -28,7 +28,7 @@ libraryDependencies += "org.scala-rules" %% "rule-engine" % "0.2.6"
 The rule engine uses a `Fact` as the base for all of its derivations. A `Fact` defines its name and type so it can be referenced in evaluations down the road. `Facts` are best defined inside a `Glossary`:
 
 ```scala
-class MyGlossary extends Glossary {
+object MyGlossary extends Glossary {
 	val factA = defineFact[Int]
 	val factB = defineFact[Int]
 	val factC = defineFact[Int]
