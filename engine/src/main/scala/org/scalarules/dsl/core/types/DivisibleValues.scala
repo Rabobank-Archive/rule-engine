@@ -38,7 +38,7 @@ object DivisibleValues {
     private val ev = implicitly[Quantity[N]]
     override def divide(a: N, b: Percentage): N = ev.divide(a, b.alsFractie)
     override def leftUnit: N = ev.zero
-    override def rightUnit: Percentage = 1.procent
+    override def rightUnit: Percentage = 100.procent
   }
 
   implicit def somethingDividedByInt[N : Quantity]: DivisibleValues[N, Int, N] = new DivisibleValues[N, Int, N] {
