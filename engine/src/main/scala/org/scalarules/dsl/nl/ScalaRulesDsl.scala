@@ -1,7 +1,7 @@
 package org.scalarules.dsl.nl
 
 import org.scalarules.dsl.nl.datum.DatumImplicits
-import org.scalarules.dsl.nl.grammar.macros.DslMacros
+import org.scalarules.dsl.nl.grammar.`macro`.DslMacros
 import org.scalarules.dsl.nl.grammar.{DslCondition, DslConditionImplicits, DslEvaluationImplicits, DslListFilterWord, DslLoopWordTrait, GegevenWord}
 import org.scalarules.engine._
 
