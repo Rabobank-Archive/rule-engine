@@ -11,8 +11,226 @@ import org.scalatest.prop.Checkers
 
 import scala.language.postfixOps
 
+/**
+  * There is a fair bit of duplication going on here, however, rounding issues can be very subtle yet quite destructive.
+  * This way there is a fair bit of redundancy within the tests and a lot of numbers are run through the functions so
+  * if any discrepancies exist between the DSL and the corresponding BigDecimal.setScale function, we will find them.
+  */
 class AfrondingsWordsTest extends PropSpec with Checkers {
 
+  /* BigDecimal property base tests*/
+  property("BigDecimal: halfNaarEven should match BigDecimal.RoundingMode.HALF_EVEN for positive doubles") {
+    check(
+      forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "halfNaarEven")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfEven)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: halfNaarEven should match BigDecimal.RoundingMode.HALF_EVEN for negative doubles") {
+    check(
+      forAll (for {testGetal <- Gen.negNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "halfNaarEven")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfEven)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: halfNaarNulToe should match BigDecimal.RoundingMode.HALF_DOWN for positive doubles") {
+    check(
+      forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "halfNaarNulToe")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfNaarNulToe)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: halfNaarNulToe should match BigDecimal.RoundingMode.HALF_DOWN for negative doubles") {
+    check(
+      forAll (for {testGetal <- Gen.negNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "halfNaarNulToe")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfNaarNulToe)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: naarBeneden should match BigDecimal.RoundingMode.FLOOR for positive doubles") {
+    check(
+      forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "naarBeneden")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBeneden)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: naarBeneden should match BigDecimal.RoundingMode.FLOOR for negative doubles") {
+    check(
+      forAll (for {testGetal <- Gen.negNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "naarBeneden")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBeneden)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: naarBoven should match BigDecimal.RoundingMode.CEILING for positive doubles") {
+    check(
+      forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "naarBoven")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBoven)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: naarBoven should match BigDecimal.RoundingMode.CEILING for negative doubles") {
+    check(
+      forAll (for {testGetal <- Gen.negNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "naarBoven")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBoven)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: naarNulToe should match BigDecimal.RoundingMode.DOWN for positive doubles") {
+    check(
+      forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "naarNulToe")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarNulToe)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: naarNulToe should match BigDecimal.RoundingMode.DOWN for negative doubles") {
+    check(
+      forAll (for {testGetal <- Gen.negNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "naarNulToe")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarNulToe)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: rekenkundig should match BigDecimal.RoundingMode.HALF_UP for positive doubles") {
+    check(
+      forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "rekenkundig")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalRekenkundig)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: rekenkundig should match BigDecimal.RoundingMode.HALF_UP for negative doubles") {
+    check(
+      forAll (for {testGetal <- Gen.negNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "rekenkundig")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalRekenkundig)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: vanNulAf should match BigDecimal.RoundingMode.UP for positive doubles") {
+    check(
+      forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "vanNulAf")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalVanNulAf)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP) )
+
+      }
+    )
+  }
+
+  property("BigDecimal: vanNulAf should match BigDecimal.RoundingMode.UP for negative doubles") {
+    check(
+      forAll (for {testGetal <- Gen.negNum[Double]} yield testGetal) { testGetal: Double =>
+
+        val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
+                                    afrondingsType -> "vanNulAf")
+
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalVanNulAf)
+
+        all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP) )
+
+      }
+    )
+  }
+
+
+  /* Percentage property based test*/
   property("Percentage: halfNaarEven should match BigDecimal.RoundingMode.HALF_EVEN for positive doubles") {
     check(
       forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
@@ -223,12 +441,13 @@ class AfrondingsWordsTest extends PropSpec with Checkers {
     )
   }
 
+  /* Bedrag property based tests*/
   property("Bedrag: halfNaarEven should match BigDecimal.RoundingMode.HALF_EVEN for positive doubles") {
     check(
       forAll (for {testGetal <- Gen.posNum[Double]} yield testGetal) { testGetal: Double =>
 
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
-                                    afrondingsType -> "halfNaarEven")
+          afrondingsType -> "halfNaarEven")
 
         val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragHalfEven)
 

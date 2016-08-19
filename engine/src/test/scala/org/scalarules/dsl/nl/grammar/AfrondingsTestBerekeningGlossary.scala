@@ -5,7 +5,17 @@ import org.scalarules.utils.Glossary
 
 object AfrondingsTestBerekeningGlossary extends Glossary {
 
-  val aantal = defineFact[Integer]()
+  val afrondingsType = defineFact[String]()
+
+  val startBigDecimal = defineFact[BigDecimal]()
+  val afgerondBigDecimalHalfEven = defineFact[BigDecimal]()
+  val afgerondBigDecimalHalfNaarNulToe = defineFact[BigDecimal]()
+  val afgerondBigDecimalNaarBeneden = defineFact[BigDecimal]()
+  val afgerondBigDecimalNaarBoven = defineFact[BigDecimal]()
+  val afgerondBigDecimalNaarNulToe = defineFact[BigDecimal]()
+  val afgerondBigDecimalRekenkundig = defineFact[BigDecimal]()
+  val afgerondBigDecimalVanNulAf = defineFact[BigDecimal]()
+  
   val startPercentage = defineFact[Percentage]()
   val afgerondPercentageHalfEven = defineFact[Percentage]()
   val afgerondPercentageHalfNaarNulToe = defineFact[Percentage]()
@@ -23,6 +33,5 @@ object AfrondingsTestBerekeningGlossary extends Glossary {
   val afgerondBedragNaarNulToe = defineFact[Bedrag]()
   val afgerondBedragRekenkundig = defineFact[Bedrag]()
   val afgerondBedragVanNulAf = defineFact[Bedrag]()
-  val afrondingsType = defineFact[String]()
 
 }

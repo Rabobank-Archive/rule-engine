@@ -110,6 +110,13 @@ trait Afrondbaar[T] {
 }
 
 trait AfrondingsImplicits {
+  implicit def afrondbaarBigDecimal: Afrondbaar[BigDecimal] = {
+    new Afrondbaar[BigDecimal] {
+      override def rondAfOp(afTeRonden: BigDecimal, aantalDecimalen: Integer, afrondingsWijze: RoundingMode): BigDecimal =
+      afTeRonden.setScale(aantalDecimalen, afrondingsWijze)
+    }
+  }
+
   implicit def afrondbaarPercentage: Afrondbaar[Percentage] = {
     new Afrondbaar[Percentage] {
       override def rondAfOp(afTeRonden: Percentage, aantalDecimalen: Integer, afrondingsWijze: RoundingMode): Percentage =
