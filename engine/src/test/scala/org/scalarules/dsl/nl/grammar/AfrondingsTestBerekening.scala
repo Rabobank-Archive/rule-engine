@@ -7,6 +7,37 @@ import scala.language.postfixOps
 
 class AfrondingsTestBerekening extends Berekening (
 
+  /* BigDecimal test calculations*/
+  Gegeven(afrondingsType is "halfNaarEven") Bereken
+    afgerondBigDecimalHalfEven is (startBigDecimal halfNaarEven afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "halfNaarNulToe") Bereken
+    afgerondBigDecimalHalfNaarNulToe is (startBigDecimal halfNaarNulToe afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "naarBeneden") Bereken
+    afgerondBigDecimalNaarBeneden is (startBigDecimal naarBeneden afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "naarBoven") Bereken
+    afgerondBigDecimalNaarBoven is (startBigDecimal naarBoven afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "naarNulToe") Bereken
+    afgerondBigDecimalNaarNulToe is (startBigDecimal naarNulToe afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "rekenkundig") Bereken
+    afgerondBigDecimalRekenkundig is (startBigDecimal rekenkundig afgerond op 0 decimalen)
+  ,
+
+  Gegeven(afrondingsType is "vanNulAf") Bereken
+    afgerondBigDecimalVanNulAf is (startBigDecimal vanNulAf afgerond op 0 decimalen)
+  ,
+
+
+  /* Percentage test calculations*/
   Gegeven(afrondingsType is "halfNaarEven") Bereken
     afgerondPercentageHalfEven is (startPercentage halfNaarEven afgerond op 0 decimalen)
   ,
@@ -35,6 +66,8 @@ class AfrondingsTestBerekening extends Berekening (
     afgerondPercentageVanNulAf is (startPercentage vanNulAf afgerond op 0 decimalen)
   ,
 
+
+  /* Bedrag test calculations*/
   Gegeven(afrondingsType is "halfNaarEven") Bereken
     afgerondBedragHalfEven is (startBedrag halfNaarEven afgerond op 0 decimalen)
   ,
