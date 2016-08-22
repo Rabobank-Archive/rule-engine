@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.dsl.nl.grammar.AfrondingsWords._
+import org.scalarules.dsl.nl.grammar._
 import org.scalarules.dsl.nl.grammar.AfrondingsTestBerekeningGlossary._
 
 import scala.language.postfixOps

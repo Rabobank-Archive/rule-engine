@@ -16,7 +16,7 @@ import scala.language.postfixOps
   * This way there is a fair bit of redundancy within the tests and a lot of numbers are run through the functions so
   * if any discrepancies exist between the DSL and the corresponding BigDecimal.setScale function, we will find them.
   */
-class AfrondingsWordsTest extends PropSpec with Checkers {
+class AfrondingsWordsTraitTest extends PropSpec with Checkers {
 
   /* BigDecimal property base tests*/
   property("BigDecimal: halfNaarEven should match BigDecimal.RoundingMode.HALF_EVEN for positive doubles") {

@@ -8,7 +8,7 @@ import org.scalarules.engine._
   * Aggregates the keywords and implicit definitions of the Scala-Rules DSL. The implicits available in this
   * trait can be used by importing the `grammar` package object's members, or extending this trait.
   */
-trait ScalaRulesDsl extends AfrondingsImplicits
+trait ScalaRulesDsl extends AfrondingsWordsTrait
   with DslConditionImplicits
   with DslEvaluationImplicits
   with DatumImplicits

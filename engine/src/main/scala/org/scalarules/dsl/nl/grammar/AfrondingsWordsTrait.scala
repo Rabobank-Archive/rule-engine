@@ -7,7 +7,7 @@ import org.scalarules.finance.nl.{Bedrag, Percentage}
 import scala.language.{implicitConversions, postfixOps}
 import scala.math.BigDecimal.RoundingMode.RoundingMode
 
-object AfrondingsWords {
+trait AfrondingsWordsTrait {
 
   /**
     * a "filler" value required to enforce proper Dsl readability
@@ -18,7 +18,7 @@ object AfrondingsWords {
 
     /**
       * initiates a dsl mathematical rounding sequence: half-even
- *
+      *
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
       * @return AfrondingOpWord
       */
@@ -26,7 +26,7 @@ object AfrondingsWords {
 
     /**
       * initiates a dsl mathematical rounding sequence: half-down
- *
+      *
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
       * @return AfrondingOpWord
       */
@@ -34,7 +34,7 @@ object AfrondingsWords {
 
     /**
       * initiates a dsl mathematical rounding sequence: floor
- *
+      *
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
       * @return AfrondingOpWord
       */
@@ -42,7 +42,7 @@ object AfrondingsWords {
 
     /**
       * initiates a dsl mathematical rounding sequence: ceiling
- *
+      *
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
       * @return AfrondingOpWord
       */
@@ -50,7 +50,7 @@ object AfrondingsWords {
 
     /**
       * initiates a dsl mathematical rounding sequence: down
- *
+      *
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
       * @return AfrondingOpWord
       */
@@ -58,7 +58,7 @@ object AfrondingsWords {
 
     /**
       * initiates a dsl mathematical rounding sequence: half-up
- *
+      *
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
       * @return AfrondingOpWord
       */
@@ -66,7 +66,7 @@ object AfrondingsWords {
 
     /**
       * initiates a dsl mathematical rounding sequence: up
- *
+      *
       * @param afgerond obligatory word-val to enable a natural language expression of rounding
       * @return AfrondingOpWord
       */
@@ -77,7 +77,7 @@ object AfrondingsWords {
 
     /**
       * allows the dsl rounding to take an integer as its parameter for the amount of digits to be rounded to
- *
+      *
       * @param aantalDecimalen integer representing the number of digits to be rounded to
       * @return Afronding
       */
@@ -89,7 +89,7 @@ object AfrondingsWords {
     /**
       * We could have ended the call with "op" (where we have all the information),
       * but for natural language purposes and later flexibility, were are enforcing "decimalen" as closing statement.
- *
+      *
       * @return DslEvaluation[Percentage]
       */
     def decimalen: DslEvaluation[T] = {
@@ -103,17 +103,11 @@ object AfrondingsWords {
   }
 
   sealed class AfgerondKeyword
-}
 
-trait Afrondbaar[T] {
-  def rondAfOp(afTeRonden: T, aantalDecimalen: Integer, afrondingsWijze: RoundingMode): T
-}
-
-trait AfrondingsImplicits {
   implicit def afrondbaarBigDecimal: Afrondbaar[BigDecimal] = {
     new Afrondbaar[BigDecimal] {
       override def rondAfOp(afTeRonden: BigDecimal, aantalDecimalen: Integer, afrondingsWijze: RoundingMode): BigDecimal =
-      afTeRonden.setScale(aantalDecimalen, afrondingsWijze)
+        afTeRonden.setScale(aantalDecimalen, afrondingsWijze)
     }
   }
 
@@ -131,4 +125,9 @@ trait AfrondingsImplicits {
     }
   }
 }
+
+trait Afrondbaar[T] {
+  def rondAfOp(afTeRonden: T, aantalDecimalen: Integer, afrondingsWijze: RoundingMode): T
+}
+
 
