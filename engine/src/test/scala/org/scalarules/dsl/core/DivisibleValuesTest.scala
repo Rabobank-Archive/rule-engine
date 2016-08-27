@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.nl._
 import DivisibleValuesGlossary._
 import org.scalarules.utils.InternalBerekeningenTester
 
@@ -12,5 +12,12 @@ class DivisibleValuesTest extends InternalBerekeningenTester(new DivisibleValues
   ) verwacht (
     PercentageA is 50.procent
   )
+
+  test("Bedrag gedeeld door percentage geeft bedrag") gegeven (
+    BedragD is 400.euro,
+    PercentageB is 50.procent
+    ) verwacht (
+      BedragC is 800.euro
+    )
 
 }

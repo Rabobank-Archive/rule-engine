@@ -1,44 +1,27 @@
 package org.scalarules.engine
 
-import scala.annotation.tailrec
 import scala.language.existentials
-import scala.reflect.runtime.universe._
 
 trait Fact[+A] {
   def name: String
-  def isResult: Boolean
   def description: String
 
   def toEval: Evaluation[A]
-  def valueClass: Class[_]
+
+  override def toString: String = name
 }
 
-case class SingularFact[+A : TypeTag](name: String, isResult: Boolean = true, description: String = "") extends Fact[A] {
+private[engine] case object OriginFact extends Fact[Nothing] {
+  def name: String = "___meta___OriginFact___meta___"
+  def description: String = "Meta-fact used in graph construction"
+
+  def toEval: Evaluation[Nothing] = new ErrorEvaluation("The OriginFact is a meta-fact used in graph construction to indicate top-level constant evaluations")
+}
+
+case class SingularFact[+A](name: String, description: String = "") extends Fact[A] {
   def toEval: Evaluation[A] = new SingularFactEvaluation(this)
-
-  override def toString: String = name
-
-  override def valueClass: Class[_] = {
-    val tag = implicitly[TypeTag[A]]
-
-    tag.mirror.runtimeClass(tag.tpe)
-  }
 }
 
-case class ListFact[+A : TypeTag](name: String, isResult: Boolean = true, description: String = "") extends Fact[List[A]] {
+case class ListFact[+A](name: String, description: String = "") extends Fact[List[A]] {
   def toEval: Evaluation[List[A]] = new ListFactEvaluation[A](this)
-
-  override def toString: String = name
-
-  override def valueClass: Class[_] = {
-    val tag = implicitly[TypeTag[A]]
-
-    tag.mirror.runtimeClass(resolveTypeTagToElementType(tag.tpe))
-  }
-
-  @tailrec
-  private def resolveTypeTagToElementType(tpe: Type): Type = tpe.typeArgs match {
-    case t :: ts => resolveTypeTagToElementType(t)
-    case Nil => tpe
-  }
 }

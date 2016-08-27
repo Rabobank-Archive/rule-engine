@@ -2,6 +2,7 @@ package org.scalarules.dsl.core
 
 import org.scalarules.dsl.core.TableSelectorGlossary._
 import org.scalarules.dsl.core.grammar.Table
+import org.scalarules.finance.nl._
 import org.scalarules.utils.{InternalBerekeningenTester}
 
 class TableSelectorTest extends InternalBerekeningenTester(new TableSelectorBerekening) {

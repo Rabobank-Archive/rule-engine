@@ -1,9 +1,9 @@
 package org.scalarules.utils
 
 import org.scalarules.dsl.core.grammar.PresentWord
-import org.scalarules.dsl.nl.finance.{Bedrag, Per}
 import org.scalarules.dsl.nl.grammar.Berekening
 import org.scalarules.engine.{Context, Fact, FactEngine}
+import org.scalarules.finance.nl._
 import org.scalatest.{FlatSpec, Matchers}
 
 // TODO : Make into English and move the Dutch specific parts to a Dutch dsl package
@@ -30,9 +30,9 @@ class InternalBerekeningenTester(verplichteBerekening: Berekening, optioneleBere
 
   protected def assert[A](result: Context, fact: Fact[A], value: A) = {
     fact.toEval(result) match {
-      case Some(x) if value == Nil => fail(s"Feit ${fact.name} wordt verwacht niet aanwezig te zijn, maar heeft waarde $x")
+      case Some(x) if value == None => fail(s"Feit ${fact.name} wordt verwacht niet aanwezig te zijn, maar heeft waarde $x")
       case Some(x) => assertValue(x, value)
-      case None if value == Nil => // What to do?? --> Nothing.. You interpret Nil as 'expected not to be present', which is exactly what the None result means
+      case None if value == None => // What to do?? --> Nothing.. You interpret Nil as 'expected not to be present', which is exactly what the None result means
       case _ => fail(s"Feit ${fact.name} is niet beschikbaar in het resultaat. Waarde $value werd verwacht")
     }
   }
@@ -40,25 +40,25 @@ class InternalBerekeningenTester(verplichteBerekening: Berekening, optioneleBere
   // TODO : Extract these into ValueInspectors which we can add new instances of to some map/list of inspectors (maybe even just integrate with ScalaTest)
   private def assertValue[A](actual: A, expected: A): Unit = {
     actual match {
-      case x: List[Any] if expected != Nil => {
+      case x: List[Any] if expected != None => {
         assert(x.length == expected.asInstanceOf[List[Any]].length, "Lists sizes mismatch")
         x.zip(expected.asInstanceOf[List[Any]]).foreach( a => assertValue (a._1, a._2) )
       }
-      case x: BigDecimal if expected != Nil => x.setScale(24, BigDecimal.RoundingMode.HALF_EVEN) should be (expected.asInstanceOf[BigDecimal].setScale(24, BigDecimal.RoundingMode.HALF_EVEN))
-      case x: Bedrag if expected != Nil => x.afgerondOpCenten should be (expected.asInstanceOf[Bedrag].afgerondOpCenten)
+      case x: BigDecimal if expected != None => x.setScale(24, BigDecimal.RoundingMode.HALF_EVEN) should be (expected.asInstanceOf[BigDecimal].setScale(24, BigDecimal.RoundingMode.HALF_EVEN))
+      case x: Bedrag if expected != None => x.afgerondOpCenten should be (expected.asInstanceOf[Bedrag].afgerondOpCenten)
       // TODO: This is a bit ugly ... maybe we have to create a Per-companion object with appropriate unapply methods
-      case x: Per[_, _] if expected != Nil && x.waarde.isInstanceOf[Bedrag] => {
+      case x: Per[_, _] if expected != None && x.waarde.isInstanceOf[Bedrag] => {
         val concreteExpected: Per[Bedrag, _] = expected.asInstanceOf[Per[Bedrag, _]]
         x.waarde.asInstanceOf[Bedrag].afgerondOpCenten should be (concreteExpected.waarde.afgerondOpCenten)
         x.termijn should be (concreteExpected.termijn)
       }
-      case x: Any if expected != Nil => x should be (expected)
+      case x: Any if expected != None => x should be (expected)
     }
   }
 
   implicit class FactToFactValues[A](fact: Fact[A]) {
     def is(value: A): FactValues = FactValues(List((fact, value)))
-    def niet(aanwezigheid: PresentWord): FactValues = FactValues(List((fact, Nil)))
+    def niet(aanwezigheid: PresentWord): FactValues = FactValues(List((fact, None)))
   }
 }
 

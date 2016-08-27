@@ -3,8 +3,8 @@ package org.scalarules.dsl.core.grammar
 import DslCondition._
 import org.scalarules.dsl.core.temporal.LocalDate
 import org.scalarules.dsl.core.operators._
-import org.scalarules.dsl.core.types.NumberLike
-import org.scalarules.dsl.nl.finance.{Bedrag, Percentage}
+import org.scalarules.finance.core.Quantity
+import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.engine._
 
 import scala.language.implicitConversions
@@ -29,9 +29,9 @@ class BinaryEvaluation[-A, B, +C](lhs: Evaluation[A], rhs: Evaluation[B], operat
   override def toString: String = s"${lhs.toString} ${operatorDefinition.representation} ${rhs.toString}"
 }
 
-class UnaryMinusEvaluation[+A : NumberLike](eval: Evaluation[A]) extends Evaluation[A] {
+class UnaryMinusEvaluation[+A : Quantity](eval: Evaluation[A]) extends Evaluation[A] {
   override def apply(c: Context): Option[A] = {
-    val ev = implicitly[NumberLike[A]]
+    val ev = implicitly[Quantity[A]]
 
     Some(ev.negate(eval(c).getOrElse(ev.zero)))
   }
@@ -59,7 +59,7 @@ class DslEvaluation[+A](val condition: DslCondition, val evaluation: Evaluation[
     newDslEvaluation(other, new BinaryEvaluation[A1, B, C](evaluation, other.evaluation, ev))
   }
 
-  def unary_-[B >: A : NumberLike]: DslEvaluation[B] = {
+  def unary_-[B >: A : Quantity]: DslEvaluation[B] = {
     DslEvaluation(condition, new UnaryMinusEvaluation[B](evaluation))
   }
 

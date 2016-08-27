@@ -5,11 +5,11 @@ import org.scalarules.utils.Glossary
 
 object TableSelectorGlossary extends Glossary {
 
-  val IndexX = defineFact[Int]("IndexX")
-  val IndexY = defineFact[Int]("IndexY")
-  val ResultString = defineFact[String]("ResultString")
-  val TableFact = defineFact[Table[String, Int, Int]]("TableFact")
+  val IndexX = defineFact[Int]
+  val IndexY = defineFact[Int]
+  val ResultString = defineFact[String]
+  val TableFact = defineFact[Table[String, Int, Int]]
 
-  val IndexXRange = defineListFact[Int]("IndexXRange")
-  val ResultList = defineListFact[String]("ResultList")
+  val IndexXRange = defineListFact[Int]
+  val ResultList = defineListFact[String]
 }

@@ -1,5 +1,7 @@
 package org.scalarules.dsl.core.types
 
+import org.scalarules.finance.core.Quantity
+
 import scala.annotation.implicitNotFound
 
 /**
@@ -9,7 +11,7 @@ import scala.annotation.implicitNotFound
   * @tparam B type of the right hand side of the adding multiply
   * @tparam C type of the result of the adding multiply
   */
-@implicitNotFound("No member of type class Subtractable available in scope for combination ${A} - ${B} = ${C}")
+@implicitNotFound("No member of type class SubtractableValues available in scope for combination ${A} - ${B} = ${C}")
 trait SubtractableValues[A, B, C] {
   def minus(a: A, b: B): C
 
@@ -23,8 +25,8 @@ object SubtractableValues {
     override def leftUnit: BigDecimal = 0
     override def rightUnit: BigDecimal = 0
   }
-  implicit def numberLikeSubtractedByNumberLike[N : NumberLike]: SubtractableValues[N, N, N] = new SubtractableValues[N, N, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def quantitySubtractedByQuantity[N : Quantity]: SubtractableValues[N, N, N] = new SubtractableValues[N, N, N] {
+    private val ev = implicitly[Quantity[N]]
     override def minus(a: N, b: N): N = ev.minus(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: N = ev.zero

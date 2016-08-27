@@ -54,11 +54,11 @@ case class SubRunDerivation(inputs: Input, output: Output, condition: Condition,
   * @param inputList the `Fact` whose value should be used to iterate over and perform sub runs for.
   * @param yieldFact the `Fact` to extract from the result of the sub run. These values will be collected and end up
   *                  being the overall result of the `SubRunDerivation`.
-  * @tparam A type of the resulting `Fact`.
-  * @tparam B element type of the input `Fact`.
+  * @tparam O type of the resulting output `Fact`.
+  * @tparam I element type of the input `Fact`.
   */
-case class SubRunData[+A, B](derivations: List[Derivation], contextAdditions: B => Context, inputList: Fact[List[B]], yieldFact: Fact[A]) {
-  def yieldValue: Context => Option[A] = c => yieldFact.toEval(c)
+case class SubRunData[+O, I](derivations: List[Derivation], contextAdditions: I => Context, inputList: Fact[List[I]], yieldFact: Fact[O]) {
+  def yieldValue: Context => Option[O] = c => yieldFact.toEval(c)
 }
 
 /**

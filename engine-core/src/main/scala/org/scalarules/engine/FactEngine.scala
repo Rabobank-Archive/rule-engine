@@ -1,11 +1,15 @@
 package org.scalarules.engine
 
+import org.scalarules.engine.DerivationTools._
+
 import scala.annotation.tailrec
 import scala.util.{Failure, Success, Try}
-import org.scalarules.engine.DerivationTools._
 
 object FactEngine {
 
+  private var graphCache = new LRUCache[List[Derivation], Levels]()
+
+  // TODO : Move these functions to DerivationGraph
   /**
     * Constructs a Dependency graph for the provided list of Derivations. Each Derivation will yield a Node describing its output and other Nodes requiring its
     * output.
@@ -14,35 +18,36 @@ object FactEngine {
     * @return a Set of Nodes which reference their dependent Nodes
     */
   def constructGraph(derivations: List[Derivation]): Set[Node] = {
-    def resolveChildNodes(output: Fact[Any], nodesByInput: Map[Fact[Any], List[Node]]): List[Node] = if (nodesByInput contains output) nodesByInput(output) else List()
-    def constructNode(derivation: Derivation, nodesByInput: Map[Fact[Any], List[Node]]): Node = Node(derivation, resolveChildNodes(derivation.output, nodesByInput))
-    def staleOutputsForDerivations(derivations: List[Derivation]): Set[Fact[Any]] = computeAllOutputs(derivations) -- computeAllInputs(derivations)
+    constructNodes(derivations, computeAllInputs(derivations).map( (_, List()) ).toMap + (OriginFact -> List()), staleOutputsForDerivations(derivations).toList)
+  }
 
-    @tailrec
-    def constructNodes(remainingDerivations: List[Derivation], finishedNodesByInput: Map[Fact[Any], List[Node]], readyFacts: List[Fact[Any]]): Set[Node] = {
-      readyFacts match {
-        case rf :: rfs => {
-          val currentDerivation = remainingDerivations find ( _.output eq rf )
-          if (currentDerivation.isEmpty) throw new IllegalStateException("Attempting to process a Derivation which is no longer in the remainingDerivations list. This is weird :)")
-          if (currentDerivation.get.input.isEmpty) throw new IllegalArgumentException("Derivations without inputs are not supported. Offending derivation was: " + currentDerivation.get.output)
+  private def resolveChildNodes(output: Fact[Any], nodesByInput: Map[Fact[Any], List[Node]]): List[Node] = if (nodesByInput contains output) nodesByInput(output) else List()
+  private def constructNode(derivation: Derivation, nodesByInput: Map[Fact[Any], List[Node]]): Node = Node(derivation, resolveChildNodes(derivation.output, nodesByInput))
+  private def staleOutputsForDerivations(derivations: List[Derivation]): Set[Fact[Any]] = computeAllOutputs(derivations) -- computeAllInputs(derivations)
 
-          val newRemainingDerivations = remainingDerivations filterNot ( _.output eq rf )
-          val newNode: Node = constructNode(currentDerivation.get, finishedNodesByInput)
-          val newFinishedNodesByInput =
-            finishedNodesByInput map { case (fact, nodes) => (fact, if (currentDerivation.get.input contains fact) newNode :: nodes else nodes) }
-          val newReadyFacts = staleOutputsForDerivations(newRemainingDerivations).toList
+  @tailrec
+  private def constructNodes(remainingDerivations: List[Derivation], finishedNodesByInput: Map[Fact[Any], List[Node]], readyFacts: List[Fact[Any]]): Set[Node] = {
+    readyFacts match {
+      case rf :: rfs => {
+        val currentDerivation = remainingDerivations find ( _.output eq rf )
+        if (currentDerivation.isEmpty) throw new IllegalStateException("Attempting to process a Derivation which is no longer in the remainingDerivations list. This is weird :)")
 
-          constructNodes( newRemainingDerivations, newFinishedNodesByInput, newReadyFacts )
+        val newRemainingDerivations = remainingDerivations filterNot ( _.output eq rf )
+        val newNode: Node = constructNode(currentDerivation.get, finishedNodesByInput)
+        val newFinishedNodesByInput = finishedNodesByInput map {
+            case (OriginFact, nodes) if currentDerivation.get.input.isEmpty => (OriginFact, newNode :: nodes)
+            case (fact, nodes) => (fact, if (currentDerivation.get.input contains fact) newNode :: nodes else nodes)
         }
-        case Nil => if (remainingDerivations.isEmpty) {
-          finishedNodesByInput.values.foldLeft(Set[Node]())( (acc: Set[Node], v: List[Node]) => acc ++ v )
-        } else {
-          throw new IllegalStateException("There are no stale outputs, but there are remaining derivations. This means there is a cycle in these derivations: " + remainingDerivations)
-        }
+        val newReadyFacts = staleOutputsForDerivations(newRemainingDerivations).toList
+
+        constructNodes( newRemainingDerivations, newFinishedNodesByInput, newReadyFacts )
+      }
+      case Nil => if (remainingDerivations.isEmpty) {
+        finishedNodesByInput.values.foldLeft(Set[Node]())( (acc: Set[Node], v: List[Node]) => acc ++ v )
+      } else {
+        throw new IllegalStateException("There are no stale outputs, but there are remaining derivations. This means there is a cycle in these derivations: " + remainingDerivations)
       }
     }
-
-    constructNodes(derivations, computeAllInputs(derivations).map( (_, List()) ).toMap, staleOutputsForDerivations(derivations).toList)
   }
 
   /**
@@ -76,6 +81,7 @@ object FactEngine {
 
     sorter(List(), List(), List(), Set(), originalNodes.toList)
   }
+  // End TODO move to DerivationGraph
 
   /**
     * Takes a List of Derivations an abstract initial situation and an evaluation function. This then creates an evaluation graph and starts evaluating the
@@ -91,12 +97,15 @@ object FactEngine {
     * @return the resulting state of the last invocation to the evaluator function.
     */
   def runDerivations[A](state: A, derivations: List[Derivation], evaluator: (A, Derivation) => A): A = {
-    val graph = FactEngine.constructGraph(derivations)
-    val levels = FactEngine.levelSorter(graph)
+    if (!graphCache.get(derivations).isDefined) {
+      graphCache.add(derivations, FactEngine.levelSorter(FactEngine.constructGraph(derivations)))
+    }
+
+    val graph: Levels = graphCache.get(derivations).get
 
     def levelRunner(state: A, level: Level): A = level.foldLeft(state)( (b, n) => evaluator(b, n.derivation) )
 
-    levels.foldLeft(state)( levelRunner )
+    graph.foldLeft(state)( levelRunner )
   }
 
   case class EvaluationException(message: String, derivation: Derivation, cause: Throwable) extends Exception(message, cause)
@@ -123,8 +132,7 @@ object FactEngine {
         val operation = d match {
           case der: SubRunDerivation => {
             val options: Seq[Option[Any]] = runSubCalculations(c, der.subRunData)
-            val values = options.flatten
-            if (values.size == options.size) Some(values) else None
+            Some(options.flatten)
           }
           case der: DefaultDerivation => der.operation(c)
         }
@@ -158,8 +166,7 @@ object FactEngine {
           case der: SubRunDerivation => {
             val (results, subSteps): (List[Context], List[List[Step]]) = runSubCalculations(c, der.subRunData, d).unzip
             val options = results.map(der.subRunData.yieldValue)
-            val values = options.flatten
-            processStep(d, c, subSteps.flatten ::: steps, if (values.size == options.size) Some(values) else None)
+            processStep(d, c, subSteps.flatten ::: steps, Some(options.flatten))
           }
           case der: DefaultDerivation => processStep(d, c, steps, der.operation(c))
         }

@@ -2,7 +2,7 @@ package org.scalarules.dsl.nl.grammar
 
 import org.scalarules.dsl.core.grammar.{DslCondition, DslEvaluation, FirstElementEvaluation, FirstEvaluation, IfThenElseEvaluation, ReducableEvaluation}
 import org.scalarules.dsl.core.grammar.DslCondition._
-import org.scalarules.dsl.nl.finance.Bedrag
+import org.scalarules.finance.nl.Bedrag
 import org.scalarules.engine._
 
 //scalastyle:off object.name

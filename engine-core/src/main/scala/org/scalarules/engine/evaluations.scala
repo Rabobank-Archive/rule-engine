@@ -12,6 +12,12 @@ class NoopEvaluation[+A] extends Evaluation[A] {
   override def toString: String = "None"
 }
 
+class ErrorEvaluation[+A](val message: String) extends Evaluation[A] {
+  def apply(c: Context): Option[A] = throw new IllegalStateException(message)
+
+  override def toString: String = "Error : " + message
+}
+
 class ListEvaluationWrapper[+A](wrappee: Evaluation[A]) extends Evaluation[List[A]] {
   def apply(c: Context): Option[List[A]] = wrappee(c) match {
     case Some(x) => Some(List(x))
@@ -40,6 +46,13 @@ class ListFactEvaluation[+A](fact: Fact[List[A]]) extends Evaluation[List[A]] {
 class ProjectionEvaluation[-A, +B](src: Evaluation[A], f: A => B) extends Evaluation[B] {
   override def apply(c: Context): Option[B] = src(c) match {
     case Some(x) => Some(f(x))
+    case None => None
+  }
+}
+
+class ProjectionListEvaluation[-A, +B](src: Evaluation[List[A]], f: A => B) extends Evaluation[List[B]] {
+  override def apply(c: Context): Option[List[B]] = src(c) match {
+    case Some(x) => Some(x.map(f))
     case None => None
   }
 }

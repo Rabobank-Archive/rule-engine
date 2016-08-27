@@ -1,7 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
 import org.scalarules.dsl.core.grammar.DslEvaluation
-import org.scalarules.dsl.core.grammar.DslCondition._
+import org.scalarules.dsl.core.grammar.DslCondition.{andCombineConditions, factFilledCondition}
 import org.scalarules.engine._
 
 //scalastyle:off method.name

@@ -1,5 +1,7 @@
 package org.scalarules.dsl.core.types
 
+import org.scalarules.finance.core.Quantity
+
 import scala.annotation.implicitNotFound
 
 /**
@@ -9,8 +11,8 @@ import scala.annotation.implicitNotFound
   * @tparam B type of the right hand side of the adding multiply
   * @tparam C type of the result of the adding multiply
   */
-@implicitNotFound("No member of type class Addable available in scope for combination ${A} + ${B} = ${C}")
-sealed trait AddableValues[A, B, C] {
+@implicitNotFound("No member of type class AddableValue available in scope for combination ${A} + ${B} = ${C}")
+trait AddableValues[A, B, C] {
   def plus(a: A, b: B): C
 
   def leftUnit: A
@@ -23,8 +25,13 @@ object AddableValues {
     override def leftUnit: BigDecimal = 0
     override def rightUnit: BigDecimal = 0
   }
-  implicit def numberLikeAddedToNumberLike[N : NumberLike]: AddableValues[N, N, N] = new AddableValues[N, N, N] {
-    private val ev = implicitly[NumberLike[N]]
+  implicit def intAddedToInt: AddableValues[Int, Int, Int] = new AddableValues[Int, Int, Int] {
+    override def plus(a: Int, b: Int): Int = a + b
+    override def leftUnit: Int = 0
+    override def rightUnit: Int = 0
+  }
+  implicit def quantityAddedToQuantity[N : Quantity]: AddableValues[N, N, N] = new AddableValues[N, N, N] {
+    private val ev = implicitly[Quantity[N]]
     override def plus(a: N, b: N): N = ev.plus(a, b)
     override def leftUnit: N = ev.zero
     override def rightUnit: N = ev.zero

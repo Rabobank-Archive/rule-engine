@@ -1,11 +1,20 @@
 package org.scalarules.dsl.core.grammar
 
-import DslCondition._
 import org.scalarules.engine._
 
 import scala.reflect.ClassTag
 
 //scalastyle:off method.name object.name
+sealed trait PresentWord {
+  def buildCondition[A](fact: Fact[A]): Condition
+}
+
+object present extends PresentWord {
+  override def buildCondition[A](fact: Fact[A]): Condition = Conditions.exists(fact)
+}
+object absent extends PresentWord {
+  override def buildCondition[A](fact: Fact[A]): Condition = Conditions.notExists(fact)
+}
 sealed trait DslConditionComparators[T] {
 
   def is(value: T): DslCondition = combineWith(c => lhsEvaluation(c) contains value)
@@ -48,8 +57,6 @@ case class DslConditionPart[T] private[grammar](oldPart: DslCondition, fact: Fac
   override private[grammar] def lhsEvaluation: Evaluation[T] = fact.toEval
   override private[grammar] def combineWith(condition: Condition): DslCondition = DslCondition(oldPart.facts + fact, combineMethod(oldPart.condition, condition))
 
-  def is(value: PresentWord): DslCondition = combineWith(isPresent(fact))
+  def is(value: PresentWord): DslCondition = combineWith(value.buildCondition(fact))
 
 }
-
-class PresentWord

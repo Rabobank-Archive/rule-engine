@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core
 
-import org.scalarules.dsl.nl.finance._
+import org.scalarules.finance.nl._
 import org.scalarules.dsl.nl.grammar._
 import TableSelectorGlossary._
 import org.scalarules.dsl.core.grammar.DslCondition._

@@ -7,5 +7,4 @@ package object en
   with DslEvaluationImplicits
 {
 
-  val present = new PresentWord
 }

@@ -8,7 +8,7 @@ import org.joda.time.{LocalDate => JodaLocalDate}
   *
   * @param internal internal representation of the date.
   */
-case class LocalDate private[temporal](internal: JodaLocalDate) extends Ordered[LocalDate] {
+case class LocalDate(internal: JodaLocalDate) extends Ordered[LocalDate] {
 
   override def compare(that: LocalDate): Int = internal.compareTo(that.internal)
 

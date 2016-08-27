@@ -7,18 +7,17 @@ import scala.reflect.ClassTag
 object GlossaryConverter {
 
   def toJson(g: Glossary): String = {
+    g.facts.map( factToJson ).mkString("{", ", ", "}")
+  }
 
-    def factToJson[A : ClassTag](fe: (String, Fact[A])): String = {
-      val (name, fact) = fe
-      val classTag = implicitly[ClassTag[A]]
-      s""" "${name}": {
-          |  "name": "${name}",
-          |  "description": "${fact.description}",
-          |}
+  private def factToJson[A : ClassTag](fe: (String, Fact[A])): String = {
+    val (name, fact) = fe
+    val classTag = implicitly[ClassTag[A]]
+    s""" "${name}": {
+        |  "name": "${name}",
+        |  "description": "${fact.description}",
+        |}
        """.stripMargin
-    }
-
-    g.getFacts.map( factToJson ).mkString("{", ", ", "}")
   }
 
 }
