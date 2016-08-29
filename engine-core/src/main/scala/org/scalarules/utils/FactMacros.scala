@@ -75,28 +75,32 @@ object FactMacros {
   def defineFactMacroImpl[A : c.WeakTypeTag](c: Context)(): c.Expr[SingularFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new SingularFact[A](factNameExpr.splice, "") }
+    val valueType = extractValueType[A](c)
+    c.universe.reify { new SingularFact[A](factNameExpr.splice, "", valueType.splice) }
   }
 
   @compileTimeOnly("This is a compile-time macro implementation, do not call it at runtime")
   def defineFactMacroWithDescriptionImpl[A : c.WeakTypeTag](c: Context)(description: c.Expr[String]): c.Expr[SingularFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new SingularFact[A](factNameExpr.splice, description.splice) }
+    val valueType = extractValueType[A](c)
+    c.universe.reify { new SingularFact[A](factNameExpr.splice, description.splice, c.weakTypeOf[A].toString) }
   }
 
   @compileTimeOnly("This is a compile-time macro implementation, do not call it at runtime")
   def defineListFactMacroImpl[A : c.WeakTypeTag](c: Context)(): c.Expr[ListFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new ListFact[A](factNameExpr.splice, "") }
+    val valueType = extractValueType[A](c)
+    c.universe.reify { new ListFact[A](factNameExpr.splice, "", valueType.splice) }
   }
 
   @compileTimeOnly("This is a compile-time macro implementation, do not call it at runtime")
   def defineListFactMacroWithDescriptionImpl[A : c.WeakTypeTag](c: Context)(description: c.Expr[String]): c.Expr[ListFact[A]] =
   {
     val factNameExpr = extractDeclaredValName(c)
-    c.universe.reify { new ListFact[A](factNameExpr.splice, description.splice) }
+    val valueType = extractValueType[A](c)
+    c.universe.reify { new ListFact[A](factNameExpr.splice, description.splice, valueType.splice) }
   }
 
   /**
@@ -116,6 +120,12 @@ object FactMacros {
     val fullName = enclosingOwner.name.decodedName.toString().trim()
 
     c.Expr[String](Literal(Constant(fullName)))
+  }
+
+  private def extractValueType[A : c.WeakTypeTag](c: Context): c.Expr[String] = {
+    import c.universe._
+
+    c.Expr[String](Literal(Constant(c.weakTypeOf[A].toString)))
   }
 
 }
