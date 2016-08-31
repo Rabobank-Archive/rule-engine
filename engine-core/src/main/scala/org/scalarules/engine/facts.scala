@@ -8,6 +8,8 @@ trait Fact[+A] {
 
   def toEval: Evaluation[A]
 
+  def valueType: String
+
   override def toString: String = name
 }
 
@@ -16,12 +18,14 @@ private[engine] case object OriginFact extends Fact[Nothing] {
   def description: String = "Meta-fact used in graph construction"
 
   def toEval: Evaluation[Nothing] = new ErrorEvaluation("The OriginFact is a meta-fact used in graph construction to indicate top-level constant evaluations")
+
+  def valueType: String = "Nothing"
 }
 
-case class SingularFact[+A](name: String, description: String = "") extends Fact[A] {
+case class SingularFact[+A](name: String, description: String = "", valueType: String = "") extends Fact[A] {
   def toEval: Evaluation[A] = new SingularFactEvaluation(this)
 }
 
-case class ListFact[+A](name: String, description: String = "") extends Fact[List[A]] {
+case class ListFact[+A](name: String, description: String = "", valueType: String = "") extends Fact[List[A]] {
   def toEval: Evaluation[List[A]] = new ListFactEvaluation[A](this)
 }
