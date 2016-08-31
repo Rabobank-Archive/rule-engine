@@ -2,7 +2,7 @@ package org.scalarules.dsl.nl.grammar.`macro`
 
 import org.scalarules.dsl.nl.grammar.{DslCondition, GegevenWord, ListBerekenStart, SingularBerekenStart}
 import org.scalarules.engine.{Derivation, ListFact, SingularFact}
-import org.scalarules.utils.SourcePosition
+import org.scalarules.utils.FileSourcePosition
 
 import scala.annotation.compileTimeOnly
 import scala.language.experimental.macros
@@ -15,7 +15,7 @@ object DslMacros {
   def captureGegevenSourcePositionMacroImpl(c: Context)(condition: c.Expr[DslCondition]): c.Expr[GegevenWord] = {
     val (filename, line, column, start, length) = extractSourcePosition(c)
 
-    c.universe.reify { new GegevenWord(condition.splice, SourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
+    c.universe.reify { new GegevenWord(condition.splice, FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
   }
 
   @compileTimeOnly("This macro stores the source position of a 'Bereken' during compile time, no use during runtime")
@@ -26,7 +26,7 @@ object DslMacros {
 
     val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
 
-    c.universe.reify { new SingularBerekenStart[A](conditionExpr.splice, fact.splice, List(), SourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
+    c.universe.reify { new SingularBerekenStart[A](conditionExpr.splice, fact.splice, List(), FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
   }
 
   @compileTimeOnly("This macro stores the source position of a 'Bereken' during compile time, no use during runtime")
@@ -38,7 +38,7 @@ object DslMacros {
     val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
     val derivationsExpr: c.Expr[List[Derivation]] = c.Expr[List[Derivation]](Select(c.prefix.tree, TermName("derivations")))
 
-    c.universe.reify { new SingularBerekenStart[A](conditionExpr.splice, fact.splice, derivationsExpr.splice, SourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
+    c.universe.reify { new SingularBerekenStart[A](conditionExpr.splice, fact.splice, derivationsExpr.splice, FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
   }
 
   @compileTimeOnly("This macro stores the source position of a 'Bereken' during compile time, no use during runtime")
@@ -49,7 +49,7 @@ object DslMacros {
 
     val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
 
-    c.universe.reify { new ListBerekenStart[A](conditionExpr.splice, fact.splice, List(), SourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
+    c.universe.reify { new ListBerekenStart[A](conditionExpr.splice, fact.splice, List(), FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
   }
 
   @compileTimeOnly("This macro stores the source position of a 'Bereken' during compile time, no use during runtime")
@@ -61,7 +61,7 @@ object DslMacros {
     val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
     val derivationsExpr: c.Expr[List[Derivation]] = c.Expr[List[Derivation]](Select(c.prefix.tree, TermName("derivations")))
 
-    c.universe.reify { new ListBerekenStart[A](conditionExpr.splice, fact.splice, derivationsExpr.splice, SourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
+    c.universe.reify { new ListBerekenStart[A](conditionExpr.splice, fact.splice, derivationsExpr.splice, FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
   }
 
   def extractSourcePosition(c: Context): (c.Expr[String], c.Expr[Int], c.Expr[Int], c.Expr[Int], c.Expr[Int]) = {

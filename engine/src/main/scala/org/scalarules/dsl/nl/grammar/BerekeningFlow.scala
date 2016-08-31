@@ -3,7 +3,7 @@ package org.scalarules.dsl.nl.grammar
 import DslCondition.{andCombineConditions, factFilledCondition}
 import org.scalarules.dsl.nl.grammar.`macro`.DslMacros
 import org.scalarules.engine._
-import org.scalarules.utils.SourcePosition
+import org.scalarules.utils.{FileSourcePosition, SourcePosition, SourceUnknown}
 
 import scala.annotation.compileTimeOnly
 import scala.reflect.macros.blackbox.Context
@@ -16,7 +16,7 @@ object Specificatie {
     val condition = andCombineConditions(dslCondition, dslEvaluation.condition).condition
     val input = dslCondition.facts.toList ++ dslEvaluation.condition.facts
 
-    DefaultDerivation(input, output, condition, dslEvaluation.evaluation, Some(sourcePosition))
+    DefaultDerivation(input, output, condition, dslEvaluation.evaluation, sourcePosition, dslCondition.sourcePosition)
   }
 }
 
@@ -38,8 +38,17 @@ object Specificatie {
  *
  */
 
-class GegevenWord(val condition: DslCondition, val position: SourcePosition) {
+class GegevenWord(val initialCondition: DslCondition, val position: SourcePosition = SourceUnknown()) {
   println( s"Defined Gegeven at : ${position}" ) // scalastyle:ignore
+
+  val condition: DslCondition = position match {
+    case SourceUnknown() => initialCondition
+    case fsp @ FileSourcePosition(_, _, _, _, _) => {
+      val DslCondition(facts, condition, _) = initialCondition
+
+      DslCondition(facts, condition, position)
+    }
+  }
 
   def Bereken[A](fact: SingularFact[A]): SingularBerekenStart[A] = macro DslMacros.captureSingularBerekenSourcePositionMacroImpl[A]
   def Bereken[A](fact: ListFact[A]): ListBerekenStart[A] = macro DslMacros.captureListBerekenSourcePositionMacroImpl[A]

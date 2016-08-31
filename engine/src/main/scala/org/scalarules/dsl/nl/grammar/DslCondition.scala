@@ -2,10 +2,11 @@ package org.scalarules.dsl.nl.grammar
 
 import org.scalarules.dsl.nl.grammar.DslCondition._
 import org.scalarules.engine._
+import org.scalarules.utils.{SourcePosition, SourceUnknown}
 
 import scala.language.implicitConversions
 
-case class DslCondition(facts: Set[Fact[Any]], condition: Condition) {
+case class DslCondition(facts: Set[Fact[Any]], condition: Condition, sourcePosition: SourcePosition = SourceUnknown()) {
   def en[T](rhs: Fact[T]): DslConditionPart[T] = DslConditionPart(this, rhs, andPredicate)
   def en(rhs: DslCondition): DslCondition = combine(this, rhs, andPredicate)
 

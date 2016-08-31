@@ -3,7 +3,7 @@ package org.scalarules.engine
 // TODO : Turn this off and fix it
 import scala.language.existentials
 import DerivationTools._
-import org.scalarules.utils.SourcePosition
+import org.scalarules.utils.{SourcePosition, SourceUnknown}
 
 /**
   * A `Derivation` models the basic element used inside the `Engine`. One execution step of the `Engine` will always
@@ -14,7 +14,8 @@ sealed trait Derivation {
   val input: Input
   val output: Output
   val condition: Condition
-  val sourcePosition: Option[SourcePosition] = None
+  val sourcePosition: SourcePosition = SourceUnknown()
+  val conditionSourcePosition: SourcePosition = SourceUnknown()
 }
 
 /**
@@ -26,7 +27,12 @@ sealed trait Derivation {
   * @param operation the actual `Evaluation` to perform when the `condition` parameter resolves to `true`. Its result
   *                  will be stored under the `Fact` declared in the `output` parameter.
   */
-case class DefaultDerivation(input: Input, output: Output, condition: Condition, operation: Evaluation[Any], override val sourcePosition: Option[SourcePosition] = None) extends Derivation
+case class DefaultDerivation(input: Input,
+                             output: Output,
+                             condition: Condition,
+                             operation: Evaluation[Any],
+                             override val sourcePosition: SourcePosition = SourceUnknown(),
+                             override val conditionSourcePosition: SourcePosition = SourceUnknown()) extends Derivation
 
 /**
   * Special case for a sub `Derivation`. `Derivation`s of this type cause a nested run of the `Engine` to be performed
