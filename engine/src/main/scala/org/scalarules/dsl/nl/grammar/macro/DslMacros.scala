@@ -73,7 +73,7 @@ object DslMacros {
 
     val line = c.Expr(Literal(Constant(position.line)))
     val column = c.Expr(Literal(Constant(position.column)))
-    val start = c.Expr(Literal(Constant(position.start)))
+    val start = c.Expr(Literal(Constant(position.focus.start)))
     val length = c.Expr(Literal(Constant(methodName.symbol.name.toString().length)))
     val filename = c.Expr(Literal(Constant(source.file.name)))
 
