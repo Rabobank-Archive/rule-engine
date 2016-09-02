@@ -84,7 +84,7 @@ object FactMacros {
   {
     val factNameExpr = extractDeclaredValName(c)
     val valueType = extractValueType[A](c)
-    c.universe.reify { new SingularFact[A](factNameExpr.splice, description.splice, c.weakTypeOf[A].toString) }
+    c.universe.reify { new SingularFact[A](factNameExpr.splice, description.splice, valueType.splice) }
   }
 
   @compileTimeOnly("This is a compile-time macro implementation, do not call it at runtime")
