@@ -123,7 +123,7 @@ object FactMacros {
   }
 
   private def extractValueType[A : c.WeakTypeTag](c: Context): c.Expr[String] = {
-    import c.universe._
+    import c.universe._ // scalastyle:ignore
 
     c.Expr[String](Literal(Constant(c.weakTypeOf[A].toString)))
   }
