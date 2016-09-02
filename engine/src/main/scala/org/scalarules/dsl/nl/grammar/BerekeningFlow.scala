@@ -39,8 +39,6 @@ object Specificatie {
  */
 
 class GegevenWord(val initialCondition: DslCondition, val position: SourcePosition = SourceUnknown()) {
-  println( s"Defined Gegeven at : ${position}" ) // scalastyle:ignore
-
   val condition: DslCondition = position match {
     case SourceUnknown() => initialCondition
     case fsp @ FileSourcePosition(_, _, _, _, _) => {
