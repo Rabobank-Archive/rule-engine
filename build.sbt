@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
   organization := "org.scala-rules",
   organizationHomepage := Some(url("https://github.com/scala-rules")),
   homepage := Some(url("https://github.com/scala-rules/rule-engine")),
-  version := "0.3.3-SNAPSHOT",
+  version := "0.3.3-1",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings")
 ) ++ staticAnalysisSettings ++ publishSettings
@@ -104,6 +104,8 @@ lazy val staticAnalysisSettings = {
     testScalastyle := org.scalastyle.sbt.ScalastylePlugin.scalastyle.in(Test).toTask("").value
   )
 }
+
+coverageExcludedPackages := ".*Macros"
 
 addCommandAlias("verify", ";compileScalastyle;testScalastyle;coverage;test;coverageReport;coverageAggregate")
 
