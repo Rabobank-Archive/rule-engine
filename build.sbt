@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
   organization := "org.scala-rules",
   organizationHomepage := Some(url("https://github.com/scala-rules")),
   homepage := Some(url("https://github.com/scala-rules/rule-engine")),
-  version := "0.3.3-SNAPSHOT",
+  version := "0.3.3",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings")
 ) ++ staticAnalysisSettings ++ publishSettings
