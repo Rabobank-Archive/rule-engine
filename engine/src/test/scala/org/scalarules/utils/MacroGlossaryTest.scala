@@ -45,4 +45,16 @@ class MacroGlossaryTest extends FlatSpec with Matchers {
     g.facts.get("factD").get.description should be(fourthDescription)
   }
 
+  it should "store concrete value type in the Fact on creation" in {
+    val g = new Glossary {
+      val stringFact = defineFact[String]
+      val intFact = defineFact[Int]
+      val intListFact = defineListFact[Int]
+    }
+
+    g.stringFact.valueType should be("String")
+    g.intFact.valueType should be("Int")
+    g.intListFact.valueType should be("Int")
+  }
+
 }
