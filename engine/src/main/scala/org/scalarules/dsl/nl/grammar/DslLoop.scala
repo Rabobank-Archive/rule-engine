@@ -24,5 +24,5 @@ class DslLoop[I](inputList: ListFact[I], contextAddition: I => Context) extends 
 }
 
 class SubBerekening[I, O](inputList: ListFact[I], contextAddition: I => Context, yieldFact: Fact[O]) {
-  def door(berekening: Berekening): SubRunData[O, I] = new SubRunData(berekening.berekeningen, contextAddition, inputList, yieldFact)
+  def door(berekening: Berekening): SubRunData[O, I] = new SubRunData(berekening.derivations, contextAddition, inputList, yieldFact)
 }

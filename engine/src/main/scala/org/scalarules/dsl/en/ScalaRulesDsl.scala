@@ -10,7 +10,8 @@ import org.scalarules.engine._
   * trait can be used by importing the `grammar` package object's members, or extending this trait.
   */
 trait ScalaRulesDsl extends /*AfrondingsWordsTrait*/
-  /*with */DslConditionImplicits
+  /*with */DslConditionENImplicits
+  with DslConditionImplicits
   with DslEvaluationImplicits
   with DateImplicits
   /*with DslLoopWordTrait

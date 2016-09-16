@@ -1,9 +1,8 @@
 package org.scalarules.dsl.nl
 
-import org.scalarules.dsl.core.grammar.{DslCondition, DslConditionImplicits, DslConditionPart, DslEvaluationImplicits, absent, present}
+import org.scalarules.dsl.core.grammar.{DslCondition, DslConditionImplicits, DslEvaluationImplicits, absent, present}
 import org.scalarules.dsl.nl.datum.DatumImplicits
 import org.scalarules.dsl.nl.grammar._
-import org.scalarules.engine._
 
 /**
   * Aggregates the keywords and implicit definitions of the Scala-Rules DSL. The implicits available in this

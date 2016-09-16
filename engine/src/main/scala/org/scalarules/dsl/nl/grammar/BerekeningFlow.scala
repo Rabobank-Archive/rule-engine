@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.dsl.core.grammar.DslEvaluation
+import org.scalarules.dsl.core.grammar.{DerivationAccumulator, DslEvaluation}
 import org.scalarules.dsl.core.grammar.DslCondition.{andCombineConditions, factFilledCondition}
 import org.scalarules.engine._
 
@@ -53,7 +53,7 @@ class ListBerekenStart[T] private[grammar](condition: DslConditionNL, output: Fa
   }
 }
 
-class BerekeningAccumulator private[grammar](condition: DslConditionNL, val derivations: List[Derivation]) {
+class BerekeningAccumulator private[grammar](condition: DslConditionNL, val derivations: List[Derivation]) extends DerivationAccumulator {
   def en[T](fact: SingularFact[T]): SingularBerekenStart[T] = new SingularBerekenStart(condition, fact, derivations)
   def en[A](fact: ListFact[A]): ListBerekenStart[A] = new ListBerekenStart(condition, fact, derivations)
 }

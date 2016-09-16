@@ -1,7 +1,7 @@
 package org.scalarules.dsl.en.grammar
 
 import org.scalarules.dsl.core.grammar.DslCondition._
-import org.scalarules.dsl.core.grammar.{DslCondition, DslEvaluation}
+import org.scalarules.dsl.core.grammar.{DerivationAccumulator, DslCondition, DslEvaluation}
 import org.scalarules.engine._
 
 //scalastyle:off method.name
@@ -47,7 +47,7 @@ class ListCalculationStart[T] private[grammar](condition: DslCondition, output: 
   }
 }
 
-class CalculationAccumulator private[grammar](condition: DslCondition, val derivations: List[Derivation]) {
+class CalculationAccumulator private[grammar](condition: DslCondition, val derivations: List[Derivation]) extends DerivationAccumulator {
   def and[T](fact: SingularFact[T]): SingularCalculationStart[T] = new SingularCalculationStart(condition, fact, derivations)
   def and[A](fact: ListFact[A]): ListCalculationStart[A] = new ListCalculationStart(condition, fact, derivations)
 }

@@ -1,8 +1,8 @@
 package org.scalarules.dsl.en.grammar
 
-import org.scalarules.engine.Derivation
+import org.scalarules.dsl.core.grammar.AbstractCalculation
 
-class Calculation(berekeningAccumulators: CalculationAccumulator*) {
-  val derivations: List[Derivation] = berekeningAccumulators.flatMap(_.derivations).toList
-//  val berekeningenWithExtraInputInformation: List[(Derivation, List[Fact[Any]], List[Fact[Any]])] = berekeningAccumulators.flatMap(b => b.toDerivationAndInputSets).toList
+class Calculation(berekeningAccumulators: CalculationAccumulator*) extends AbstractCalculation[CalculationAccumulator](berekeningAccumulators:_*) {
+
+  //  val berekeningenWithExtraInputInformation: List[(Derivation, List[Fact[Any]], List[Fact[Any]])] = berekeningAccumulators.flatMap(b => b.toDerivationAndInputSets).toList
 }

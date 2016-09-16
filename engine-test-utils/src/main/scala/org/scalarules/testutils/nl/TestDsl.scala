@@ -10,7 +10,7 @@ import org.scalatest.{FlatSpec, Matchers}
 // TODO : Make into English and move the Dutch specific parts to a Dutch dsl package
 class BerekeningenTester(verplichteBerekening: Berekening, optioneleBerekeningen: Berekening*) extends FlatSpec with Matchers {
 
-  val berekeningen = (verplichteBerekening :: optioneleBerekeningen.toList).flatMap(_.berekeningen)
+  val berekeningen = (verplichteBerekening :: optioneleBerekeningen.toList).flatMap(_.derivations)
   def waardes(factValues: FactValues*): FactValues = FactValues( factValues flatMap (_.tuples) )
   def test(description: String): ResultOfTest = new ResultOfTest(description, this)
 

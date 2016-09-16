@@ -1,15 +1,14 @@
 package org.scalarules.utils
 
-import org.scalarules.dsl.core.grammar.PresentWord
-import org.scalarules.dsl.nl.grammar.Berekening
+import org.scalarules.dsl.core.grammar.{AbstractCalculation, PresentWord}
 import org.scalarules.engine.{Context, Fact, FactEngine}
 import org.scalarules.finance.nl._
 import org.scalatest.{FlatSpec, Matchers}
 
 // TODO : Make into English and move the Dutch specific parts to a Dutch dsl package
-class InternalBerekeningenTester(verplichteBerekening: Berekening, optioneleBerekeningen: Berekening*) extends FlatSpec with Matchers {
+class InternalBerekeningenTester(verplichteBerekening: AbstractCalculation[_], optioneleBerekeningen: AbstractCalculation[_]*) extends FlatSpec with Matchers {
 
-  val berekeningen = (verplichteBerekening :: optioneleBerekeningen.toList).flatMap(_.berekeningen)
+  val berekeningen = (verplichteBerekening :: optioneleBerekeningen.toList).flatMap( _.derivations )
   def waardes(factValues: FactValues*): FactValues = FactValues( factValues flatMap (_.tuples) )
   def test(description: String): ResultOfTest = new ResultOfTest(description, this)
 
