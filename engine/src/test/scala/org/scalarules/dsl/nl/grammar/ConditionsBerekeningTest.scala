@@ -45,4 +45,10 @@ class ConditionsBerekeningTest extends InternalBerekeningenTester(new Conditions
     outputShouldBeAvailableIfInputIsNotAvailable niet aanwezig
   )
 
+  test("of aanwezige waarde niet wordt overschreven") gegeven (
+    tryToOverwriteThisValue is BigDecimal(100)
+  ) verwacht (
+    tryToOverwriteThisValue is BigDecimal(100)
+  )
+
 }
