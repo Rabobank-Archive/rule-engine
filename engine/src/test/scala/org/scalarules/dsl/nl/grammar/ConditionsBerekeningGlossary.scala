@@ -9,4 +9,9 @@ object ConditionsBerekeningGlossary extends Glossary {
   val outputAlwaysAvailable = defineFact[BigDecimal]
   val outputShouldBeAvailableIfInputIsAvailable = defineFact[BigDecimal]
   val outputShouldBeAvailableIfInputIsNotAvailable = defineFact[BigDecimal]
+
+  val tryToOverwriteThisValue = defineFact[BigDecimal]
+  val defaultValueForOverwriting = defineFact[BigDecimal]
+  val missingValueToUseInEerste = defineFact[BigDecimal]
+
 }
