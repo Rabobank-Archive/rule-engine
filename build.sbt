@@ -9,7 +9,7 @@ lazy val commonSettings = Seq(
   organization := "org.scala-rules",
   organizationHomepage := Some(url("https://github.com/scala-rules")),
   homepage := Some(url("https://github.com/scala-rules/rule-engine")),
-  version := "0.3.5-SNAPSHOT",
+  version := "0.3.5-REUTEL-SNAPSHOT",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings")
 ) ++ staticAnalysisSettings ++ publishSettings
@@ -46,7 +46,14 @@ lazy val engine = (project in file("engine"))
   .settings(
     name := "rule-engine",
     description := "Rule Engine",
-    libraryDependencies ++= engineDependencies
+    libraryDependencies ++= engineDependencies,
+    addCompilerPlugin(
+      "org.scalameta" % "paradise" % "3.0.0.95" cross CrossVersion.full ),
+    scalacOptions += "-Xplugin-require:macroparadise",
+    resolvers += Resolver.url(
+      "scalameta-bintray",
+      url("https://dl.bintray.com/scalameta/maven"))(Resolver.ivyStylePatterns)
+
   )
   .dependsOn(financeDsl, engineCore)
 
@@ -72,6 +79,7 @@ lazy val commonDependencies = Seq(
   "com.fasterxml.jackson.jaxrs" % "jackson-jaxrs-json-provider" % "2.7.3",
   "joda-time" % "joda-time" % jodaTimeVersion,
   "org.joda" % "joda-convert" % jodaConvertVersion,
+  "org.scalameta"  %% "scalameta" % "1.2.0",
   "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
   "org.scalacheck" %% "scalacheck" % "1.12.5" % Test
 )
