@@ -119,7 +119,7 @@ coverageExcludedPackages := ".*Macros"
 // TODO : Extract the macros to their own subproject and disable these things there
 //addCommandAlias("verify", ";compileScalastyle;testScalastyle;coverage;test;coverageReport;coverageAggregate")
 addCommandAlias("verify", ";testScalastyle;test")
-
+addCommandAlias("release", ";clean;compile;publishSigned")
 
 
 // *** Publishing ***
