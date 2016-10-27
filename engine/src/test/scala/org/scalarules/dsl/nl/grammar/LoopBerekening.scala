@@ -1,27 +1,36 @@
 package org.scalarules.dsl.nl.grammar
 
 import LoopBerekeningGlossary._
+import org.scalarules.dsl.nl.grammar.meta.SubBerekening
 
 class LoopBerekening extends Berekening (
   Gegeven(altijd) Bereken
-    simpleLoopResult is (Loop over loopInput per intermediateBigDecimal doe (intermediateBigDecimal * BigDecimal(2)))
+    simpleLoopResult bevat resultaten van SimpeleLoopSubBerekening over loopInput
   ,
   Gegeven(altijd) Bereken
-    enhancedLoopResult is (Loop over loopInput per intermediateBigDecimal geeft innerLoopReturnValue door new Berekening(
-      Gegeven (altijd) Bereken innerLoopReturnValue is intermediateBigDecimal + innerLoopAdditionValue)
-  )
+    nestedTestOutput bevat resultaten van GenesteLoopSubBerekening over nestedTestInput
   ,
   Gegeven(altijd) Bereken
-    enhancedLoopListInListResult is (
-      Loop over loopInput per intermediateBigDecimal doe (
-        Loop over innerLoopInput per intermediateInnerLoopBigDecimal doe (intermediateInnerLoopBigDecimal + intermediateBigDecimal)
-      )
-    )
-  ,
-  Gegeven(altijd) Bereken
-    filteredLoopResult is (
-      Loop over loopInput per intermediateBigDecimal geeft innerLoopReturnValue door new Berekening(
-        Gegeven (intermediateBigDecimal is 2) Bereken innerLoopReturnValue is (intermediateBigDecimal * BigDecimal(2))
-      )
-    )
+    filteredLoopResult bevat resultaten van GefilterdeLoopSubBerekening over loopInput
+)
+
+@SubBerekening
+class SimpeleLoopSubBerekening extends FlowBerekening[BigDecimal, BigDecimal] (
+  Invoer is innerLoopIteratee,
+  Uitvoer is innerLoopReturnValue,
+  Gegeven (altijd) Bereken innerLoopReturnValue is innerLoopIteratee + innerLoopAdditionValue
+)
+
+@SubBerekening
+class GenesteLoopSubBerekening extends FlowBerekening[List[BigDecimal], List[BigDecimal]] (
+  Invoer is nestedOuterLoopInput,
+  Uitvoer is nestedOuterLoopResult,
+  Gegeven (altijd) Bereken nestedOuterLoopResult bevat resultaten van SimpeleLoopSubBerekening over nestedOuterLoopInput
+)
+
+@SubBerekening
+class GefilterdeLoopSubBerekening extends FlowBerekening[BigDecimal, BigDecimal] (
+  Invoer is innerLoopIteratee,
+  Uitvoer is innerLoopReturnValue,
+  Gegeven (innerLoopIteratee is 2) Bereken innerLoopReturnValue is innerLoopIteratee + BigDecimal(2)
 )

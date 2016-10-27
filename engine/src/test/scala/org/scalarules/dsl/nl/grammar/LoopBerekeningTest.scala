@@ -6,31 +6,29 @@ import org.scalarules.utils.{InternalBerekeningenTester, lijst}
 class LoopBerekeningTest extends InternalBerekeningenTester(new LoopBerekening) {
 
   test("of simpele loop over lijst werkt") gegeven (
+    loopInput is List[BigDecimal](0, 1, 2, 3, 4, 5, 6),
+    innerLoopAdditionValue is BigDecimal(2)
+  ) verwacht (
+    simpleLoopResult is List[BigDecimal](2, 3, 4, 5, 6, 7, 8)
+  )
+
+  test("of loop goed omgaat met niet aanwezige innerloop waardes") gegeven (
     loopInput is List[BigDecimal](0, 1, 2, 3, 4, 5, 6)
   ) verwacht (
-    simpleLoopResult is List[BigDecimal](0, 2, 4, 6,8, 10, 12)
+    simpleLoopResult is List()
   )
 
-  test("of loop met subberekening werkt") gegeven (
-    loopInput is List[BigDecimal](0, 1, 2, 3, 4, 5, 6),
+  test("of loop met geneste subberekeningen werkt") gegeven (
+    nestedTestInput is List(List[BigDecimal](0, 1), List[BigDecimal](2, 3), List[BigDecimal](4, 5)),
     innerLoopAdditionValue is BigDecimal(1)
   ) verwacht (
-    enhancedLoopResult is List[BigDecimal](1, 2, 3, 4, 5, 6, 7)
-  )
-
-  test("of loop met inner loop werkt") gegeven (
-    loopInput is List[BigDecimal](0, 1, 2),
-    innerLoopInput is List[BigDecimal](10, 10, 10, 10)
-  ) verwacht (
-    enhancedLoopListInListResult is List(lijst van 4 waarde BigDecimal(10),
-                                        lijst van 4 waarde BigDecimal(11),
-                                        lijst van 4 waarde BigDecimal(12))
+    nestedTestOutput is List(List[BigDecimal](1, 2), List[BigDecimal](3, 4), List[BigDecimal](5, 6))
   )
 
   test("of loop met inner loop goed omgaat met niet aanwezige innerloop waardes") gegeven (
-    loopInput is List[BigDecimal](0, 1, 2)
+    nestedTestInput is List(List[BigDecimal](0, 1), List[BigDecimal](2, 3), List[BigDecimal](4, 5))
   ) verwacht (
-    enhancedLoopListInListResult is List()
+    nestedTestOutput is List(List(), List(), List())
   )
 
   test("of loop goed omgaat met gefilterde return values") gegeven (

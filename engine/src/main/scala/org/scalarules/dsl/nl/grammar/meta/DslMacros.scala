@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.grammar.macros
+package org.scalarules.dsl.nl.grammar.meta
 
 import org.scalarules.dsl.nl.grammar.{DslCondition, GegevenWord, ListBerekenStart, SingularBerekenStart}
 import org.scalarules.engine.{Derivation, ListFact, SingularFact}

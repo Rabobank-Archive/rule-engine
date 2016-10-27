@@ -1,13 +1,15 @@
 package org.scalarules.dsl.nl.grammar
 
 import DslCondition.{andCombineConditions, factFilledCondition}
-import org.scalarules.dsl.nl.grammar.`macro`.DslMacros
+import org.scalarules.dsl.nl.grammar.meta.DslMacros
+import org.scalarules.engine
 import org.scalarules.engine._
 import org.scalarules.utils.{FileSourcePosition, SourcePosition, SourceUnknown}
 
 import scala.annotation.compileTimeOnly
 import scala.reflect.macros.blackbox.Context
 import scala.language.experimental.macros
+import scala.meta._
 
 //scalastyle:off method.name
 
@@ -65,9 +67,46 @@ class ListBerekenStart[T] (condition: DslCondition, output: Fact[List[T]], berek
     val subRunDerivation: SubRunDerivation = SubRunDerivation(input, output, c, subRunData)
     new BerekeningAccumulator(condition, subRunDerivation :: berekeningenAcc)
   }
+
+  /**
+    * Specificeert hoe een lijst is opgebouwd uit de resultaten van een subberekening die voor ieder element uit een invoerlijst is opgebouwd.
+    *
+    * Syntax: <uitvoer> bevat resultaten van <SubBerekening> over <invoer>
+    */
+  def bevat(r: ResultatenWord): LijstOpbouwConstruct[T] = new LijstOpbouwConstruct[T](condition, output, berekeningenAcc)
+}
+
+class ResultatenWord
+
+class LijstOpbouwConstruct[Uit](condition: DslCondition, output: Fact[List[Uit]], berekeningAcc: List[Derivation]) {
+  def van[I](uitTeVoerenSubBerekening: FlowBerekeningReference[I, Uit]): LijstOpbouwConstructMetBerekening[I] = new LijstOpbouwConstructMetBerekening[I](uitTeVoerenSubBerekening.berekening)
+
+  class LijstOpbouwConstructMetBerekening[In](flowBerekening: FlowBerekening[In, Uit]) {
+
+    def over(iterator: ListFact[In]): BerekeningAccumulator = {
+      val contextAddition: In => engine.Context = (x: In) => Map(flowBerekening.invoerFact -> x)
+
+      val subRunData = new SubRunData[Uit, In](flowBerekening.berekeningen, contextAddition, iterator, flowBerekening.uitvoerFact)
+
+      val topLevelCondition = andCombineConditions(condition, factFilledCondition(subRunData.inputList)).condition
+
+      new BerekeningAccumulator(condition, SubRunDerivation(subRunData.inputList :: condition.facts.toList, output, topLevelCondition, subRunData) :: berekeningAcc)
+    }
+  }
 }
 
 class BerekeningAccumulator private[grammar](val condition: DslCondition, val derivations: List[Derivation]) {
   def en[A](fact: SingularFact[A]): SingularBerekenStart[A] = macro DslMacros.captureSingularBerekenSourcePositionWithAccumulatorMacroImpl[A]
   def en[A](fact: ListFact[A]): ListBerekenStart[A] = macro DslMacros.captureListBerekenSourcePositionWithAccumulatorMacroImpl[A]
 }
+
+// --- New List stuff
+class InvoerWord{
+  def is[In](iteratee: Fact[In]): InvoerSpec[In] = new InvoerSpec[In](iteratee)
+}
+class UitvoerWord{
+  def is[Uit](iteratee: Fact[Uit]): UitvoerSpec[Uit] = new UitvoerSpec[Uit](iteratee)
+}
+
+
+
