@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core
 
-import org.scalarules.engine.SingularFact
+import org.scalarules.facts.SingularFact
 import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.utils.Glossary
 

@@ -1,5 +1,8 @@
 package org.scalarules
 
+import org.scalarules.derivations.Node
+import org.scalarules.facts.Fact
+
 package object engine {
 
   type Context = Map[Fact[Any], Any]

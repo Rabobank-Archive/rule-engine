@@ -1,5 +1,7 @@
 package org.scalarules.engine
 
+import org.scalarules.facts.{ListFact, SingularFact}
+
 object FactEngineTestGlossary {
   val Costs = SingularFact[BigDecimal]("Costsp")
   val EstimatedNewValue = SingularFact[BigDecimal]("EstimatedNewValue")

@@ -3,6 +3,7 @@ package org.scalarules.dsl.nl.grammar
 import DslCondition.{andCombineConditions, factFilledCondition}
 import org.scalarules.dsl.nl.grammar.`macro`.DslMacros
 import org.scalarules.engine._
+import org.scalarules.facts.{Fact, ListFact, SingularFact}
 import org.scalarules.utils.{FileSourcePosition, SourcePosition, SourceUnknown}
 
 import scala.annotation.compileTimeOnly

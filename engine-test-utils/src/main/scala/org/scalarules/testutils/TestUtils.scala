@@ -1,6 +1,7 @@
 package org.scalarules.testutils.nl
 
-import org.scalarules.engine.{Derivation, Fact, FactEngine, Step, _}
+import org.scalarules.engine.{Derivation, FactEngine, Step, _}
+import org.scalarules.facts.Fact
 import org.scalarules.services.{AnalyzedScenario, HeuristicService}
 import org.scalarules.utils.PrettyPrinter
 

@@ -1,5 +1,6 @@
 package org.scalarules.engine
 
+import org.scalarules.facts.SingularFact
 import org.scalatest.{FlatSpec, Matchers}
 
 class FactTest extends FlatSpec with Matchers {

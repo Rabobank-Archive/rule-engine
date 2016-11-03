@@ -1,5 +1,7 @@
 package org.scalarules.engine
 
+import org.scalarules.facts.Fact
+
 trait Evaluation[+A] {
   def apply(c: Context): Option[A]
 

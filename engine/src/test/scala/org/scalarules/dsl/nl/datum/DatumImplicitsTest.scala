@@ -1,9 +1,10 @@
 package org.scalarules.dsl.nl.datum
 
 import org.scalarules.finance.nl.{Bedrag, Percentage}
-import org.scalarules.engine.{Context, FactEngine, SingularFact}
+import org.scalarules.engine.{Context, FactEngine}
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalarules.dsl.nl.grammar._
+import org.scalarules.facts.SingularFact
 
 class DatumImplicitsTest extends FlatSpec with Matchers {
 

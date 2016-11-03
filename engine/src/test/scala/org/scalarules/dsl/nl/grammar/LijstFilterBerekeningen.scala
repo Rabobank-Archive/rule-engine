@@ -4,6 +4,7 @@ import org.scalarules.dsl.core.projections.{ProjectableListFields, ProjectedDslE
 import org.scalarules.dsl.nl.grammar.LijstBerekeningGlossary._
 import org.scalarules.dsl.nl.grammar.ComplexObjectProjections._
 import org.scalarules.engine._
+import org.scalarules.facts.ListFact
 
 import scala.language.implicitConversions
 

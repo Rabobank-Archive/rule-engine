@@ -1,7 +1,8 @@
 package org.scalarules.dsl.nl.grammar.`macro`
 
 import org.scalarules.dsl.nl.grammar.{DslCondition, GegevenWord, ListBerekenStart, SingularBerekenStart}
-import org.scalarules.engine.{Derivation, ListFact, SingularFact}
+import org.scalarules.engine.Derivation
+import org.scalarules.facts.{ListFact, SingularFact}
 import org.scalarules.utils.FileSourcePosition
 
 import scala.annotation.compileTimeOnly

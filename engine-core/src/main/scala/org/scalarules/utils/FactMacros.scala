@@ -1,6 +1,6 @@
 package org.scalarules.utils
 
-import org.scalarules.engine.{ListFact, SingularFact}
+import org.scalarules.facts.{ListFact, SingularFact}
 
 import scala.annotation.compileTimeOnly
 import scala.language.experimental.macros

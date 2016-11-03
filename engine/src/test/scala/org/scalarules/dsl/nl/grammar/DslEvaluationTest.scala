@@ -1,7 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
+import org.scalarules.facts.SingularFact
 import org.scalarules.finance.nl.{Bedrag, Percentage}
-import org.scalarules.engine.SingularFact
 import org.scalatest.{FlatSpec, Matchers}
 
 class DslEvaluationTest extends FlatSpec with Matchers {

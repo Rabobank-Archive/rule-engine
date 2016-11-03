@@ -5,6 +5,8 @@ import org.scalarules.engine.FactEngineTestGlossary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 import DerivationTools._
+import org.scalarules.derivations.{Derivations, Node}
+import org.scalarules.facts.Fact
 
 class FactEngineTestComputeInputs extends FlatSpec with Matchers {
 
@@ -48,13 +50,13 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
 
   it should "detect a direct loop between two derivations" in {
     intercept[IllegalStateException] {
-      FactEngine.constructGraph(FactEngineTestValues.directLoopDefaultDerivations)
+      Derivations.constructGraph(FactEngineTestValues.directLoopDefaultDerivations)
     }
   }
 
   it should "detect an indirect loop between three derivations" in {
     intercept[IllegalStateException] {
-      FactEngine.constructGraph(FactEngineTestValues.indirectLoopDefaultDerivationsOrders.head)
+      Derivations.constructGraph(FactEngineTestValues.indirectLoopDefaultDerivationsOrders.head)
     }
   }
 
@@ -62,14 +64,14 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
     implicit val arbitraryDefaultDerivations: Arbitrary[List[DefaultDerivation]] = Arbitrary(FactEngineTestValues.derivationsGeneration)
 
     forAll((derivations: List[DefaultDerivation]) => {
-      val nodes = FactEngine.constructGraph(derivations)
+      val nodes = Derivations.constructGraph(derivations)
 
       nodes should have size derivations.size
     })
   }
 
   it should "allow DefaultDerivations with 0 inputs" in {
-    val nodes = FactEngine.constructGraph(List(FactEngineTestValues.derivationWithoutInputs1))
+    val nodes = Derivations.constructGraph(List(FactEngineTestValues.derivationWithoutInputs1))
 
     nodes should have size 1
   }

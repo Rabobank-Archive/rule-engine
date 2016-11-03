@@ -1,6 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
 import org.scalarules.engine._
+import org.scalarules.facts.Fact
 
 /* ********************************************************************************************************************************************************** *
  * This file contains the actual implementations of the Evaluations supported by the DSL. The DSL implicits will create objects of these classes to feed to   *

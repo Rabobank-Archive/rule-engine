@@ -4,6 +4,7 @@ import java.util.concurrent.atomic.AtomicLong
 
 import org.scalarules.dsl.nl.grammar.DslCondition.factFilledCondition
 import org.scalarules.engine._
+import org.scalarules.facts.{Fact, ListFact, SingularFact}
 
 trait DslLoopWordTrait {
   private[grammar] val counter = new AtomicLong()

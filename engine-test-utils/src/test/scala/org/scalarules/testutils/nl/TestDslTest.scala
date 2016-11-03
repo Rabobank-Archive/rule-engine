@@ -1,7 +1,7 @@
 package org.scalarules.testutils.nl
 
 import org.scalarules.finance.nl._
-import org.scalarules.engine.{ListFact, SingularFact}
+import org.scalarules.facts.{ListFact, SingularFact}
 import org.scalarules.testutils.nl.TestDslTestGlossary._
 
 class TestDslTest extends BerekeningenTester(new TestDslTestBerekening) {

@@ -2,7 +2,8 @@ package org.scalarules.testutils.nl
 
 import org.scalarules.finance.nl.{Bedrag, Per}
 import org.scalarules.dsl.nl.grammar.{Aanwezigheid, Berekening}
-import org.scalarules.engine.{Context, Fact, FactEngine}
+import org.scalarules.engine.{Context, FactEngine}
+import org.scalarules.facts.Fact
 import org.scalarules.utils.PrettyPrinter
 import org.scalatest.{FlatSpec, Matchers}
 

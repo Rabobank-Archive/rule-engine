@@ -3,6 +3,7 @@ package org.scalarules.engine
 // TODO : Turn this off and fix it
 import scala.language.existentials
 import DerivationTools._
+import org.scalarules.facts.Fact
 import org.scalarules.utils.{SourcePosition, SourceUnknown}
 
 /**

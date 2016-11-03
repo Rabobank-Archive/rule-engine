@@ -1,6 +1,6 @@
 package org.scalarules.utils
 
-import org.scalarules.engine.{ListFact, SingularFact}
+import org.scalarules.facts.{ListFact, SingularFact}
 import org.scalatest.{FlatSpec, Matchers}
 
 import scala.language.reflectiveCalls

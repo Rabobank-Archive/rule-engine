@@ -3,6 +3,7 @@ package org.scalarules.dsl.nl.grammar
 import DslCondition._
 import org.scalarules.finance.nl.Bedrag
 import org.scalarules.engine._
+import org.scalarules.facts.Fact
 
 //scalastyle:off object.name
 

@@ -2,6 +2,7 @@ package org.scalarules.dsl.nl.grammar
 
 import DslCondition._
 import org.scalarules.engine._
+import org.scalarules.facts.Fact
 
 import scala.reflect.ClassTag
 

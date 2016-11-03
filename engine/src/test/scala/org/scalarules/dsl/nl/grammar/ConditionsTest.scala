@@ -2,6 +2,7 @@ package org.scalarules.dsl.nl.grammar
 
 import DslCondition.{andPredicate, orPredicate}
 import org.scalarules.engine._
+import org.scalarules.facts.Fact
 import org.scalatest.{FlatSpec, Matchers}
 
 class ConditionsTestAndCondition extends FlatSpec with Matchers {

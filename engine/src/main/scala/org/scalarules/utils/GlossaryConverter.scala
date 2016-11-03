@@ -1,6 +1,6 @@
 package org.scalarules.utils
 
-import org.scalarules.engine.Fact
+import org.scalarules.facts.Fact
 
 import scala.reflect.ClassTag
 

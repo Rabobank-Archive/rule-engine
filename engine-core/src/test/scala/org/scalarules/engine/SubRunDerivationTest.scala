@@ -1,6 +1,7 @@
 package org.scalarules.engine
 
-import org.scalatest.{Matchers, FlatSpec}
+import org.scalarules.facts.{ListFact, SingularFact}
+import org.scalatest.{FlatSpec, Matchers}
 
 class SubRunDerivationTest extends FlatSpec with Matchers {
 

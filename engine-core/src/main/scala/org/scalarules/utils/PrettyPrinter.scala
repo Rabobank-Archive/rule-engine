@@ -3,8 +3,8 @@ package org.scalarules.utils
 import org.scalarules.engine._
 
 import scala.annotation.tailrec
-
 import org.scalarules.engine.DerivationTools._
+import org.scalarules.facts.Fact
 
 object PrettyPrinter {
 
