@@ -1,11 +1,11 @@
 package org.scalarules.derivations
 
-// TODO : Turn this off and fix it
 import org.scalarules.derivations.DerivationTools._
 import org.scalarules.engine._
 import org.scalarules.facts.Fact
 import org.scalarules.utils.{SourcePosition, SourceUnknown}
 
+// TODO : Turn this off and fix it
 import scala.language.existentials
 
 /**

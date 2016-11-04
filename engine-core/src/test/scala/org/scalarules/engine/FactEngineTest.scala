@@ -1,12 +1,11 @@
 package org.scalarules.engine
 
 import org.scalacheck.{Arbitrary, Gen}
+import org.scalarules.derivations._
 import org.scalarules.engine.FactEngineTestGlossary._
+import org.scalarules.facts.Fact
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-import org.scalarules.derivations._
-import org.scalarules.facts.Fact
-import org.scalarules.utils.PrettyPrinter
 
 class FactEngineTestComputeInputs extends FlatSpec with Matchers {
 

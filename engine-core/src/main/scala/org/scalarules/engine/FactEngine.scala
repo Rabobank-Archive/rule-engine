@@ -1,7 +1,7 @@
 package org.scalarules.engine
 
 import org.scalarules.derivations._
-import org.scalarules.facts.{Fact, ListFact, SynthesizedFact}
+import org.scalarules.facts.{Fact, SynthesizedFact}
 
 import scala.util.{Failure, Success, Try}
 
