@@ -6,7 +6,7 @@ import org.scalarules.facts.{Fact, OriginFact}
 
 import scala.annotation.tailrec
 
-object Derivations {
+object DerivationTools {
 
   /**
     * Constructs a Dependency graph for the provided list of Derivations. Each Derivation will yield a Node describing its output and other Nodes requiring its
@@ -17,6 +17,39 @@ object Derivations {
     */
   def constructGraph(derivations: List[Derivation]): Set[Node] = {
     constructNodes(derivations, computeAllInputs(derivations).map( (_, List()) ).toMap + (OriginFact -> List()), staleOutputsForDerivations(derivations).toList)
+  }
+
+  /**
+    * Computes the Set of all unique Facts used by Derivations.
+    *
+    * @param derivations all available Derivations
+    * @return a Set containing all unique input Facts
+    */
+  def computeAllInputs(derivations: List[Derivation]): Set[Fact[Any]] = {
+    def collectInputs(derivations: List[Derivation], acc: Set[Fact[Any]]) : Set[Fact[Any]] = derivations match {
+      case d :: ds => collectInputs(ds, acc ++ d.input)
+      case Nil => acc
+    }
+    collectInputs(derivations, Set())
+  }
+
+  /**
+    * Computes the Set of all unique Facts produced by Derivations. It also enforces uniqueness between Derivations, since we do not allow multiple Derivations
+    * to produce the same Fact.
+    *
+    * @param derivations all available Derivations
+    * @return a Set containing all unique output Facts
+    */
+  def computeAllOutputs(derivations: List[Derivation]): Set[Fact[Any]] = {
+    def collectOutputs(derivations: List[Derivation], acc: Set[Fact[Any]]) : Set[Fact[Any]] = derivations match {
+      case d :: ds => if (acc contains d.output) {
+        throw new IllegalStateException("Found a second derivation trying to satisfy output " + d.output)
+      } else {
+        collectOutputs(ds, acc + d.output)
+      }
+      case Nil => acc
+    }
+    collectOutputs(derivations, Set())
   }
 
   private def resolveChildNodes(output: Fact[Any], nodesByInput: Map[Fact[Any], List[Node]]): List[Node] = if (nodesByInput contains output) nodesByInput(output) else List()

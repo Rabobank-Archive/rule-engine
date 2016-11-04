@@ -24,7 +24,7 @@ object FactEngine {
     */
   def runDerivations[A](state: A, derivations: List[Derivation], evaluator: (A, Derivation) => A): A = {
     if (!graphCache.get(derivations).isDefined) {
-      graphCache.add(derivations, Derivations.levelSorter(Derivations.constructGraph(derivations)))
+      graphCache.add(derivations, DerivationTools.levelSorter(DerivationTools.constructGraph(derivations)))
     }
 
     val graph: Levels = graphCache.get(derivations).get

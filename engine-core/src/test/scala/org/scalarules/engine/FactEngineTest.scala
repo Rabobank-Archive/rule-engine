@@ -49,13 +49,13 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
 
   it should "detect a direct loop between two derivations" in {
     intercept[IllegalStateException] {
-      Derivations.constructGraph(FactEngineTestValues.directLoopDefaultDerivations)
+      DerivationTools.constructGraph(FactEngineTestValues.directLoopDefaultDerivations)
     }
   }
 
   it should "detect an indirect loop between three derivations" in {
     intercept[IllegalStateException] {
-      Derivations.constructGraph(FactEngineTestValues.indirectLoopDefaultDerivationsOrders.head)
+      DerivationTools.constructGraph(FactEngineTestValues.indirectLoopDefaultDerivationsOrders.head)
     }
   }
 
@@ -63,14 +63,14 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
     implicit val arbitraryDefaultDerivations: Arbitrary[List[DefaultDerivation]] = Arbitrary(FactEngineTestValues.derivationsGeneration)
 
     forAll((derivations: List[DefaultDerivation]) => {
-      val nodes = Derivations.constructGraph(derivations)
+      val nodes = DerivationTools.constructGraph(derivations)
 
       nodes should have size derivations.size
     })
   }
 
   it should "allow DefaultDerivations with 0 inputs" in {
-    val nodes = Derivations.constructGraph(List(FactEngineTestValues.derivationWithoutInputs1))
+    val nodes = DerivationTools.constructGraph(List(FactEngineTestValues.derivationWithoutInputs1))
 
     nodes should have size 1
   }
