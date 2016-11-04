@@ -1,6 +1,7 @@
 package org.scalarules.engine
 
 import org.scalarules.derivations._
+import org.scalarules.facts.{Fact, ListFact, SynthesizedFact}
 
 import scala.util.{Failure, Success, Try}
 
@@ -54,27 +55,35 @@ object FactEngine {
   def runNormalDerivations(c: Context, derivations: List[Derivation]): Context = {
     def evaluator(c: Context, d: Derivation): Context = {
       if (!c.contains(d.output) && d.condition(c)) {
-        val operation = d match {
+        d match {
           case der: SubRunDerivation => {
-            val options: Seq[Option[Any]] = runSubCalculations(c, der.subRunData)
-            Some(options.flatten)
-          }
-          case der: DefaultDerivation => der.operation(c)
-        }
+            val subRunResults: Seq[(Option[Any], Context)] = runSubCalculations(c, der.subRunData)
 
-        if (operation.isEmpty) c else c + (d.output -> operation.get)
+            val (results, contexts) = subRunResults.unzip
+
+            c + (d.output -> results.flatten) + (synthesizeIterationResultsFact(d.output) -> contexts)
+          }
+          case der: DefaultDerivation =>
+            val result = der.operation(c)
+            if (result.isEmpty) c else c + (d.output -> result.get)
+        }
       } else {
         c
       }
     }
 
-    def runSubCalculations[B](c: Context, subRunData: SubRunData[Any, B]): Seq[Option[Any]] = {
-      subRunData.inputList.toEval(c).get.map(input => subRunData.yieldValue(runDerivations(c ++ subRunData.contextAdditions(input), subRunData.derivations, evaluator)))
+    def runSubCalculations[B](c: Context, subRunData: SubRunData[Any, B]): Seq[(Option[Any], Context)] = {
+      subRunData.inputList.toEval(c).get.map(input => {
+        val subRunContext: Context = runDerivations(c ++ subRunData.contextAdditions(input), subRunData.derivations, evaluator)
+        (subRunData.yieldValue(subRunContext), subRunContext -- c.keys)
+      })
     }
 
     runDerivations(c, derivations, evaluatorExceptionWrapper(evaluator))
   }
 
+  private def synthesizeIterationResultsFact(fact: Fact[Any]) =
+    SynthesizedFact[List[Context]](fact, "iteration_results", s"Synthesized fact to contain intermediate results of an iterated evalution over ${fact.name}")
 
   /**
     * Runs the provided Derivations and yields the resulting Context as well as a List of all Steps computed.
@@ -92,8 +101,11 @@ object FactEngine {
         d match {
           case der: SubRunDerivation => {
             val (results, subSteps): (List[Context], List[List[Step]]) = runSubCalculations(c, der.subRunData, d).unzip
-            val options = results.map(der.subRunData.yieldValue)
-            processStep(d, c, subSteps.flatten ::: steps, Some(options.flatten))
+            val iterationResultOptions = results.map(der.subRunData.yieldValue)
+
+            val newContext = c + (d.output -> iterationResultOptions.flatten) + (synthesizeIterationResultsFact(d.output) -> results)
+            val newStep = Step(c, d, "Completed iterated evaluation", newContext)
+            (newContext, newStep :: subSteps.flatten ::: steps)
           }
           case der: DefaultDerivation => processStep(d, c, steps, der.operation(c))
         }

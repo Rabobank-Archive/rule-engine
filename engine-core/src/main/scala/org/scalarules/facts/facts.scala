@@ -31,3 +31,9 @@ case object OriginFact extends Fact[Nothing] {
 
   def valueType: String = "Nothing"
 }
+
+case class SynthesizedFact[+A](factOriginalFact: Fact[Any], synthesizedPostfix: String, description: String = "", valueType: String = "") extends Fact[A] {
+  def name: String = factOriginalFact.name + "_" + synthesizedPostfix
+
+  def toEval: Evaluation[A] = new SingularFactEvaluation[A](this)
+}

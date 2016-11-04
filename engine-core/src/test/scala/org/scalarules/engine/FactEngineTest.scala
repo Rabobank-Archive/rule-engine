@@ -6,6 +6,7 @@ import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalarules.derivations._
 import org.scalarules.facts.Fact
+import org.scalarules.utils.PrettyPrinter
 
 class FactEngineTestComputeInputs extends FlatSpec with Matchers {
 
@@ -134,7 +135,8 @@ class FactEngineTestRunSubRunDefaultDerivations extends FlatSpec with Matchers w
   it should "calculate values correctly when all input values are available" in {
     val result = FactEngine.runNormalDerivations(context, List(FactEngineTestValues.derivationSubRun))
 
-    result should have size (context.size + 1)
+    // We're expecting the actual output as well as the synthesized fact containing all iteration results
+    result should have size (context.size + 2)
     result(SubRunOutput) should equal (inputs.map(i => i + 10))
   }
 
