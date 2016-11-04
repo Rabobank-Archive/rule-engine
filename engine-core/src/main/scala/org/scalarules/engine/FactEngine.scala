@@ -96,7 +96,7 @@ object FactEngine {
     def evaluator(t: (Context, List[Step]), d: Derivation): (Context, List[Step]) = {
       val (c, steps) = t
       if (c.contains(d.output)) {
-        (c, Step(c, d, "Output exists in context, skipping", c) :: steps)
+        (c, AlreadyExistsStep(c, d, c) :: steps)
       } else if (d.condition(c)) {
         d match {
           case der: SubRunDerivation => {
@@ -104,29 +104,29 @@ object FactEngine {
             val iterationResultOptions = results.map(der.subRunData.yieldValue)
 
             val newContext = c + (d.output -> iterationResultOptions.flatten) + (synthesizeIterationResultsFact(d.output) -> results)
-            val newStep = Step(c, d, "Completed iterated evaluation", newContext)
+            val newStep = IterationFinishedStep(c, d, newContext)
             (newContext, newStep :: subSteps.flatten ::: steps)
           }
           case der: DefaultDerivation => processStep(d, c, steps, der.operation(c))
         }
       } else {
-        (c, Step(c, d, "Condition false", c) :: steps)
+        (c, ConditionFalseStep(c, d, c) :: steps)
       }
     }
 
     def runSubCalculations[B](c: Context, subRunData: SubRunData[Any, B], d: Derivation): List[(Context, List[Step])] = {
       subRunData.inputList.toEval(c).get.map(input => {
         val newContext: Context = c ++ subRunData.contextAdditions(input)
-        runDerivations((newContext, List(Step(c, d, "SubCalculation with new value", newContext))), subRunData.derivations, evaluator)
+        runDerivations((newContext, List(IterationStartedStep(c, d, newContext))), subRunData.derivations, evaluator)
       })
     }
 
     def processStep(d: Derivation, c: Context, steps: List[Step], operation: Option[Any]): (Context, List[Step]) = {
       if (operation.isEmpty) {
-        (c, Step(c, d, "Empty result", c) :: steps)
+        (c, EmptyResultStep(c, d, c) :: steps)
       } else {
         val newContext = c + (d.output -> operation.get)
-        (newContext, Step(c, d, "Evaluated", newContext) :: steps)
+        (newContext, EvaluatedStep(c, d, newContext) :: steps)
       }
     }
 
