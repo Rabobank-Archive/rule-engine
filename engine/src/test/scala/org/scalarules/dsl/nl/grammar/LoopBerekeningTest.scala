@@ -18,7 +18,7 @@ class LoopBerekeningTest extends InternalBerekeningenTester(new LoopBerekening) 
     simpleLoopResult is List()
   )
 
-  test("of loop met geneste subberekeningen werkt") gegeven (
+  test("of loop met geneste elementberekeningen werkt") gegeven (
     nestedTestInput is List(List[BigDecimal](0, 1), List[BigDecimal](2, 3), List[BigDecimal](4, 5)),
     innerLoopAdditionValue is BigDecimal(1)
   ) verwacht (
