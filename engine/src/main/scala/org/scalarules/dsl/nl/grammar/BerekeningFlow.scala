@@ -1,13 +1,15 @@
 package org.scalarules.dsl.nl.grammar
 
 import DslCondition.{andCombineConditions, factFilledCondition}
-import org.scalarules.dsl.nl.grammar.`macro`.DslMacros
+import org.scalarules.dsl.nl.grammar.meta.DslMacros
+import org.scalarules.engine
 import org.scalarules.engine._
 import org.scalarules.utils.{FileSourcePosition, SourcePosition, SourceUnknown}
 
 import scala.annotation.compileTimeOnly
 import scala.reflect.macros.blackbox.Context
 import scala.language.experimental.macros
+import scala.meta._
 
 //scalastyle:off method.name
 
@@ -34,8 +36,7 @@ object Specificatie {
  * DslNumericalListAggregator  ::= (`totaal van` | `gemiddelde van`)
  *
  * DslEvaluation
- * SubRunData :== SubBerekening over [ListFact] vul [Fact] geeft [outputFact] door [Berekening]
- *
+ * LijstOpbouwConstruct ::= [Fact] `bevat` `resultaten` `van` [ElementBerekening] `over` [Fact]
  */
 
 class GegevenWord(val initialCondition: DslCondition, val position: SourcePosition = SourceUnknown()) {
@@ -65,6 +66,40 @@ class ListBerekenStart[T] (condition: DslCondition, output: Fact[List[T]], berek
     val subRunDerivation: SubRunDerivation = SubRunDerivation(input, output, c, subRunData)
     new BerekeningAccumulator(condition, subRunDerivation :: berekeningenAcc)
   }
+
+  /**
+    * Specificeert hoe een lijst is opgebouwd uit de resultaten van een elementberekening die voor ieder element uit een invoerlijst is uitgevoerd.
+    *
+    * Syntax: <uitvoer> bevat resultaten van <ElementBerekening> over <invoer>
+    */
+  def bevat(r: ResultatenWord): LijstOpbouwConstruct[T] = new LijstOpbouwConstruct[T](condition, output, berekeningenAcc)
+}
+
+class ResultatenWord
+
+class LijstOpbouwConstruct[Uit](condition: DslCondition, output: Fact[List[Uit]], berekeningAcc: List[Derivation]) {
+  def van[I](uitTeVoerenElementBerekening: ElementBerekeningReference[I, Uit]): LijstOpbouwConstructMetBerekening[I] = new LijstOpbouwConstructMetBerekening[I](uitTeVoerenElementBerekening.berekening)
+
+  class LijstOpbouwConstructMetBerekening[In](elementBerekening: ElementBerekening[In, Uit]) {
+
+    def over(iterator: ListFact[In]): BerekeningAccumulator = {
+      val contextAddition: In => engine.Context = (x: In) => Map(elementBerekening.invoerFact -> x)
+
+      val subRunData = new SubRunData[Uit, In](elementBerekening.berekeningen, contextAddition, iterator, elementBerekening.uitvoerFact)
+
+      val topLevelCondition = andCombineConditions(condition, factFilledCondition(subRunData.inputList)).condition
+
+      new BerekeningAccumulator(condition, SubRunDerivation(subRunData.inputList :: condition.facts.toList, output, topLevelCondition, subRunData) :: berekeningAcc)
+    }
+  }
+}
+
+// --- supports naming the invoer and uitvoer inside an ElementBerekening
+class InvoerWord{
+  def is[In](iteratee: Fact[In]): InvoerSpec[In] = new InvoerSpec[In](iteratee)
+}
+class UitvoerWord{
+  def is[Uit](iteratee: Fact[Uit]): UitvoerSpec[Uit] = new UitvoerSpec[Uit](iteratee)
 }
 
 class BerekeningAccumulator private[grammar](val condition: DslCondition, val derivations: List[Derivation]) {

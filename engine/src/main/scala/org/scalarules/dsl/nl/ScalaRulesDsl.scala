@@ -2,7 +2,7 @@ package org.scalarules.dsl.nl
 
 import org.scalarules.dsl.nl.datum.DatumImplicits
 import org.scalarules.dsl.nl.grammar._
-import org.scalarules.dsl.nl.grammar.`macro`.DslMacros
+import org.scalarules.dsl.nl.grammar.meta.DslMacros
 import org.scalarules.engine._
 
 import scala.language.experimental.macros
@@ -15,7 +15,6 @@ trait ScalaRulesDsl extends AfrondingsWordsTrait
   with DslConditionImplicits
   with DslEvaluationImplicits
   with DatumImplicits
-  with DslLoopWordTrait
   with DslListFilterWord
 {
 
@@ -24,4 +23,9 @@ trait ScalaRulesDsl extends AfrondingsWordsTrait
   // Entrypoint for the DSL
   def Gegeven(condition: DslCondition): GegevenWord = macro DslMacros.captureGegevenSourcePositionMacroImpl //scalastyle:ignore method.name
 
+  val resultaten = new ResultatenWord
+
+  val Invoer = new InvoerWord
+  val Uitvoer = new UitvoerWord
 }
+
