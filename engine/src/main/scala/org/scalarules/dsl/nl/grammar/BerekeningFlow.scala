@@ -106,7 +106,3 @@ class BerekeningAccumulator private[grammar](val condition: DslCondition, val de
   def en[A](fact: SingularFact[A]): SingularBerekenStart[A] = macro DslMacros.captureSingularBerekenSourcePositionWithAccumulatorMacroImpl[A]
   def en[A](fact: ListFact[A]): ListBerekenStart[A] = macro DslMacros.captureListBerekenSourcePositionWithAccumulatorMacroImpl[A]
 }
-
-
-
-
