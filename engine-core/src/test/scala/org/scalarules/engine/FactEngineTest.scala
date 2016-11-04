@@ -4,8 +4,7 @@ import org.scalacheck.{Arbitrary, Gen}
 import org.scalarules.engine.FactEngineTestGlossary._
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-import DerivationTools._
-import org.scalarules.derivations.{Derivations, Node}
+import org.scalarules.derivations._
 import org.scalarules.facts.Fact
 
 class FactEngineTestComputeInputs extends FlatSpec with Matchers {
@@ -13,7 +12,7 @@ class FactEngineTestComputeInputs extends FlatSpec with Matchers {
   val derivations = List(FactEngineTestValues.derivationOne, FactEngineTestValues.derivationTwo, FactEngineTestValues.derivationRedefiningOutput)
 
   it should "output all unique inputs" in {
-    val resultingInputs: Set[Fact[Any]] = computeAllInputs(derivations)
+    val resultingInputs: Set[Fact[Any]] = DerivationTools.computeAllInputs(derivations)
 
     resultingInputs should have size 5
     resultingInputs should contain (PurchaseAmount)
@@ -31,7 +30,7 @@ class FactEngineTestComputeOutputs extends FlatSpec with Matchers {
   val derivationsNOK = List(FactEngineTestValues.derivationOne, FactEngineTestValues.derivationTwo, FactEngineTestValues.derivationRedefiningOutput)
 
   it should "output all outputs" in {
-    val resultingOutputs: Set[Fact[Any]] = computeAllOutputs(derivationsOK)
+    val resultingOutputs: Set[Fact[Any]] = DerivationTools.computeAllOutputs(derivationsOK)
 
     resultingOutputs should have size 2
     resultingOutputs should contain (BuildingValue)
@@ -40,7 +39,7 @@ class FactEngineTestComputeOutputs extends FlatSpec with Matchers {
 
   it should "detect a doubly defined output and break" in {
     intercept[IllegalStateException] {
-      computeAllOutputs(derivationsNOK)
+      DerivationTools.computeAllOutputs(derivationsNOK)
     }
   }
 

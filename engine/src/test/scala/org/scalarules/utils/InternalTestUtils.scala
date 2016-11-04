@@ -1,6 +1,7 @@
 package org.scalarules.utils
 
-import org.scalarules.engine.{Derivation, FactEngine, Step, _}
+import org.scalarules.derivations.Derivation
+import org.scalarules.engine.{FactEngine, Step, _}
 import org.scalarules.facts.Fact
 import org.scalarules.services.{AnalyzedScenario, HeuristicService}
 

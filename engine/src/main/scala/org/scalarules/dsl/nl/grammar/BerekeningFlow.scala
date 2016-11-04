@@ -1,13 +1,11 @@
 package org.scalarules.dsl.nl.grammar
 
-import DslCondition.{andCombineConditions, factFilledCondition}
+import org.scalarules.derivations.{DefaultDerivation, Derivation, SubRunData, SubRunDerivation}
+import org.scalarules.dsl.nl.grammar.DslCondition.{andCombineConditions, factFilledCondition}
 import org.scalarules.dsl.nl.grammar.`macro`.DslMacros
-import org.scalarules.engine._
 import org.scalarules.facts.{Fact, ListFact, SingularFact}
 import org.scalarules.utils.{FileSourcePosition, SourcePosition, SourceUnknown}
 
-import scala.annotation.compileTimeOnly
-import scala.reflect.macros.blackbox.Context
 import scala.language.experimental.macros
 
 //scalastyle:off method.name

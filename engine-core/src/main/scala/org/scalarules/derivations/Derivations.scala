@@ -1,6 +1,6 @@
 package org.scalarules.derivations
 
-import org.scalarules.engine.DerivationTools._
+import DerivationTools._
 import org.scalarules.engine._
 import org.scalarules.facts.{Fact, OriginFact}
 

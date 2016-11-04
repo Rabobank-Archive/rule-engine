@@ -1,7 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
 import DslCondition._
-import org.scalarules.engine.{Context, Derivation, Evaluation}
+import org.scalarules.engine.{Context, Evaluation}
 import org.scalarules.facts.Fact
 
 object DslTableSelector {

@@ -1,6 +1,6 @@
 package org.scalarules.engine
 
-import org.scalarules.derivations.Derivations
+import org.scalarules.derivations._
 
 import scala.util.{Failure, Success, Try}
 

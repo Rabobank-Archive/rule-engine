@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.engine.{Derivation, Evaluation}
+import org.scalarules.engine.Evaluation
 
 trait DslOrderedListAggregator {
   private[grammar] def toEvaluation[A : Ordering](listEvaluation: Evaluation[List[A]]): Evaluation[A]

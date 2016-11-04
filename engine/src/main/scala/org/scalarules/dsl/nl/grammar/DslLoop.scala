@@ -2,6 +2,7 @@ package org.scalarules.dsl.nl.grammar
 
 import java.util.concurrent.atomic.AtomicLong
 
+import org.scalarules.derivations.{DefaultDerivation, SubRunData, SubRunDerivation}
 import org.scalarules.dsl.nl.grammar.DslCondition.factFilledCondition
 import org.scalarules.engine._
 import org.scalarules.facts.{Fact, ListFact, SingularFact}

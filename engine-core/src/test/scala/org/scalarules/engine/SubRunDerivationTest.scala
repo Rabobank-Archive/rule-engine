@@ -1,5 +1,6 @@
 package org.scalarules.engine
 
+import org.scalarules.derivations.{DefaultDerivation, SubRunData, SubRunDerivation}
 import org.scalarules.facts.{ListFact, SingularFact}
 import org.scalatest.{FlatSpec, Matchers}
 
