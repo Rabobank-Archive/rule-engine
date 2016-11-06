@@ -128,7 +128,7 @@ object FactEngine {
     */
   def runNormalDerivations(c: Context, derivations: List[Derivation]): Context = {
     def evaluator(c: Context, d: Derivation): Context = {
-      if (d.condition(c)) {
+      if (!c.contains(d.output) && d.condition(c)) {
         val operation = d match {
           case der: SubRunDerivation => {
             val options: Seq[Option[Any]] = runSubCalculations(c, der.subRunData)
@@ -161,7 +161,9 @@ object FactEngine {
   def runDebugDerivations(c: Context, derivations: List[Derivation]): (Context, List[Step]) = {
     def evaluator(t: (Context, List[Step]), d: Derivation): (Context, List[Step]) = {
       val (c, steps) = t
-      if (d.condition(c)) {
+      if (c.contains(d.output)) {
+        (c, Step(c, d, "Output exists in context, skipping", c) :: steps)
+      } else if (d.condition(c)) {
         d match {
           case der: SubRunDerivation => {
             val (results, subSteps): (List[Context], List[List[Step]]) = runSubCalculations(c, der.subRunData, d).unzip

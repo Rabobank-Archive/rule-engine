@@ -4,19 +4,17 @@ import org.scalarules.utils.Glossary
 
 object LoopBerekeningGlossary extends Glossary {
   val loopInput = defineListFact[BigDecimal]
-  val intermediateBigDecimal = defineFact[BigDecimal]
-  val simpleLoopResult = defineListFact[BigDecimal]
+  val nestedTestInput = defineListFact[List[BigDecimal]]
 
-  val enhancedLoopResult = defineListFact[BigDecimal]
-  val innerLoopReturnValue = defineFact[BigDecimal]
+  val innerLoopIteratee = defineFact[BigDecimal]
   val innerLoopAdditionValue = defineFact[BigDecimal]
+  val innerLoopReturnValue = defineFact[BigDecimal]
 
-  val innerLoopInput = defineListFact[BigDecimal]
-  val intermediateInnerLoopBigDecimal = defineFact[BigDecimal]
-  val enhancedLoopListInListResult = defineListFact[List[BigDecimal]]
-  val innerLoopListReturnValue = defineListFact[BigDecimal]
-  val innerLoopAdditionListValue = defineListFact[BigDecimal]
+  val nestedOuterLoopInput = defineListFact[BigDecimal]
+  val nestedOuterLoopResult = defineListFact[BigDecimal]
 
+  val simpleLoopResult = defineListFact[BigDecimal]
   val filteredLoopResult = defineListFact[BigDecimal]
+  val nestedTestOutput = defineListFact[List[BigDecimal]]
 
 }

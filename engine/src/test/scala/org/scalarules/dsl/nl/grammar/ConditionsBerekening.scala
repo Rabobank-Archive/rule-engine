@@ -11,4 +11,10 @@ class ConditionsBerekening extends Berekening (
   ,
   Gegeven(unavailableInput is afwezig) Bereken
     outputShouldBeAvailableIfInputIsNotAvailable is BigDecimal(12)
+  ,
+  Gegeven (altijd)
+  Bereken
+    tryToOverwriteThisValue is eerste (missingValueToUseInEerste, defaultValueForOverwriting) en
+    defaultValueForOverwriting is BigDecimal(0)
+
 )
