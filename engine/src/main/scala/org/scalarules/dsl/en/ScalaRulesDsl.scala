@@ -6,6 +6,8 @@ import org.scalarules.dsl.en.grammar._
 import org.scalarules.dsl.en.grammar.meta.DslMacros
 import org.scalarules.engine._
 
+import scala.language.experimental.macros
+
 /**
   * Aggregates the keywords and implicit definitions of the Scala-Rules DSL. The implicits available in this
   * trait can be used by importing the `grammar` package object's members, or extending this trait.
