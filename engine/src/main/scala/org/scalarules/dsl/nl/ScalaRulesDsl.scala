@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl
 
-import org.scalarules.dsl.core.grammar.{DslCondition, DslConditionImplicits, DslEvaluationImplicits, absent, present}
+import org.scalarules.dsl.core.grammar.{DslConditionImplicits, DslEvaluationImplicits, absent, present}
 import org.scalarules.dsl.nl.datum.DatumImplicits
 import org.scalarules.dsl.nl.grammar._
 import org.scalarules.dsl.nl.grammar.meta.DslMacros
