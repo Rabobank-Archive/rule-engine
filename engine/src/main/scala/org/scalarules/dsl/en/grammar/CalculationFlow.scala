@@ -3,6 +3,7 @@ package org.scalarules.dsl.en.grammar
 import org.scalarules.dsl.core.grammar.DslCondition._
 import org.scalarules.dsl.core.grammar.{DerivationAccumulator, DslCondition, DslEvaluation}
 import org.scalarules.dsl.en.grammar.meta.DslMacros
+import org.scalarules.engine
 import org.scalarules.engine._
 import org.scalarules.utils.{FileSourcePosition, SourcePosition, SourceUnknown}
 
@@ -56,7 +57,42 @@ class ListCalculationStart[T] private[grammar](condition: DslCondition, output: 
     val subRunDerivation: SubRunDerivation = SubRunDerivation(input, output, c, subRunData)
     new CalculationAccumulator(condition, subRunDerivation :: derivationAcc)
   }
+
+  /**
+    * Specifies how a List is constructed from the results of applying an ElementCalculation to each element of the input List.
+    *
+    * Syntax: <output> contains results of <ElementCalculation> over <input>
+    */
+  def contains(r: ResultsWord): ListIterationConstruct[T] = new ListIterationConstruct[T](condition, output, derivationAcc)
 }
+
+class ResultsWord
+
+class ListIterationConstruct[Out](condition: DslCondition, output: Fact[List[Out]], berekeningAcc: List[Derivation]) {
+  def of[I](elementCalculationToExecute: ElementCalculationReference[I, Out]): ListIterationConstructWithCalculation[I] = new ListIterationConstructWithCalculation[I](elementCalculationToExecute.calculation)
+
+  class ListIterationConstructWithCalculation[In](elementCalculation: ElementCalculation[In, Out]) {
+
+    def over(iterator: ListFact[In]): CalculationAccumulator = {
+      val contextAddition: In => engine.Context = (x: In) => Map(elementCalculation.inputFact -> x)
+
+      val subRunData = new SubRunData[Out, In](elementCalculation.derivations, contextAddition, iterator, elementCalculation.outputFact)
+
+      val topLevelCondition = andCombineConditions(condition, factFilledCondition(subRunData.inputList)).condition
+
+      new CalculationAccumulator(condition, SubRunDerivation(subRunData.inputList :: condition.facts.toList, output, topLevelCondition, subRunData) :: berekeningAcc)
+    }
+  }
+}
+
+// --- supports naming the invoer and uitvoer inside an ElementCalculation
+class InputWord{
+  def is[In](iteratee: Fact[In]): InputSpec[In] = new InputSpec[In](iteratee)
+}
+class OutputWord{
+  def is[Out](iteratee: Fact[Out]): OutputSpec[Out] = new OutputSpec[Out](iteratee)
+}
+
 
 class CalculationAccumulator private[grammar](condition: DslCondition, val derivations: List[Derivation]) extends DerivationAccumulator {
   def and[A](fact: SingularFact[A]): SingularCalculationStart[A] = macro DslMacros.captureSingularBerekenSourcePositionWithAccumulatorMacroImpl[A]

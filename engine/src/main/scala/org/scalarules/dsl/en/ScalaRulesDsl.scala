@@ -1,10 +1,9 @@
 package org.scalarules.dsl.en
 
-import org.scalarules.dsl.core.grammar.{DslCondition, DslConditionImplicits, DslEvaluationImplicits, absent, present}
+import org.scalarules.dsl.core.grammar.{DslCondition, DslConditionImplicits, DslEvaluationImplicits}
 import org.scalarules.dsl.en.date.DateImplicits
 import org.scalarules.dsl.en.grammar._
 import org.scalarules.dsl.en.grammar.meta.DslMacros
-import org.scalarules.engine._
 
 import scala.language.experimental.macros
 
@@ -23,5 +22,10 @@ trait ScalaRulesDsl extends /*AfrondingsWordsTrait*/
 
   // Entrypoint for the DSL
   def Given(condition: DslCondition): GivenWord = macro DslMacros.captureGivenSourcePositionMacroImpl //scalastyle:ignore method.name
+
+  val results = new ResultsWord
+
+  val Input = new InputWord
+  val Output = new OutputWord
 
 }
