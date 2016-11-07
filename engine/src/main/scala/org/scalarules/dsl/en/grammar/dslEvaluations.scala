@@ -1,8 +1,7 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.en.grammar
 
-import org.scalarules.dsl.core.grammar.{DslCondition, DslEvaluation, FirstElementEvaluation, FirstEvaluation, IfThenElseEvaluation, ReducableEvaluation}
 import org.scalarules.dsl.core.grammar.DslCondition._
-import org.scalarules.finance.nl.Bedrag
+import org.scalarules.dsl.core.grammar.{DslCondition, DslEvaluation, FirstElementEvaluation, FirstEvaluation, IfThenElseEvaluation, ReducableEvaluation}
 import org.scalarules.engine._
 
 //scalastyle:off object.name
@@ -13,17 +12,17 @@ import org.scalarules.engine._
  * please add its DSL-part to this file and its implementation to the operationEvaluations.scala file.                                                        *
  * ************************************************************************************************************************************************************/
 
-object eerste {
+object first {
   def apply[A](facts: Fact[A]*): DslEvaluation[A] = {
     val condition = facts.map(f => factFilledCondition(f)).reduceLeft((b, a) => orCombineConditions(b, a))
 
     DslEvaluation[A](condition, new FirstEvaluation(facts))
   }
 
-  def elementVan[A](fact: Fact[List[A]]): DslEvaluation[A] = {
+  def elementOf[A](fact: Fact[List[A]]): DslEvaluation[A] = {
     val condition = factFilledCondition(fact)
 
-    DslEvaluation[A](condition, new FirstElementEvaluation(fact))
+    DslEvaluation[A](condition, new FirstElementEvaluation[A](fact))
   }
 }
 
@@ -58,7 +57,7 @@ object maximum extends ReducableDslOperation {
   }
 }
 
-object gecombineerdMaximum {
+object combinedMaximum {
   def apply[A : Ordering](facts: Fact[List[A]]*): DslEvaluation[List[A]] = {
     val condition = facts.map(f => factFilledCondition(f)).reduceLeft((b, a) => andCombineConditions(b, a))
 
@@ -68,7 +67,7 @@ object gecombineerdMaximum {
   }
 }
 
-object gecombineerdMinimum {
+object combinedMinimum {
   def apply[A : Ordering](facts: Fact[List[A]]*): DslEvaluation[List[A]] = {
     val condition = facts.map(f => factFilledCondition(f)).reduceLeft((b, a) => andCombineConditions(b, a))
 
@@ -78,15 +77,16 @@ object gecombineerdMinimum {
   }
 }
 
-object als {
+//scalastyle:off method.name
+object If {
   def apply[A](dslCondition: DslCondition): AlsResult[A] = new AlsResult(dslCondition)
 
   class AlsResult[A] private[grammar](alsCondition: DslCondition) {
-    def dan(eval: DslEvaluation[A]): DanResult[A] = new DanResult(alsCondition, eval)
+    def Then(eval: DslEvaluation[A]): DanResult[A] = new DanResult(alsCondition, eval)
   }
 
   class DanResult[A]private[grammar](alsCondition: DslCondition, danEvaluation: DslEvaluation[A]) {
-    def anders(andersEvaluation: DslEvaluation[A]) : DslEvaluation[A] = {
+    def Else(andersEvaluation: DslEvaluation[A]) : DslEvaluation[A] = {
       val facts = alsCondition.facts ++ danEvaluation.condition.facts ++ andersEvaluation.condition.facts
       val condition = facts.map(f => factFilledCondition(f)).foldLeft(emptyTrueCondition)((l, r) => andCombineConditions(l, r))
       val evaluation = new IfThenElseEvaluation(alsCondition.condition, danEvaluation.evaluation, andersEvaluation.evaluation)
@@ -95,16 +95,4 @@ object als {
     }
   }
 }
-
-object AfgekaptOp100Euro {
-  def apply(eval: DslEvaluation[Bedrag]): DslEvaluation[Bedrag] = {
-    DslEvaluation(eval.condition,
-      new Evaluation[Bedrag] {
-        override def apply(c: Context): Option[Bedrag] = eval.evaluation(c) match {
-          case Some(x) => Some(x.afgekaptOp100Euro)
-          case _ => None
-        }
-      }
-    )
-  }
-}
+//scalastyle:on method.name

@@ -1,5 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
+import org.scalarules.dsl.core.grammar.{DslEvaluation, ListAggregationEvaluation}
 import org.scalarules.dsl.core.operators.{Addable, Divisible, Subtractable}
 import org.scalarules.engine.Evaluation
 

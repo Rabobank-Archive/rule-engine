@@ -1,9 +1,9 @@
 package org.scalarules.dsl.nl
 
+import org.scalarules.dsl.core.grammar.{DslConditionImplicits, DslEvaluationImplicits, absent, present}
 import org.scalarules.dsl.nl.datum.DatumImplicits
 import org.scalarules.dsl.nl.grammar._
 import org.scalarules.dsl.nl.grammar.meta.DslMacros
-import org.scalarules.engine._
 
 import scala.language.experimental.macros
 
@@ -12,16 +12,18 @@ import scala.language.experimental.macros
   * trait can be used by importing the `grammar` package object's members, or extending this trait.
   */
 trait ScalaRulesDsl extends AfrondingsWordsTrait
+  with DslConditionNLImplicits
   with DslConditionImplicits
   with DslEvaluationImplicits
   with DatumImplicits
   with DslListFilterWord
 {
 
-  type ConditionFunction = (Condition, Condition) => Condition
+  val aanwezig = present
+  val afwezig = absent
 
   // Entrypoint for the DSL
-  def Gegeven(condition: DslCondition): GegevenWord = macro DslMacros.captureGegevenSourcePositionMacroImpl //scalastyle:ignore method.name
+  def Gegeven(condition: DslConditionNL): GegevenWord = macro DslMacros.captureGegevenSourcePositionMacroImpl //scalastyle:ignore method.name
 
   val resultaten = new ResultatenWord
 

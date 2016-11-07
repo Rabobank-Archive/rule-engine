@@ -1,20 +1,18 @@
 package org.scalarules.dsl.nl.grammar
 
-import DslCondition.{andCombineConditions, factFilledCondition}
+import org.scalarules.dsl.core.grammar.DslCondition.{andCombineConditions, factFilledCondition}
+import org.scalarules.dsl.core.grammar.{DerivationAccumulator, DslEvaluation}
 import org.scalarules.dsl.nl.grammar.meta.DslMacros
 import org.scalarules.engine
 import org.scalarules.engine._
 import org.scalarules.utils.{FileSourcePosition, SourcePosition, SourceUnknown}
 
-import scala.annotation.compileTimeOnly
-import scala.reflect.macros.blackbox.Context
 import scala.language.experimental.macros
-import scala.meta._
 
 //scalastyle:off method.name
 
 object Specificatie {
-  def apply[T](dslCondition: DslCondition, output: Fact[T], dslEvaluation: DslEvaluation[T], sourcePosition: SourcePosition): Derivation = {
+  def apply[T](dslCondition: DslConditionNL, output: Fact[T], dslEvaluation: DslEvaluation[T], sourcePosition: SourcePosition): Derivation = {
     val condition = andCombineConditions(dslCondition, dslEvaluation.condition).condition
     val input = dslCondition.facts.toList ++ dslEvaluation.condition.facts
 
@@ -38,14 +36,11 @@ object Specificatie {
  * DslEvaluation
  * LijstOpbouwConstruct ::= [Fact] `bevat` `resultaten` `van` [ElementBerekening] `over` [Fact]
  */
-
-class GegevenWord(val initialCondition: DslCondition, val position: SourcePosition = SourceUnknown()) {
-  val condition: DslCondition = position match {
+class GegevenWord(val initialCondition: DslConditionNL, val position: SourcePosition = SourceUnknown()) {
+  val condition: DslConditionNL = position match {
     case SourceUnknown() => initialCondition
     case fsp @ FileSourcePosition(_, _, _, _, _) => {
-      val DslCondition(facts, condition, _) = initialCondition
-
-      DslCondition(facts, condition, position)
+      new DslConditionNL(initialCondition.facts, initialCondition.condition, position)
     }
   }
 
@@ -53,11 +48,11 @@ class GegevenWord(val initialCondition: DslCondition, val position: SourcePositi
   def Bereken[A](fact: ListFact[A]): ListBerekenStart[A] = macro DslMacros.captureListBerekenSourcePositionMacroImpl[A]
 }
 
-class SingularBerekenStart[T] (condition: DslCondition, output: Fact[T], berekeningenAcc: List[Derivation], sourcePosition: SourcePosition) {
+class SingularBerekenStart[T] (condition: DslConditionNL, output: Fact[T], berekeningenAcc: List[Derivation], sourcePosition: SourcePosition) {
   def is[T1 >: T](operation: DslEvaluation[T1]): BerekeningAccumulator = new BerekeningAccumulator(condition, Specificatie(condition, output, operation, sourcePosition) :: berekeningenAcc)
 }
 
-class ListBerekenStart[T] (condition: DslCondition, output: Fact[List[T]], berekeningenAcc: List[Derivation], sourcePosition: SourcePosition) {
+class ListBerekenStart[T] (condition: DslConditionNL, output: Fact[List[T]], berekeningenAcc: List[Derivation], sourcePosition: SourcePosition) {
   def is[T1 <: T](operation: DslEvaluation[List[T1]]): BerekeningAccumulator = new BerekeningAccumulator(condition, Specificatie(condition, output, operation, sourcePosition) :: berekeningenAcc)
 
   def is[B](subRunData : SubRunData[T, B]) : BerekeningAccumulator = {
@@ -77,7 +72,7 @@ class ListBerekenStart[T] (condition: DslCondition, output: Fact[List[T]], berek
 
 class ResultatenWord
 
-class LijstOpbouwConstruct[Uit](condition: DslCondition, output: Fact[List[Uit]], berekeningAcc: List[Derivation]) {
+class LijstOpbouwConstruct[Uit](condition: DslConditionNL, output: Fact[List[Uit]], berekeningAcc: List[Derivation]) {
   def van[I](uitTeVoerenElementBerekening: ElementBerekeningReference[I, Uit]): LijstOpbouwConstructMetBerekening[I] = new LijstOpbouwConstructMetBerekening[I](uitTeVoerenElementBerekening.berekening)
 
   class LijstOpbouwConstructMetBerekening[In](elementBerekening: ElementBerekening[In, Uit]) {
@@ -85,7 +80,7 @@ class LijstOpbouwConstruct[Uit](condition: DslCondition, output: Fact[List[Uit]]
     def over(iterator: ListFact[In]): BerekeningAccumulator = {
       val contextAddition: In => engine.Context = (x: In) => Map(elementBerekening.invoerFact -> x)
 
-      val subRunData = new SubRunData[Uit, In](elementBerekening.berekeningen, contextAddition, iterator, elementBerekening.uitvoerFact)
+      val subRunData = new SubRunData[Uit, In](elementBerekening.derivations, contextAddition, iterator, elementBerekening.uitvoerFact)
 
       val topLevelCondition = andCombineConditions(condition, factFilledCondition(subRunData.inputList)).condition
 
@@ -102,7 +97,7 @@ class UitvoerWord{
   def is[Uit](iteratee: Fact[Uit]): UitvoerSpec[Uit] = new UitvoerSpec[Uit](iteratee)
 }
 
-class BerekeningAccumulator private[grammar](val condition: DslCondition, val derivations: List[Derivation]) {
+class BerekeningAccumulator private[grammar](val condition: DslConditionNL, val derivations: List[Derivation]) extends DerivationAccumulator {
   def en[A](fact: SingularFact[A]): SingularBerekenStart[A] = macro DslMacros.captureSingularBerekenSourcePositionWithAccumulatorMacroImpl[A]
   def en[A](fact: ListFact[A]): ListBerekenStart[A] = macro DslMacros.captureListBerekenSourcePositionWithAccumulatorMacroImpl[A]
 }

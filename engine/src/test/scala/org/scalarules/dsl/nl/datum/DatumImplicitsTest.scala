@@ -1,6 +1,5 @@
 package org.scalarules.dsl.nl.datum
 
-import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.engine.{Context, FactEngine, SingularFact}
 import org.scalatest.{FlatSpec, Matchers}
 import org.scalarules.dsl.nl.grammar._
@@ -25,7 +24,7 @@ class DatumImplicitsTest extends FlatSpec with Matchers {
   }
 
   def check(gegeven: GegevenWord, expectSmaller: Boolean, expectEqual: Boolean, expectGreater: Boolean): Unit = {
-    val accumulator: BerekeningAccumulator = gegeven Bereken( result ) is( expected )
+    val accumulator: BerekeningAccumulator = gegeven Bereken result is expected
 
     val resultContext: Context = FactEngine.runNormalDerivations(Map(sutDatumA -> "01-01-2015".datum, sutDatumB -> "02-01-2015".datum), accumulator.derivations)
     val evaluatedResult: Boolean = result.toEval(resultContext).getOrElse(false)

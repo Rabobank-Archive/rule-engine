@@ -1,5 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
+import org.scalarules.dsl.core.grammar.DslEvaluation
 import org.scalarules.dsl.core.projections.ProjectedDslEvaluation
 import org.scalarules.engine.{Context, Evaluation}
 

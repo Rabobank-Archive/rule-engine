@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core.projections
 
-import org.scalarules.dsl.nl.grammar.{DslCondition, DslEvaluation}
+import org.scalarules.dsl.core.grammar.{DslCondition, DslEvaluation}
 import org.scalarules.engine._
 
 /**

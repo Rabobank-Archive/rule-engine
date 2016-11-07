@@ -18,6 +18,8 @@ import scala.language.postfixOps
   */
 class AfrondingsWordsTraitTest extends PropSpec with Checkers {
 
+  var afrondingTestBerekeningDerivations: List[Derivation] = new AfrondingsTestBerekening().derivations
+
   /* BigDecimal property base tests*/
   property("BigDecimal: halfNaarEven should match BigDecimal.RoundingMode.HALF_EVEN for positive doubles") {
     check(
@@ -26,7 +28,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "halfNaarEven")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfEven)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalHalfEven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN) )
 
@@ -41,7 +43,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "halfNaarEven")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfEven)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalHalfEven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN) )
 
@@ -56,7 +58,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "halfNaarNulToe")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfNaarNulToe)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalHalfNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN) )
 
@@ -71,7 +73,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "halfNaarNulToe")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalHalfNaarNulToe)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalHalfNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN) )
 
@@ -86,7 +88,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "naarBeneden")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBeneden)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalNaarBeneden)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR) )
 
@@ -101,7 +103,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "naarBeneden")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBeneden)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalNaarBeneden)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR) )
 
@@ -116,7 +118,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "naarBoven")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBoven)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalNaarBoven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING) )
 
@@ -131,7 +133,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "naarBoven")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarBoven)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalNaarBoven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING) )
 
@@ -146,7 +148,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "naarNulToe")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarNulToe)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN) )
 
@@ -161,7 +163,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "naarNulToe")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalNaarNulToe)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN) )
 
@@ -176,7 +178,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "rekenkundig")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalRekenkundig)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalRekenkundig)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP) )
 
@@ -191,7 +193,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "rekenkundig")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalRekenkundig)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalRekenkundig)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP) )
 
@@ -206,7 +208,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "vanNulAf")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalVanNulAf)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalVanNulAf)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP) )
 
@@ -221,7 +223,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBigDecimal -> BigDecimal(testGetal),
                                     afrondingsType -> "vanNulAf")
 
-        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBigDecimalVanNulAf)
+        val uitkomst: Option[BigDecimal] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBigDecimalVanNulAf)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP) )
 
@@ -238,7 +240,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "halfNaarEven")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageHalfEven)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageHalfEven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN).procent )
 
@@ -253,7 +255,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "halfNaarEven")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageHalfEven)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageHalfEven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN).procent )
 
@@ -268,7 +270,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "halfNaarNulToe")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageHalfNaarNulToe)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageHalfNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN).procent )
 
@@ -283,7 +285,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "halfNaarNulToe")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageHalfNaarNulToe)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageHalfNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN).procent )
 
@@ -298,7 +300,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "naarBeneden")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageNaarBeneden)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageNaarBeneden)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR).procent )
 
@@ -313,7 +315,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "naarBeneden")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageNaarBeneden)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageNaarBeneden)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR).procent )
 
@@ -328,7 +330,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "naarBoven")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageNaarBoven)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageNaarBoven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING).procent )
 
@@ -343,7 +345,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "naarBoven")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageNaarBoven)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageNaarBoven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING).procent )
 
@@ -358,7 +360,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "naarNulToe")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageNaarNulToe)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN).procent )
 
@@ -373,7 +375,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "naarNulToe")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageNaarNulToe)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN).procent )
 
@@ -388,7 +390,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "rekenkundig")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageRekenkundig)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageRekenkundig)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP).procent )
 
@@ -403,7 +405,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "rekenkundig")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageRekenkundig)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageRekenkundig)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP).procent )
 
@@ -418,7 +420,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "vanNulAf")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageVanNulAf)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageVanNulAf)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP).procent )
 
@@ -433,7 +435,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startPercentage -> BigDecimal(testGetal).procent,
                                     afrondingsType -> "vanNulAf")
 
-        val uitkomst: Option[Percentage] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondPercentageVanNulAf)
+        val uitkomst: Option[Percentage] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondPercentageVanNulAf)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP).procent )
 
@@ -449,7 +451,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
           afrondingsType -> "halfNaarEven")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragHalfEven)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragHalfEven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN).euro )
 
@@ -464,7 +466,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "halfNaarEven")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragHalfEven)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragHalfEven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_EVEN).euro )
 
@@ -479,7 +481,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "halfNaarNulToe")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragHalfNaarNulToe)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragHalfNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN).euro )
 
@@ -494,7 +496,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "halfNaarNulToe")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragHalfNaarNulToe)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragHalfNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_DOWN).euro )
 
@@ -509,7 +511,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "naarBeneden")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragNaarBeneden)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragNaarBeneden)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR).euro )
 
@@ -524,7 +526,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "naarBeneden")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragNaarBeneden)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragNaarBeneden)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.FLOOR).euro )
 
@@ -539,7 +541,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "naarBoven")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragNaarBoven)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragNaarBoven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING).euro )
 
@@ -554,7 +556,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "naarBoven")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragNaarBoven)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragNaarBoven)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.CEILING).euro )
 
@@ -569,7 +571,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "naarNulToe")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragNaarNulToe)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN).euro )
 
@@ -584,7 +586,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "naarNulToe")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragNaarNulToe)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragNaarNulToe)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.DOWN).euro )
 
@@ -599,7 +601,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "rekenkundig")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragRekenkundig)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragRekenkundig)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP).euro )
 
@@ -614,7 +616,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "rekenkundig")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragRekenkundig)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragRekenkundig)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.HALF_UP).euro )
 
@@ -629,7 +631,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "vanNulAf")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragVanNulAf)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragVanNulAf)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP).euro )
 
@@ -644,7 +646,7 @@ class AfrondingsWordsTraitTest extends PropSpec with Checkers {
         val context: Context = Map(startBedrag -> BigDecimal(testGetal).euro,
                                     afrondingsType -> "vanNulAf")
 
-        val uitkomst: Option[Bedrag] = runAndExtractFact(context, new AfrondingsTestBerekening().berekeningen, afgerondBedragVanNulAf)
+        val uitkomst: Option[Bedrag] = runAndExtractFact(context, afrondingTestBerekeningDerivations, afgerondBedragVanNulAf)
 
         all(uitkomst.isDefined, uitkomst.get == BigDecimal(testGetal).setScale(0, BigDecimal.RoundingMode.UP).euro )
 

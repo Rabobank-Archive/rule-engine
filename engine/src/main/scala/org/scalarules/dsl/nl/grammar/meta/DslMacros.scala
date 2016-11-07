@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar.meta
 
-import org.scalarules.dsl.nl.grammar.{DslCondition, GegevenWord, ListBerekenStart, SingularBerekenStart}
+import org.scalarules.dsl.nl.grammar.{DslConditionNL, GegevenWord, ListBerekenStart, SingularBerekenStart}
 import org.scalarules.engine.{Derivation, ListFact, SingularFact}
 import org.scalarules.utils.FileSourcePosition
 
@@ -12,7 +12,7 @@ import scala.reflect.macros.blackbox._
 object DslMacros {
 
   @compileTimeOnly("This macro stores the source position of a 'Gegeven' during compile time, no use during runtime")
-  def captureGegevenSourcePositionMacroImpl(c: Context)(condition: c.Expr[DslCondition]): c.Expr[GegevenWord] = {
+  def captureGegevenSourcePositionMacroImpl(c: Context)(condition: c.Expr[DslConditionNL]): c.Expr[GegevenWord] = {
     val (filename, line, column, start, length) = extractSourcePosition(c)
 
     c.universe.reify { new GegevenWord(condition.splice, FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
@@ -24,7 +24,7 @@ object DslMacros {
 
     val (filename, line, column, start, length) = extractSourcePosition(c)
 
-    val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
+    val conditionExpr: c.Expr[DslConditionNL] = c.Expr[DslConditionNL](Select(c.prefix.tree, TermName("condition")))
 
     c.universe.reify { new SingularBerekenStart[A](conditionExpr.splice, fact.splice, List(), FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
   }
@@ -35,7 +35,7 @@ object DslMacros {
 
     val (filename, line, column, start, length) = extractSourcePosition(c)
 
-    val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
+    val conditionExpr: c.Expr[DslConditionNL] = c.Expr[DslConditionNL](Select(c.prefix.tree, TermName("condition")))
     val derivationsExpr: c.Expr[List[Derivation]] = c.Expr[List[Derivation]](Select(c.prefix.tree, TermName("derivations")))
 
     c.universe.reify { new SingularBerekenStart[A](conditionExpr.splice, fact.splice, derivationsExpr.splice, FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
@@ -47,7 +47,7 @@ object DslMacros {
 
     val (filename, line, column, start, length) = extractSourcePosition(c)
 
-    val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
+    val conditionExpr: c.Expr[DslConditionNL] = c.Expr[DslConditionNL](Select(c.prefix.tree, TermName("condition")))
 
     c.universe.reify { new ListBerekenStart[A](conditionExpr.splice, fact.splice, List(), FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }
   }
@@ -58,7 +58,7 @@ object DslMacros {
 
     val (filename, line, column, start, length) = extractSourcePosition(c)
 
-    val conditionExpr: c.Expr[DslCondition] = c.Expr[DslCondition](Select(c.prefix.tree, TermName("condition")))
+    val conditionExpr: c.Expr[DslConditionNL] = c.Expr[DslConditionNL](Select(c.prefix.tree, TermName("condition")))
     val derivationsExpr: c.Expr[List[Derivation]] = c.Expr[List[Derivation]](Select(c.prefix.tree, TermName("derivations")))
 
     c.universe.reify { new ListBerekenStart[A](conditionExpr.splice, fact.splice, derivationsExpr.splice, FileSourcePosition(filename.splice, line.splice, column.splice, start.splice, length.splice)) }

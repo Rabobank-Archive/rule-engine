@@ -1,10 +1,9 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.engine.{Derivation, Fact}
+import org.scalarules.dsl.core.grammar.AbstractCalculation
+import org.scalarules.engine.Fact
 
-class Berekening(berekeningAccumulators: BerekeningAccumulator*) {
-  val berekeningen: List[Derivation] = berekeningAccumulators.flatMap(_.derivations).toList
-}
+class Berekening(berekeningAccumulators: BerekeningAccumulator*) extends AbstractCalculation[BerekeningAccumulator](berekeningAccumulators:_*)
 
 class InvoerSpec[In](val iteratee: Fact[In])
 class UitvoerSpec[Uit](val resultee: Fact[Uit])
@@ -14,6 +13,10 @@ class UitvoerSpec[Uit](val resultee: Fact[Uit])
   * Berekeningen die als elementberekening in een lijst-iteratie worden gebruikt. In de DSL kunnen deze worden vormgegeven door de volgende syntax:
   *
   * class MijnBerekening extends ElementBerekening[<invoertype>, <uitvoertype>] (
+  *   Invoer is <invoerFact>,
+  *   Uitvoer is <uitvoerFact>,
+  *   Gegeven ...
+  * )
   */
 class ElementBerekening[In, Uit](invoer: InvoerSpec[In], uitvoer: UitvoerSpec[Uit], berekeningAccumulators: BerekeningAccumulator*) extends Berekening(berekeningAccumulators:_*) {
   def invoerFact: Fact[In] = invoer.iteratee

@@ -1,10 +1,12 @@
 package org.scalarules.dsl.core.projections
 
-import scala.language.implicitConversions
-import org.scalarules.dsl.core.projections.ProjectableFieldsGlossary._
+import org.scalarules.dsl.core.grammar.DslEvaluation
 import org.scalarules.dsl.core.projections.ComplexObjectProjections.toProjections
+import org.scalarules.dsl.core.projections.ProjectableFieldsGlossary._
 import org.scalarules.dsl.nl.grammar._
 import org.scalarules.engine.{Fact, ListFact, SingularFact}
+
+import scala.language.implicitConversions
 
 class ProjectableFieldsCalculation extends Berekening(
   Gegeven(altijd) Bereken

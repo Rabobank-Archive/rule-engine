@@ -3,7 +3,8 @@ package org.scalarules.dsl.core
 import org.scalarules.finance.nl._
 import org.scalarules.dsl.nl.grammar._
 import LijstBewerkingenGlossary$._
-import org.scalarules.dsl.nl.grammar.DslCondition._
+import org.scalarules.dsl.core.grammar.DslEvaluation
+import org.scalarules.dsl.core.grammar.DslCondition._
 import org.scalarules.engine._
 
 import scala.language.implicitConversions

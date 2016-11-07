@@ -1,6 +1,6 @@
 package org.scalarules.dsl.core
 
-import org.scalarules.dsl.nl.grammar.Table
+import org.scalarules.dsl.core.grammar.Table
 import org.scalarules.utils.Glossary
 
 object TableSelectorGlossary extends Glossary {

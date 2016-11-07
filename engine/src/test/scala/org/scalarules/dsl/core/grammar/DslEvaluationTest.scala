@@ -1,4 +1,4 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.core.grammar
 
 import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.engine.SingularFact

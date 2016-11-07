@@ -1,9 +1,10 @@
-package org.scalarules.dsl.nl.grammar
+package org.scalarules.dsl.en.grammar
 
-import org.scalarules.dsl.nl.grammar.ConditionsBerekeningGlossary._
+import org.scalarules.dsl.core.grammar.present
+import org.scalarules.dsl.en.grammar.ConditionsDerivationGlossary._
 import org.scalarules.utils.InternalBerekeningenTester
 
-class ConditionsBerekeningTest extends InternalBerekeningenTester(new ConditionsBerekening) {
+class ConditionsDerivationTest extends InternalBerekeningenTester(new ConditionsDerivation) {
 
   test("of altijd condition werkt met lege context") gegeven (
 
@@ -21,7 +22,7 @@ class ConditionsBerekeningTest extends InternalBerekeningenTester(new Conditions
 
   ) verwacht (
     outputAlwaysAvailable is BigDecimal(10),
-    outputShouldBeAvailableIfInputIsAvailable niet aanwezig
+    outputShouldBeAvailableIfInputIsAvailable niet present
   )
 
   test("of aanwezig condition werkt met gevulde context") gegeven (
@@ -42,13 +43,7 @@ class ConditionsBerekeningTest extends InternalBerekeningenTester(new Conditions
     unavailableInput is BigDecimal(1)
   ) verwacht (
     outputAlwaysAvailable is BigDecimal(10),
-    outputShouldBeAvailableIfInputIsNotAvailable niet aanwezig
-  )
-
-  test("of aanwezige waarde niet wordt overschreven") gegeven (
-    tryToOverwriteThisValue is BigDecimal(100)
-  ) verwacht (
-    tryToOverwriteThisValue is BigDecimal(100)
+    outputShouldBeAvailableIfInputIsNotAvailable niet present
   )
 
 }

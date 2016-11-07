@@ -1,6 +1,6 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.dsl.nl.grammar.DslCondition._
+import org.scalarules.dsl.core.grammar.{DslCondition, DslEvaluation}
 import org.scalarules.engine._
 import org.scalarules.finance.nl.{Bedrag, Percentage}
 
@@ -93,7 +93,7 @@ trait AfrondingsWordsTrait {
       * @return DslEvaluation[Percentage]
       */
     def decimalen: DslEvaluation[T] = {
-      DslEvaluation(factFilledCondition(afTeRonden), new Evaluation[T] {
+      DslEvaluation(DslCondition.factFilledCondition(afTeRonden), new Evaluation[T] {
         override def apply(c: Context): Option[T] = {
           val ev = implicitly[Afrondbaar[T]]
           Some(ev.rondAfOp(afTeRonden.toEval(c).get, aantalDecimalen, roundingMode))
