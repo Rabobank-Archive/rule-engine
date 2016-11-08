@@ -2,6 +2,7 @@ package org.scalarules.dsl.nl.grammar
 
 import org.scalarules.dsl.nl.grammar.DslCondition._
 import org.scalarules.engine._
+import org.scalarules.facts.Fact
 import org.scalarules.utils.{SourcePosition, SourceUnknown}
 
 import scala.language.implicitConversions

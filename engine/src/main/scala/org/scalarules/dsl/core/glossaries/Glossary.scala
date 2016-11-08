@@ -1,6 +1,6 @@
 package org.scalarules.utils
 
-import org.scalarules.engine.{Fact, ListFact, SingularFact}
+import org.scalarules.facts.{Fact, ListFact, SingularFact}
 
 import scala.language.experimental.macros
 

@@ -4,7 +4,7 @@ import scala.language.implicitConversions
 import org.scalarules.dsl.core.projections.ProjectableFieldsGlossary._
 import org.scalarules.dsl.core.projections.ComplexObjectProjections.toProjections
 import org.scalarules.dsl.nl.grammar._
-import org.scalarules.engine.{Fact, ListFact, SingularFact}
+import org.scalarules.facts.{Fact, ListFact, SingularFact}
 
 class ProjectableFieldsCalculation extends Berekening(
   Gegeven(altijd) Bereken

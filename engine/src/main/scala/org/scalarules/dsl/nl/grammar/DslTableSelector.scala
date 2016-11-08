@@ -1,7 +1,8 @@
 package org.scalarules.dsl.nl.grammar
 
 import DslCondition._
-import org.scalarules.engine.{Derivation, Context, Evaluation, Fact}
+import org.scalarules.engine.{Context, Evaluation}
+import org.scalarules.facts.Fact
 
 object DslTableSelector {
   var prikken = new DslTableSelector

@@ -1,10 +1,11 @@
 package org.scalarules.utils
 
+import org.scalarules.derivations.DerivationTools._
+import org.scalarules.derivations.{DefaultDerivation, Derivation, SubRunDerivation}
 import org.scalarules.engine._
+import org.scalarules.facts.Fact
 
 import scala.annotation.tailrec
-
-import org.scalarules.engine.DerivationTools._
 
 object PrettyPrinter {
 

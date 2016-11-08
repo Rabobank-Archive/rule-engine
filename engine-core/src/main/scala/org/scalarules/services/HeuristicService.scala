@@ -1,6 +1,7 @@
 package org.scalarules.services
 
 import org.scalarules.engine._
+import org.scalarules.facts.Fact
 import org.scalarules.services.HeuristicServices._
 
 import scala.annotation.tailrec

@@ -1,5 +1,7 @@
 package org.scalarules.engine
 
+import org.scalarules.facts.Fact
+
 object Conditions {
 
   val trueCondition: Condition = (c: Context) => true

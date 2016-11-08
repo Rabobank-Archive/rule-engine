@@ -2,6 +2,7 @@ package org.scalarules.dsl.core.projections
 
 import org.scalarules.dsl.nl.grammar.{DslCondition, DslEvaluation}
 import org.scalarules.engine._
+import org.scalarules.facts.{Fact, ListFact}
 
 /**
   * Domain objects in the DSL can allow access to their fields through projections.

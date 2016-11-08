@@ -1,17 +1,18 @@
 package org.scalarules.engine
 
 import org.scalacheck.{Arbitrary, Gen}
+import org.scalarules.derivations._
 import org.scalarules.engine.FactEngineTestGlossary._
+import org.scalarules.facts.Fact
 import org.scalatest.prop.GeneratorDrivenPropertyChecks
 import org.scalatest.{FlatSpec, Matchers}
-import DerivationTools._
 
 class FactEngineTestComputeInputs extends FlatSpec with Matchers {
 
   val derivations = List(FactEngineTestValues.derivationOne, FactEngineTestValues.derivationTwo, FactEngineTestValues.derivationRedefiningOutput)
 
   it should "output all unique inputs" in {
-    val resultingInputs: Set[Fact[Any]] = computeAllInputs(derivations)
+    val resultingInputs: Set[Fact[Any]] = DerivationTools.computeAllInputs(derivations)
 
     resultingInputs should have size 5
     resultingInputs should contain (PurchaseAmount)
@@ -29,7 +30,7 @@ class FactEngineTestComputeOutputs extends FlatSpec with Matchers {
   val derivationsNOK = List(FactEngineTestValues.derivationOne, FactEngineTestValues.derivationTwo, FactEngineTestValues.derivationRedefiningOutput)
 
   it should "output all outputs" in {
-    val resultingOutputs: Set[Fact[Any]] = computeAllOutputs(derivationsOK)
+    val resultingOutputs: Set[Fact[Any]] = DerivationTools.computeAllOutputs(derivationsOK)
 
     resultingOutputs should have size 2
     resultingOutputs should contain (BuildingValue)
@@ -38,7 +39,7 @@ class FactEngineTestComputeOutputs extends FlatSpec with Matchers {
 
   it should "detect a doubly defined output and break" in {
     intercept[IllegalStateException] {
-      computeAllOutputs(derivationsNOK)
+      DerivationTools.computeAllOutputs(derivationsNOK)
     }
   }
 
@@ -48,13 +49,13 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
 
   it should "detect a direct loop between two derivations" in {
     intercept[IllegalStateException] {
-      FactEngine.constructGraph(FactEngineTestValues.directLoopDefaultDerivations)
+      DerivationTools.constructGraph(FactEngineTestValues.directLoopDefaultDerivations)
     }
   }
 
   it should "detect an indirect loop between three derivations" in {
     intercept[IllegalStateException] {
-      FactEngine.constructGraph(FactEngineTestValues.indirectLoopDefaultDerivationsOrders.head)
+      DerivationTools.constructGraph(FactEngineTestValues.indirectLoopDefaultDerivationsOrders.head)
     }
   }
 
@@ -62,14 +63,14 @@ class FactEngineTestConstructGraph extends FlatSpec with Matchers with Generator
     implicit val arbitraryDefaultDerivations: Arbitrary[List[DefaultDerivation]] = Arbitrary(FactEngineTestValues.derivationsGeneration)
 
     forAll((derivations: List[DefaultDerivation]) => {
-      val nodes = FactEngine.constructGraph(derivations)
+      val nodes = DerivationTools.constructGraph(derivations)
 
       nodes should have size derivations.size
     })
   }
 
   it should "allow DefaultDerivations with 0 inputs" in {
-    val nodes = FactEngine.constructGraph(List(FactEngineTestValues.derivationWithoutInputs1))
+    val nodes = DerivationTools.constructGraph(List(FactEngineTestValues.derivationWithoutInputs1))
 
     nodes should have size 1
   }
@@ -133,7 +134,8 @@ class FactEngineTestRunSubRunDefaultDerivations extends FlatSpec with Matchers w
   it should "calculate values correctly when all input values are available" in {
     val result = FactEngine.runNormalDerivations(context, List(FactEngineTestValues.derivationSubRun))
 
-    result should have size (context.size + 1)
+    // We're expecting the actual output as well as the synthesized fact containing all iteration results
+    result should have size (context.size + 2)
     result(SubRunOutput) should equal (inputs.map(i => i + 10))
   }
 

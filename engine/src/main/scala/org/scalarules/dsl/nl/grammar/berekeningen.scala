@@ -1,6 +1,7 @@
 package org.scalarules.dsl.nl.grammar
 
-import org.scalarules.engine.{Derivation, Fact}
+import org.scalarules.derivations.Derivation
+import org.scalarules.facts.Fact
 
 class Berekening(berekeningAccumulators: BerekeningAccumulator*) {
   val berekeningen: List[Derivation] = berekeningAccumulators.flatMap(_.derivations).toList

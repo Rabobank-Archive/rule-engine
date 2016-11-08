@@ -6,6 +6,7 @@ import org.scalarules.dsl.core.operators._
 import org.scalarules.finance.core.Quantity
 import org.scalarules.finance.nl.{Bedrag, Percentage}
 import org.scalarules.engine._
+import org.scalarules.facts.{ListFact, SingularFact}
 
 import scala.language.implicitConversions
 

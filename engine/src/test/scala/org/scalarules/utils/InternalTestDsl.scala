@@ -2,7 +2,8 @@ package org.scalarules.utils
 
 import org.scalarules.finance.nl.{Bedrag, Per}
 import org.scalarules.dsl.nl.grammar.{Aanwezigheid, Berekening}
-import org.scalarules.engine.{Context, Fact, FactEngine}
+import org.scalarules.engine.{Context, FactEngine}
+import org.scalarules.facts.Fact
 import org.scalatest.{FlatSpec, Matchers}
 
 // TODO : Make into English and move the Dutch specific parts to a Dutch dsl package

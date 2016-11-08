@@ -1,9 +1,12 @@
-package org.scalarules.engine
+package org.scalarules.derivations
+
+import org.scalarules.derivations.DerivationTools._
+import org.scalarules.engine._
+import org.scalarules.facts.Fact
+import org.scalarules.utils.{SourcePosition, SourceUnknown}
 
 // TODO : Turn this off and fix it
 import scala.language.existentials
-import DerivationTools._
-import org.scalarules.utils.{SourcePosition, SourceUnknown}
 
 /**
   * A `Derivation` models the basic element used inside the `Engine`. One execution step of the `Engine` will always
@@ -66,44 +69,4 @@ case class SubRunDerivation(inputs: Input, output: Output, condition: Condition,
   */
 case class SubRunData[+O, I](derivations: List[Derivation], contextAdditions: I => Context, inputList: Fact[List[I]], yieldFact: Fact[O]) {
   def yieldValue: Context => Option[O] = c => yieldFact.toEval(c)
-}
-
-/**
-  * Collection of utility methods for handling Derivations.
-  */
-object DerivationTools {
-
-  /**
-    * Computes the Set of all unique Facts used by Derivations.
-    *
-    * @param derivations all available Derivations
-    * @return a Set containing all unique input Facts
-    */
-  def computeAllInputs(derivations: List[Derivation]): Set[Fact[Any]] = {
-    def collectInputs(derivations: List[Derivation], acc: Set[Fact[Any]]) : Set[Fact[Any]] = derivations match {
-      case d :: ds => collectInputs(ds, acc ++ d.input)
-      case Nil => acc
-    }
-    collectInputs(derivations, Set())
-  }
-
-  /**
-    * Computes the Set of all unique Facts produced by Derivations. It also enforces uniqueness between Derivations, since we do not allow multiple Derivations
-    * to produce the same Fact.
-    *
-    * @param derivations all available Derivations
-    * @return a Set containing all unique output Facts
-    */
-  def computeAllOutputs(derivations: List[Derivation]): Set[Fact[Any]] = {
-    def collectOutputs(derivations: List[Derivation], acc: Set[Fact[Any]]) : Set[Fact[Any]] = derivations match {
-      case d :: ds => if (acc contains d.output) {
-        throw new IllegalStateException("Found a second derivation trying to satisfy output " + d.output)
-      } else {
-        collectOutputs(ds, acc + d.output)
-      }
-      case Nil => acc
-    }
-    collectOutputs(derivations, Set())
-  }
-
 }

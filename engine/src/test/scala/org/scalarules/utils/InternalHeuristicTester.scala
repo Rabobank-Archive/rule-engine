@@ -1,7 +1,8 @@
 package org.scalarules.utils
 
 import org.scalarules.dsl.nl.grammar.Berekening
-import org.scalarules.engine.{Context, Fact, FactEngine}
+import org.scalarules.engine.{Context, FactEngine}
+import org.scalarules.facts.Fact
 import org.scalarules.services._
 
 //scalastyle:off null
