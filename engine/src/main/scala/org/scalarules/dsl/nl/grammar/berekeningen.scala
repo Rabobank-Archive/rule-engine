@@ -1,0 +1,27 @@
+package org.scalarules.dsl.nl.grammar
+
+import org.scalarules.derivations.Derivation
+import org.scalarules.facts.Fact
+
+class Berekening(berekeningAccumulators: BerekeningAccumulator*) {
+  val berekeningen: List[Derivation] = berekeningAccumulators.flatMap(_.derivations).toList
+}
+
+class InvoerSpec[In](val iteratee: Fact[In])
+class UitvoerSpec[Uit](val resultee: Fact[Uit])
+
+/**
+  * Een ElementBerekening is een Berekening met een enkele invoer en een enkele uitvoer parameter. Deze worden voornamelijk gebruikt bij het definieren van
+  * Berekeningen die als elementberekening in een lijst-iteratie worden gebruikt. In de DSL kunnen deze worden vormgegeven door de volgende syntax:
+  *
+  * class MijnBerekening extends ElementBerekening[<invoertype>, <uitvoertype>] (
+  */
+class ElementBerekening[In, Uit](invoer: InvoerSpec[In], uitvoer: UitvoerSpec[Uit], berekeningAccumulators: BerekeningAccumulator*) extends Berekening(berekeningAccumulators:_*) {
+  def invoerFact: Fact[In] = invoer.iteratee
+  def uitvoerFact: Fact[Uit] = uitvoer.resultee
+}
+
+trait ElementBerekeningReference[In, Uit] {
+  def berekening: ElementBerekening[In, Uit]
+}
+
