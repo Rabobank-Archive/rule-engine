@@ -96,7 +96,7 @@ object FactEngine {
     def evaluator(t: (Context, List[Step]), d: Derivation): (Context, List[Step]) = {
       val (c, steps) = t
       if (c.contains(d.output)) {
-        (c, AlreadyExistsStep(c, d, c) :: steps)
+        (c, AlreadyExistsStep(c, d) :: steps)
       } else if (d.condition(c)) {
         d match {
           case der: SubRunDerivation => {
@@ -110,7 +110,7 @@ object FactEngine {
           case der: DefaultDerivation => processStep(d, c, steps, der.operation(c))
         }
       } else {
-        (c, ConditionFalseStep(c, d, c) :: steps)
+        (c, ConditionFalseStep(c, d) :: steps)
       }
     }
 
@@ -123,7 +123,7 @@ object FactEngine {
 
     def processStep(d: Derivation, c: Context, steps: List[Step], operation: Option[Any]): (Context, List[Step]) = {
       if (operation.isEmpty) {
-        (c, EmptyResultStep(c, d, c) :: steps)
+        (c, EmptyResultStep(c, d) :: steps)
       } else {
         val newContext = c + (d.output -> operation.get)
         (newContext, EvaluatedStep(c, d, newContext) :: steps)

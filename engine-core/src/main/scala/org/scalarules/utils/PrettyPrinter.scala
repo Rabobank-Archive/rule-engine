@@ -45,13 +45,13 @@ object PrettyPrinter {
   def printSteps(steps: List[Step]): String = {
     @tailrec
     def go(remainingSteps: List[Step], acc: String): String = remainingSteps match {
-      case AlreadyExistsStep(initial, derivation, result) :: tail =>
+      case AlreadyExistsStep(initial, derivation) :: tail =>
         go(tail, s" * Evaluate: ${derivation.output.name}\n   * Result: Fact already exists in context: Skipping   " +
-                  s"* Existing value: ${Map(derivation.output.name -> result.get(derivation.output).get)}\n" + acc)
-      case ConditionFalseStep(initial, derivation, result) :: tail =>
+                  s"* Existing value: ${Map(derivation.output.name -> initial.get(derivation.output).get)}\n" + acc)
+      case ConditionFalseStep(initial, derivation) :: tail =>
         go(tail, s" * Evaluate: ${derivation.output.name}\n   * Result: Condition false: Skipping   * Change: No change!\n" + acc)
-      case EmptyResultStep(initial, derivation, result) :: tail =>
-        go(tail, s" * Evaluate: ${derivation.output.name}\n   * Result: Empty   * Change: ${result -- initial.keys}\n" + acc)
+      case EmptyResultStep(initial, derivation) :: tail =>
+        go(tail, s" * Evaluate: ${derivation.output.name}\n   * Result: Empty   * Change: No change!\n" + acc)
       case EvaluatedStep(initial, derivation, result) :: tail =>
         go(tail, s" * Evaluate: ${derivation.output.name}\n   * Result: Evaluated   * Change: ${result -- initial.keys}\n" + acc)
       case IterationFinishedStep(initial, derivation, result) :: tail =>
