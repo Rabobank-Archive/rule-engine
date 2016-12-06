@@ -69,7 +69,6 @@ trait BedragImplicits {
     def euro: Bedrag = Bedrag(BigDecimal(value))
   }
 
-
   /** Zorgt ervoor dat zaken als "sum" gemakkelijk kunnen worden berekend op verzamelingen van Bedrag. */
   implicit object NumericBedrag extends Numeric[Bedrag] {
     override def plus(x: Bedrag, y: Bedrag): Bedrag = x + y
