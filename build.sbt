@@ -23,15 +23,7 @@ lazy val ruleEngineRoot = (project in file("."))
     name := "scala-rules",
     description := "Scala Rules"
   )
-  .aggregate(engineCore, engine, financeDsl, engineTestUtils)
-
-lazy val financeDsl = (project in file("finance-dsl"))
-  .settings(commonSettings: _*)
-  .settings(
-    name := "finance-dsl",
-    description := "Finance DSL",
-    libraryDependencies ++= financeDslDependencies
-  )
+  .aggregate(engineCore, engine, engineTestUtils)
 
 lazy val engineCore = (project in file("engine-core"))
   .settings(commonSettings: _*)
@@ -55,7 +47,7 @@ lazy val engine = (project in file("engine"))
       url("https://dl.bintray.com/scalameta/maven"))(Resolver.ivyStylePatterns)
 
   )
-  .dependsOn(financeDsl, engineCore)
+  .dependsOn(engineCore)
 
 lazy val engineTestUtils = (project in file("engine-test-utils"))
   .settings(commonSettings: _*)
@@ -64,8 +56,7 @@ lazy val engineTestUtils = (project in file("engine-test-utils"))
     description := "Rule Engine Test Utils",
     libraryDependencies ++= testUtilDependencies
   )
-  .dependsOn(financeDsl, engine)
-
+  .dependsOn(engine)
 
 
 // *** Dependencies ***
@@ -80,11 +71,10 @@ lazy val commonDependencies = Seq(
   "joda-time" % "joda-time" % jodaTimeVersion,
   "org.joda" % "joda-convert" % jodaConvertVersion,
   "org.scalameta"  %% "scalameta" % "1.2.0",
+  "org.scala-rules" %% "finance-dsl" % "0.1.0",
   "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
   "org.scalacheck" %% "scalacheck" % "1.12.5" % Test
 )
-
-lazy val financeDslDependencies = commonDependencies
 
 lazy val engineCoreDependencies = commonDependencies
 
