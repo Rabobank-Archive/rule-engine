@@ -8,7 +8,7 @@ import org.scalarules.service.dsl.BusinessServiceTestGlossary3._
 import org.scalarules.service.dsl.NotABusinessServiceTestGlossary1._
 import org.scalatest.{FlatSpec, Matchers}
 
-import scala.util.Try
+import scala.util.{Failure, Success, Try}
 
 
 class BusinessServiceTest extends FlatSpec with Matchers {
@@ -60,34 +60,38 @@ class BusinessServiceTest extends FlatSpec with Matchers {
   }
 
   it should "perform the proper derivations when given proper input" in {
-    val result: Context = new TestBusinessServiceAlles().run(Map(
+    new TestBusinessServiceAlles().run(Map(
       verplichteInvoer1 -> BigDecimal(1).euro,
       verplichteInvoer2 -> BigDecimal(2).euro,
       verplichteInvoer3 -> BigDecimal(3).euro
-    ), FactEngine.runNormalDerivations).get
-
-    result(uitvoer1) should be ((1 + 1).euro)
-    result(uitvoer2) should be ((2 + 2).euro)
-    result(uitvoer3) should be ((3 + 3).euro)
+    ), FactEngine.runNormalDerivations) match {
+      case Failure(f) => f.getMessage shouldBe "Something is likely wrong in the test setup if this test fails because of validation or run errors"
+      case Success(s) =>
+        s(uitvoer1) should be ((1 + 1).euro)
+        s(uitvoer2) should be ((2 + 2).euro)
+        s(uitvoer3) should be ((3 + 3).euro)
+    }
   }
 
   it should "overwrite optional invoer when given proper input" in {
-    val result: Context = new TestBusinessServiceAlles().run(Map(
+    new TestBusinessServiceAlles().run(Map(
       verplichteInvoer1 -> 1.euro,
       verplichteInvoer2 -> 2.euro,
       verplichteInvoer3 -> 3.euro,
       optioneleInvoer1 -> 11.euro,
       optioneleInvoer2 -> 22.euro,
       optioneleInvoer3 -> 33.euro
-    ), FactEngine.runNormalDerivations).get
-
-    result(uitvoer1) should be ((1 + 11).euro)
-    result(uitvoer2) should be ((2 + 22).euro)
-    result(uitvoer3) should be ((3 + 33).euro)
+    ), FactEngine.runNormalDerivations) match {
+      case Failure(f) => f.getMessage shouldBe "Something is likely wrong in the test setup if this test fails because of validation or run errors"
+      case Success(s) =>
+        s(uitvoer1) should be((1 + 11).euro)
+        s(uitvoer2) should be((2 + 22).euro)
+        s(uitvoer3) should be((3 + 33).euro)
+    }
   }
 
   it should "have no trouble with the absence of optionalInvoer specifications" in {
-    val result: Context = new TestBusinessServiceGeenOptioneel().run(Map(
+    new TestBusinessServiceGeenOptioneel().run(Map(
       verplichteInvoer1 -> 1.euro,
       verplichteInvoer2 -> 2.euro,
       verplichteInvoer3 -> 3.euro,
@@ -95,11 +99,13 @@ class BusinessServiceTest extends FlatSpec with Matchers {
       optioneleInvoer1 -> 11.euro,
       optioneleInvoer2 -> 22.euro,
       optioneleInvoer3 -> 33.euro
-    ), FactEngine.runNormalDerivations).get
-
-    result(uitvoer1) should be ((1 + 11).euro)
-    result(uitvoer2) should be ((2 + 22).euro)
-    result(uitvoer3) should be ((3 + 33).euro)
+    ), FactEngine.runNormalDerivations) match {
+      case Failure(f) => f.getMessage shouldBe "Something is likely wrong in the test setup if this test fails because of validation or run errors"
+      case Success(s) =>
+        s(uitvoer1) should be((1 + 11).euro)
+        s(uitvoer2) should be((2 + 22).euro)
+        s(uitvoer3) should be((3 + 33).euro)
+    }
   }
 
   behavior of "throw errors when improperly specified"
