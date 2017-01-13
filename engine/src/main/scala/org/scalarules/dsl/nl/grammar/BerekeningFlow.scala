@@ -94,10 +94,10 @@ class LijstOpbouwConstruct[Uit](condition: DslCondition, output: Fact[List[Uit]]
 
 // --- supports naming the invoer and uitvoer inside an ElementBerekening
 class InvoerWord{
-  def is[In](iteratee: Fact[In]): InvoerSpec[In] = new InvoerSpec[In](iteratee)
+  def is[In](iteratee: Fact[In]): InvoerSpecification[In] = new InvoerSpecification[In](iteratee)
 }
 class UitvoerWord{
-  def is[Uit](iteratee: Fact[Uit]): UitvoerSpec[Uit] = new UitvoerSpec[Uit](iteratee)
+  def is[Uit](iteratee: Fact[Uit]): UitvoerSpecification[Uit] = new UitvoerSpecification[Uit](iteratee)
 }
 
 class BerekeningAccumulator private[grammar](val condition: DslCondition, val derivations: List[Derivation]) {

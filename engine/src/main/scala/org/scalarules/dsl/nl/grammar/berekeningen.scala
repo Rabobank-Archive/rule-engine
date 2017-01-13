@@ -7,8 +7,8 @@ class Berekening(berekeningAccumulators: BerekeningAccumulator*) {
   val berekeningen: List[Derivation] = berekeningAccumulators.flatMap(_.derivations).toList
 }
 
-class InvoerSpec[In](val iteratee: Fact[In])
-class UitvoerSpec[Uit](val resultee: Fact[Uit])
+class InvoerSpecification[In](val iteratee: Fact[In])
+class UitvoerSpecification[Uit](val resultee: Fact[Uit])
 
 /**
   * Een ElementBerekening is een Berekening met een enkele invoer en een enkele uitvoer parameter. Deze worden voornamelijk gebruikt bij het definieren van
@@ -16,7 +16,7 @@ class UitvoerSpec[Uit](val resultee: Fact[Uit])
   *
   * class MijnBerekening extends ElementBerekening[<invoertype>, <uitvoertype>] (
   */
-class ElementBerekening[In, Uit](invoer: InvoerSpec[In], uitvoer: UitvoerSpec[Uit], berekeningAccumulators: BerekeningAccumulator*) extends Berekening(berekeningAccumulators:_*) {
+class ElementBerekening[In, Uit](invoer: InvoerSpecification[In], uitvoer: UitvoerSpecification[Uit], berekeningAccumulators: BerekeningAccumulator*) extends Berekening(berekeningAccumulators:_*) {
   def invoerFact: Fact[In] = invoer.iteratee
   def uitvoerFact: Fact[Uit] = uitvoer.resultee
 }
@@ -24,4 +24,3 @@ class ElementBerekening[In, Uit](invoer: InvoerSpec[In], uitvoer: UitvoerSpec[Ui
 trait ElementBerekeningReference[In, Uit] {
   def berekening: ElementBerekening[In, Uit]
 }
-
