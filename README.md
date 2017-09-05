@@ -1,9 +1,9 @@
-# scala-rules
-Scala-Rules is a forward chaining rule engine, built in [Scala](https://www.scala-lang.org). The engine comes with a DSL with which derivations can be modelled as small steps that combine into large derived networks of facts.
+# Rabo-rules
+Rabo-Rules is a forward chaining rule engine, built in [Scala](https://www.scala-lang.org). The engine comes with a DSL with which derivations can be modelled as small steps that combine into large derived networks of facts.
 
 The project started with a Dutch DSL to facilitate bankers writing mortgage-related calculations. The development of an English DSL is currently in progress (see [Future Work](#future)).
 
-[![Codeship Status for scala-rules/scala-rules](https://codeship.com/projects/628dece0-e3e8-0133-a9e8-3aa3f222b1f1/status?branch=master)](https://codeship.com/projects/146192)
+[![Codeship Status for Rabo-rules/rabo-rules](https://codeship.com/projects/628dece0-e3e8-0133-a9e8-3aa3f222b1f1/status?branch=master)](https://codeship.com/projects/146192)
 
 # Getting Started
 
@@ -11,15 +11,15 @@ The minimal requirement to get started is to add the artifact containing the rul
 
 **SBT** - `build.sbt`
 ```
-libraryDependencies += "org.scala-rules" %% "rule-engine" % "0.2.6"
+libraryDependencies += "nl.rabobank.rules" %% "rule-engine" % "0.6.0"
 ```
 
 **Maven** - `pom.xml`
 ```xml
 <dependency>
-	<groupId>org.scala-rules</groupId>
+	<groupId>nl.rabobank.rules</groupId>
 	<artifactId>rule-engine_2.11</artifactId>
-	<version>0.2.6</version>
+	<version>0.6.0</version>
 </dependency>
 ```
 
@@ -40,7 +40,7 @@ object MyGlossary extends Glossary {
 Using this glossary, it is now possible to define derivations. The Scala Rules DSL provides an easy way to express how facts interact and come together to form your logic. To enable the DSL, create a class that extends `Berekening`:
 
 ```scala
-import org.scalarules.dsl.nl.grammar._
+import nl.rabobank.rules.dsl.nl.grammar._
 import MyGlossary._
 
 class MyArithmetics extends Berekening (
@@ -50,7 +50,7 @@ class MyArithmetics extends Berekening (
 
 *Note the parenthesis behind `Berekening`, using braces won’t work. The `Berekening` constructor requires a series of `DslDerivations`, using braces causes this argument to be an empty list and yields you no executable derivations.*
 
-*Note 2: for more information about the possibilities of the DSL, see the [Wiki page about it](https://github.com/scala-rules/rule-engine/wiki/DSL-Description---Dutch)*
+*Note 2: for more information about the possibilities of the DSL, see the [Wiki page about it](https://github.com/rabobank-nederland/rule-engine/wiki/DSL-Description---Dutch)*
 
 The two listings above are actually all you need to define your calculations, validations or evaluations. The engine will have enough information to start working for you. Only one thing is still missing for the scenario to make sense to you: values.
 
