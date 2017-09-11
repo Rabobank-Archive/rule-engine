@@ -42,9 +42,7 @@ lazy val engine = (project in file("engine"))
     addCompilerPlugin(
       "org.scalameta" % "paradise" % "3.0.0.95" cross CrossVersion.full ),
     scalacOptions += "-Xplugin-require:macroparadise",
-    resolvers += Resolver.url(
-      "scalameta-bintray",
-      url("https://dl.bintray.com/scalameta/maven"))(Resolver.ivyStylePatterns)
+    resolvers += MavenRepository("scalameta-bintray", file("./provided-repo").toURI.toString)
 
   )
   .dependsOn(engineCore)
