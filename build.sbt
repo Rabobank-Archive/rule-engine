@@ -6,10 +6,10 @@
 useGpg := false
 
 lazy val commonSettings = Seq(
-  organization := "org.scala-rules",
-  organizationHomepage := Some(url("https://github.com/scala-rules")),
-  homepage := Some(url("https://github.com/scala-rules/rule-engine")),
-  version := "0.5.2-SNAPSHOT",
+  organization := "nl.rabobank.rules",
+  organizationHomepage := Some(url("https://github.com/rabobank-nederland")),
+  homepage := Some(url("https://github.com/rabobank-nederland/rule-engine")),
+  version := "0.6.0-SNAPSHOT",
   scalaVersion := "2.11.8",
   scalacOptions ++= Seq("-deprecation", "-unchecked", "-feature", "-Xlint", "-Xfatal-warnings")
 ) ++ staticAnalysisSettings ++ publishSettings
@@ -20,8 +20,8 @@ lazy val commonSettings = Seq(
 lazy val ruleEngineRoot = (project in file("."))
   .settings(commonSettings: _*)
   .settings(
-    name := "scala-rules",
-    description := "Scala Rules"
+    name := "rabobank-rules",
+    description := "Rabobank Rules"
   )
   .aggregate(engineCore, engine, engineTestUtils)
 
@@ -42,9 +42,7 @@ lazy val engine = (project in file("engine"))
     addCompilerPlugin(
       "org.scalameta" % "paradise" % "3.0.0.95" cross CrossVersion.full ),
     scalacOptions += "-Xplugin-require:macroparadise",
-    resolvers += Resolver.url(
-      "scalameta-bintray",
-      url("https://dl.bintray.com/scalameta/maven"))(Resolver.ivyStylePatterns)
+    resolvers += MavenRepository("scalameta-bintray", file("./provided-repo").toURI.toString)
 
   )
   .dependsOn(engineCore)
@@ -66,12 +64,12 @@ lazy val jodaTimeVersion = "2.4"
 lazy val jodaConvertVersion = "1.8"
 
 lazy val commonDependencies = Seq(
+  "nl.rabobank.rules" %% "finance-dsl" % "0.2.0",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.2",
   "com.fasterxml.jackson.jaxrs" % "jackson-jaxrs-json-provider" % "2.7.3",
   "joda-time" % "joda-time" % jodaTimeVersion,
   "org.joda" % "joda-convert" % jodaConvertVersion,
   "org.scalameta"  %% "scalameta" % "1.2.0",
-  "org.scala-rules" %% "finance-dsl" % "0.1.0",
   "org.scalatest" %% "scalatest" % scalaTestVersion % Test,
   "org.scalacheck" %% "scalacheck" % "1.12.5" % Test
 )
@@ -148,8 +146,8 @@ lazy val pom =
     </developer>
   </developers>
   <scm>
-    <connection>scm:git:git@github.com:scala-rules/rule-engine.git</connection>
-    <developerConnection>scm:git:git@github.com:scala-rules/rule-engine.git</developerConnection>
-    <url>git@github.com:scala-rules/rule-engine.git</url>
+    <connection>scm:git:git@github.com:rabobank-nederland/rule-engine.git</connection>
+    <developerConnection>scm:git:git@github.com:rabobank-nederland/rule-engine.git</developerConnection>
+    <url>git@github.com:rabobank-nederland/rule-engine.git</url>
   </scm>
   
