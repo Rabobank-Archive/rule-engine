@@ -23,15 +23,15 @@ Units:
 * Decouple Finance DSL from Engine (add Bridge package)
 
 
-nl.rabobank.rules.finance.core
-nl.rabobank.rules.finance.nl
-nl.rabobank.rules.finance.en
+nl.rabobank.oss.rules.finance.core
+nl.rabobank.oss.rules.finance.nl
+nl.rabobank.oss.rules.finance.en
 
-nl.rabobank.rules.engine.FactEngine
-nl.rabobank.rules.engine.domain
-nl.rabobank.rules.engine.types
-nl.rabobank.rules.engine.operators
+nl.rabobank.oss.rules.engine.FactEngine
+nl.rabobank.oss.rules.engine.domain
+nl.rabobank.oss.rules.engine.types
+nl.rabobank.oss.rules.engine.operators
 
-nl.rabobank.rules.dsl.core
-nl.rabobank.rules.dsl.nl
-nl.rabobank.rules.dsl.en
+nl.rabobank.oss.rules.dsl.core
+nl.rabobank.oss.rules.dsl.nl
+nl.rabobank.oss.rules.dsl.en

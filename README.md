@@ -11,13 +11,13 @@ The minimal requirement to get started is to add the artifact containing the rul
 
 **SBT** - `build.sbt`
 ```
-libraryDependencies += "nl.rabobank.rules" %% "rule-engine" % "0.6.0"
+libraryDependencies += "nl.rabobank.oss.rules" %% "rule-engine" % "0.6.0"
 ```
 
 **Maven** - `pom.xml`
 ```xml
 <dependency>
-	<groupId>nl.rabobank.rules</groupId>
+	<groupId>nl.rabobank.oss.rules</groupId>
 	<artifactId>rule-engine_2.11</artifactId>
 	<version>0.6.0</version>
 </dependency>
@@ -40,7 +40,7 @@ object MyGlossary extends Glossary {
 Using this glossary, it is now possible to define derivations. The Scala Rules DSL provides an easy way to express how facts interact and come together to form your logic. To enable the DSL, create a class that extends `Berekening`:
 
 ```scala
-import nl.rabobank.rules.dsl.nl.grammar._
+import nl.rabobank.oss.rules.dsl.nl.grammar._
 import MyGlossary._
 
 class MyArithmetics extends Berekening (

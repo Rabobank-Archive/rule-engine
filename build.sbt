@@ -6,7 +6,7 @@
 useGpg := false
 
 lazy val commonSettings = Seq(
-  organization := "nl.rabobank.rules",
+  organization := "nl.rabobank.oss.rules",
   organizationHomepage := Some(url("https://github.com/rabobank-nederland")),
   homepage := Some(url("https://github.com/rabobank-nederland/rule-engine")),
   version := "0.6.1-SNAPSHOT",
@@ -64,7 +64,7 @@ lazy val jodaTimeVersion = "2.4"
 lazy val jodaConvertVersion = "1.8"
 
 lazy val commonDependencies = Seq(
-  "nl.rabobank.rules" %% "finance-dsl" % "0.2.0",
+  "nl.rabobank.oss.rules" %% "finance-dsl" % "0.2.0",
   "com.fasterxml.jackson.module" %% "jackson-module-scala" % "2.7.2",
   "com.fasterxml.jackson.jaxrs" % "jackson-jaxrs-json-provider" % "2.7.3",
   "joda-time" % "joda-time" % jodaTimeVersion,
